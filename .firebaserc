@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "grecha-b8fd9": {
+      "hosting": {
+        "escape-game-front": [
+          "grecha-b8fd9"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "grecha-b8fd9"
+  }
+}
