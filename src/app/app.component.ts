@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
-import { circle, latLng, Layer, MapOptions, marker, tileLayer } from 'leaflet';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {fadeAnimation} from "./animations/fadeAnimation";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations:[fadeAnimation]
 })
-export class AppComponent {
-  options: MapOptions = {
-    layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18,  attribution: '...' }),
-    ],
-    zoom: 15,
-    center: latLng(	45.188529, 	5.724524)
-  };
-  otherLayers: Layer[] = [
-    marker([ 45.188529, 	5.724524 ])
-  ];
+export class AppComponent implements OnInit {
+  title = 'escape-game-front';
+  innerWidth: number = 1920;
 
-  displayCircle = false;
-  layerCircle: Layer = circle([ 45.188529, 	5.724524 ], {radius: 500} )
+  ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.innerWidth = window.innerWidth;
+  }
+
 }

@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'l3m-pi-2022-client'`, () => {
+  it(`should have as title 'escape-game-front'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('l3m-pi-2022-client');
+    expect(app.title).toEqual('escape-game-front');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('l3m-pi-2022-client app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('escape-game-front app is running!');
   });
 });

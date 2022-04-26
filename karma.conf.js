@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/l3m-pi-2022-client'),
+      dir: require('path').join(__dirname, './coverage/escape-game-front'),
       subdir: '.',
       reporters: [
         { type: 'html' },

@@ -1,15 +1,20 @@
-<h1>Projet intégrateur L3 Miage 2022</h1>
-<h2>BIenvenu chez les chamis</h2>
-
-<label>
-  Afficher le cercle
-  <input type="checkbox" [(ngModel)]="displayCircle" />
-</label>
-
-<div style="height: 300px;"
-     leaflet 
-     [leafletOptions]="options"
-     [leafletLayers]="otherLayers">
-
-     <div *ngIf="displayCircle" [leafletLayer]="layerCircle"></div>
+<div class="app">
+  <div class="mobile-layout" *ngIf="innerWidth<600">
+    <app-top-bar></app-top-bar>
+    <div class="contents" [@fadeAnimation]="mobileOutlet.isActivated ? mobileOutlet.activatedRoute : ''">
+      <router-outlet #mobileOutlet="outlet"></router-outlet>
+    </div>
+    <app-nav-bar></app-nav-bar>
+  </div>
+  <div class="default-layout" *ngIf="innerWidth>=600">
+    <div class="app-left">
+      <app-nav-bar></app-nav-bar>
+    </div>
+    <div class="app-right">
+      <app-top-bar></app-top-bar>
+      <div class="contents" [@fadeAnimation]="desktopOutlet.isActivated ? desktopOutlet.activatedRoute : ''">
+        <router-outlet #desktopOutlet="outlet"></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
