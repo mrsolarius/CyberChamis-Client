@@ -104,6 +104,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "escape-game-front:build:production",
+            "firebaseProject": "grecha-b8fd9",
+            "firebaseHostingSite": "grecha-b8fd9"
+          }
         }
       }
     }

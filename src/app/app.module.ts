@@ -15,6 +15,11 @@ import { ExploreComponent } from './app-views/explore/explore.component';
 import {MatTreeModule} from "@angular/material/tree";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatListModule} from "@angular/material/list";
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import {AngularFireModule} from "@angular/fire/compat";
 
 @NgModule({
   declarations: [
@@ -34,7 +39,11 @@ import {MatListModule} from "@angular/material/list";
     MatCardModule,
     MatTreeModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent]

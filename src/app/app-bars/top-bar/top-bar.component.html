@@ -4,7 +4,18 @@
   <button mat-icon-button aria-label="Rechercher">
     <mat-icon class="material-icons-outlined" >search</mat-icon>
   </button>
-  <button mat-icon-button aria-label="Profil">
-    <mat-icon class="material-icons-outlined">account_circle</mat-icon>
-  </button>
+  <div *ngIf="auth.user | async as user; else showLogin">
+    <img src="{{user.photoURL}}" alt="avatar" class="pp" referrerpolicy="no-referrer" (click)="logout()">
+    <div>
+<!--      <h1>{{ user.displayName }} !</h1>-->
+<!--      <h2>{{ user.email }}</h2>-->
+      <!--<button (click)="logout()">Se déconnecter</button>-->
+    </div>
+    <!--<p (click)="logout()">Se DECO</p>-->
+  </div>
+  <ng-template #showLogin>
+    <button mat-icon-button aria-label="Profil" (click)="login()">
+      <mat-icon class="material-icons-outlined" >account_circle</mat-icon>
+    </button>
+  </ng-template>
 </mat-toolbar>
