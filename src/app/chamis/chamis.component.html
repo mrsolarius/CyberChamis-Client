@@ -1,4 +1,6 @@
 <p>chamis works!</p>
-<ul *ngIf="chamisObs | async as chamisList">
-  <li *ngFor="let chami of chamisList">{{chami.login}}</li>
+<ul>
+  <li *ngFor="let chami of chamis">
+    {{chami.login}}
+  </li>
 </ul>
