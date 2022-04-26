@@ -7,8 +7,8 @@ import firebase from 'firebase/compat/app';
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss']
 })
-export class TopBarComponent implements OnInit {
 
+export class TopBarComponent implements OnInit {
   constructor(public auth : AngularFireAuth) { }
 
   login(): void {

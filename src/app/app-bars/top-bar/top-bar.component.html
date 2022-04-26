@@ -4,10 +4,24 @@
   <button mat-icon-button aria-label="Rechercher">
     <mat-icon class="material-icons-outlined" >search</mat-icon>
   </button>
-    <img *ngIf="auth.user | async as user; else showLogin" src="{{user.photoURL}}" alt="avatar" class="pp" referrerpolicy="no-referrer" (click)="logout()">
+  <div class="right-container" *ngIf="auth.user | async as user; else showLogin">
+    <img src="{{user.photoURL}}" alt="avatar" class="pp" referrerpolicy="no-referrer" [matMenuTriggerFor]="menu">
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Déconnection</span>
+      </button>
+    </mat-menu>
+  </div>
   <ng-template #showLogin>
-    <button mat-icon-button aria-label="Profil" (click)="login()">
-      <mat-icon class="material-icons-outlined" >account_circle</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Profil">
+      <mat-icon class="material-icons-outlined">account_circle</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="login()">
+        <mat-icon>vpn_key</mat-icon>
+        <span>Connection</span>
+      </button>
+    </mat-menu>
   </ng-template>
 </mat-toolbar>

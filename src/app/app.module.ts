@@ -20,6 +20,7 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import {AngularFireModule} from "@angular/fire/compat";
+import {MaterialModule} from '../material.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     TopBarComponent,
     NavBarComponent,
     HomeComponent,
-    ExploreComponent
+    ExploreComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +41,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     MatTreeModule,
     MatDividerModule,
     MatListModule,
+    MaterialModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

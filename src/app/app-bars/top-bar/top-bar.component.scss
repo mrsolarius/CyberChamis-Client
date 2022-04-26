@@ -2,7 +2,22 @@
   flex: 1 1 auto;
 }
 
+// .pp{
+//   width: 50%;
+//   height: auto;
+// }
+
 .pp{
-  width: 3%;
-  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  height: 24px;
+  margin: 8px;
+}
+
+.right-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
