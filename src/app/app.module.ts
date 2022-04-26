@@ -15,6 +15,9 @@ import { ExploreComponent } from './app-views/explore/explore.component';
 import {MatTreeModule} from "@angular/material/tree";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatListModule} from "@angular/material/list";
+import {ApiModule} from "./api/api.module";
+import {HttpClientModule} from "@angular/common/http";
+import { ChamisComponent } from './chamis/chamis.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
@@ -29,8 +32,12 @@ import {MaterialModule} from '../material.module';
     NavBarComponent,
     HomeComponent,
     ExploreComponent,
+    ChamisComponent,
+    ExploreComponent,
   ],
   imports: [
+    ApiModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

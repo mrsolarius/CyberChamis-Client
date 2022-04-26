@@ -9,12 +9,12 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Book } from '../models/book';
+import { Defi } from '../models/defi';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BookControllerService extends BaseService {
+export class DefiRestControllerService extends BaseService {
   constructor(
     config: ApiConfiguration,
     http: HttpClient
@@ -25,7 +25,7 @@ export class BookControllerService extends BaseService {
   /**
    * Path part for operation findById
    */
-  static readonly FindByIdPath = '/api/book/{id}';
+  static readonly FindByIdPath = '/api/defis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -34,10 +34,10 @@ export class BookControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   findById$Response(params: {
-    id: number;
-  }): Observable<StrictHttpResponse<Book>> {
+    id: string;
+  }): Observable<StrictHttpResponse<Defi>> {
 
-    const rb = new RequestBuilder(this.rootUrl, BookControllerService.FindByIdPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.FindByIdPath, 'get');
     if (params) {
       rb.path('id', params.id, {});
     }
@@ -48,7 +48,7 @@ export class BookControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Book>;
+        return r as StrictHttpResponse<Defi>;
       })
     );
   }
@@ -60,31 +60,31 @@ export class BookControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   findById(params: {
-    id: number;
-  }): Observable<Book> {
+    id: string;
+  }): Observable<Defi> {
 
     return this.findById$Response(params).pipe(
-      map((r: StrictHttpResponse<Book>) => r.body as Book)
+      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
     );
   }
 
   /**
-   * Path part for operation updateBook
+   * Path part for operation putChami
    */
-  static readonly UpdateBookPath = '/api/book/{id}';
+  static readonly PutChamiPath = '/api/defis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `updateBook()` instead.
+   * To access only the response body, use `putChami()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  updateBook$Response(params: {
+  putChami$Response(params: {
     id: string;
-    body: Book
-  }): Observable<StrictHttpResponse<Book>> {
+    body: Defi
+  }): Observable<StrictHttpResponse<Defi>> {
 
-    const rb = new RequestBuilder(this.rootUrl, BookControllerService.UpdateBookPath, 'put');
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.PutChamiPath, 'put');
     if (params) {
       rb.path('id', params.id, {});
       rb.body(params.body, 'application/json');
@@ -96,42 +96,42 @@ export class BookControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Book>;
+        return r as StrictHttpResponse<Defi>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `updateBook$Response()` instead.
+   * To access the full response (for headers, for example), `putChami$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  updateBook(params: {
+  putChami(params: {
     id: string;
-    body: Book
-  }): Observable<Book> {
+    body: Defi
+  }): Observable<Defi> {
 
-    return this.updateBook$Response(params).pipe(
-      map((r: StrictHttpResponse<Book>) => r.body as Book)
+    return this.putChami$Response(params).pipe(
+      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
     );
   }
 
   /**
-   * Path part for operation findBooks
+   * Path part for operation getDefis
    */
-  static readonly FindBooksPath = '/api/book/';
+  static readonly GetDefisPath = '/api/defis/';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `findBooks()` instead.
+   * To access only the response body, use `getDefis()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findBooks$Response(params?: {
-  }): Observable<StrictHttpResponse<Array<Book>>> {
+  getDefis$Response(params?: {
+  }): Observable<StrictHttpResponse<Array<Defi>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, BookControllerService.FindBooksPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisPath, 'get');
     if (params) {
     }
 
@@ -141,41 +141,41 @@ export class BookControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Book>>;
+        return r as StrictHttpResponse<Array<Defi>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `findBooks$Response()` instead.
+   * To access the full response (for headers, for example), `getDefis$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findBooks(params?: {
-  }): Observable<Array<Book>> {
+  getDefis(params?: {
+  }): Observable<Array<Defi>> {
 
-    return this.findBooks$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Book>>) => r.body as Array<Book>)
+    return this.getDefis$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Defi>>) => r.body as Array<Defi>)
     );
   }
 
   /**
-   * Path part for operation createBook
+   * Path part for operation createDefi
    */
-  static readonly CreateBookPath = '/api/book/';
+  static readonly CreateDefiPath = '/api/defis/';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `createBook()` instead.
+   * To access only the response body, use `createDefi()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  createBook$Response(params: {
-    body: Book
-  }): Observable<StrictHttpResponse<Book>> {
+  createDefi$Response(params: {
+    body: Defi
+  }): Observable<StrictHttpResponse<Defi>> {
 
-    const rb = new RequestBuilder(this.rootUrl, BookControllerService.CreateBookPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.CreateDefiPath, 'post');
     if (params) {
       rb.body(params.body, 'application/json');
     }
@@ -186,23 +186,23 @@ export class BookControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Book>;
+        return r as StrictHttpResponse<Defi>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `createBook$Response()` instead.
+   * To access the full response (for headers, for example), `createDefi$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  createBook(params: {
-    body: Book
-  }): Observable<Book> {
+  createDefi(params: {
+    body: Defi
+  }): Observable<Defi> {
 
-    return this.createBook$Response(params).pipe(
-      map((r: StrictHttpResponse<Book>) => r.body as Book)
+    return this.createDefi$Response(params).pipe(
+      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
     );
   }
 

@@ -4,7 +4,8 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
-import { BookControllerService } from './services/book-controller.service';
+import { DefiRestControllerService } from './services/defi-rest-controller.service';
+import { ChamiRestControllerService } from './services/chami-rest-controller.service';
 
 /**
  * Module that provides all services and configuration.
@@ -14,7 +15,8 @@ import { BookControllerService } from './services/book-controller.service';
   exports: [],
   declarations: [],
   providers: [
-    BookControllerService,
+    DefiRestControllerService,
+    ChamiRestControllerService,
     ApiConfiguration
   ],
 })

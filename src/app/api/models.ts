@@ -1,1 +1,2 @@
-export { Book } from './models/book';
+export { Chami } from './models/chami';
+export { Defi } from './models/defi';
