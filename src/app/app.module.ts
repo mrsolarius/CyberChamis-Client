@@ -27,6 +27,7 @@ import {MaterialModule} from '../material.module';
 import { DefiComponent } from './components/defi/defi.component';
 import { AppMapComponent } from './app-map/app-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import { DefisComponent } from './components/defis/defis.component';
 
 
 
@@ -41,6 +42,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     ExploreComponent,
     DefiComponent,
     AppMapComponent,
+    DefisComponent,
   ],
   imports: [
     LeafletModule,
