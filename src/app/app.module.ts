@@ -25,6 +25,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import {AngularFireModule} from "@angular/fire/compat";
 import {MaterialModule} from '../material.module';
 import { DefiComponent } from './defi/defi.component';
+import { AppMapComponent } from './app-map/app-map.component';
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+
+
 
 @NgModule({
   declarations: [
@@ -36,8 +40,10 @@ import { DefiComponent } from './defi/defi.component';
     ChamisComponent,
     ExploreComponent,
     DefiComponent,
+    AppMapComponent,
   ],
   imports: [
+    LeafletModule,
     ApiModule,
     HttpClientModule,
     BrowserModule,

@@ -9,9 +9,9 @@ import {Defi} from "../api/models/defi";
 })
 export class DefiComponent implements OnInit {
   defis: Array<Defi> = [];
-
   constructor(private defi : DefiRestControllerService) {
     this.defi.getDefis().subscribe(data => {
+      console.log(data)
       this.defis = data;
     });
   }

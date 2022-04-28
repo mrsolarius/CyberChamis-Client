@@ -1,0 +1,12 @@
+.map {
+  height: 100%; /* pour mettre le map sur tout l ecran */
+  width: 100%;
+  padding: 0;
+}
+.mapContainer{
+  display: flex;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+
+}

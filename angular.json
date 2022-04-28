@@ -116,7 +116,11 @@
           }
         }
       }
-    }
+    },
+    "styles": [
+      "styles.scss",
+      "./node_modules/leaflet/dist/leaflet.css"
+    ]
   },
   "defaultProject": "escape-game-front"
 }
