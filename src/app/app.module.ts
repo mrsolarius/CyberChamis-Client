@@ -24,7 +24,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import {AngularFireModule} from "@angular/fire/compat";
 import {MaterialModule} from '../material.module';
-import { DefiComponent } from './defi/defi.component';
+import { DefiComponent } from './components/defi/defi.component';
 import { AppMapComponent } from './app-map/app-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
