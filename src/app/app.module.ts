@@ -24,6 +24,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import {AngularFireModule} from "@angular/fire/compat";
 import {MaterialModule} from '../material.module';
+import { DefiComponent } from './defi/defi.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MaterialModule} from '../material.module';
     ExploreComponent,
     ChamisComponent,
     ExploreComponent,
+    DefiComponent,
   ],
   imports: [
     ApiModule,
