@@ -24,6 +24,9 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import {AngularFireModule} from "@angular/fire/compat";
 import {MaterialModule} from '../material.module';
+import { AppMapComponent } from './app-map/app-map.component';
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+//import { LeafletModule } from '@my-project/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -34,8 +37,10 @@ import {MaterialModule} from '../material.module';
     ExploreComponent,
     ChamisComponent,
     ExploreComponent,
+    AppMapComponent,
   ],
   imports: [
+    LeafletModule,
     ApiModule,
     HttpClientModule,
     BrowserModule,
