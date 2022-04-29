@@ -24,9 +24,12 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import {AngularFireModule} from "@angular/fire/compat";
 import {MaterialModule} from '../material.module';
-import { DefiComponent } from './defi/defi.component';
+import { DefiComponent } from './components/defi/defi.component';
 import { AppMapComponent } from './app-map/app-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import { DefisComponent } from './components/defis/defis.component';
+import { ProfileComponent } from './app-views/profile/profile.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -41,6 +44,8 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     ExploreComponent,
     DefiComponent,
     AppMapComponent,
+    DefisComponent,
+    ProfileComponent,
   ],
   imports: [
     LeafletModule,
@@ -61,6 +66,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

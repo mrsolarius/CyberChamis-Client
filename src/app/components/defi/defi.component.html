@@ -1,0 +1,23 @@
+<mat-card>
+  <img mat-card-image src="https://www.zooplus.fr/magazine/wp-content/uploads/2019/11/chaton-errant-1024x683.jpeg"
+       alt="{{defi.titre}}">
+  <mat-card-header>
+    <mat-card-title>{{defi.titre}}</mat-card-title>
+    <mat-card-subtitle>
+      <mat-icon class="material-symbols-outlined">directions_walk</mat-icon>
+      <span>A 2km de vous</span>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <mat-icon class="material-symbols-outlined">hail</mat-icon>
+      <span>Gabrielle Fauré</span>
+    </mat-card-subtitle>
+    <div class="button-container">
+      <button mat-flat-button color="primary">Jouer</button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="star-container">
+      <mat-icon *ngFor="let star of getStar(3.25)">{{star}}</mat-icon>
+    </div>
+  </mat-card-content>
+</mat-card>

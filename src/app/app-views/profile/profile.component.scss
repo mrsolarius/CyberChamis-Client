@@ -1,0 +1,54 @@
+@import "/src/app-var";
+
+.profil-page-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin: 20px;
+}
+
+.card-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.card-margin{
+  max-width: $max-width-smartphone;
+}
+
+.profil-img-container{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  *{
+    margin: 0 20px;
+  }
+  img{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+  }
+}
+
+.form-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  mat-form-field{
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: $max-width-tablet){
+  .text-area{
+    width: 100%;
+  }
+}
