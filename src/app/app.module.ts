@@ -30,6 +30,8 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DefisComponent } from './components/defis/defis.component';
 import { ProfileComponent } from './app-views/profile/profile.component';
 import {FormsModule} from "@angular/forms";
+import { JeuDefiComponent } from './components/jeu-defi/jeu-defi.component';
+import { EtapeIndicativeComponent } from './components/etape-indicative/etape-indicative.component';
 
 
 
@@ -46,6 +48,8 @@ import {FormsModule} from "@angular/forms";
     AppMapComponent,
     DefisComponent,
     ProfileComponent,
+    JeuDefiComponent,
+    EtapeIndicativeComponent,
   ],
   imports: [
     LeafletModule,
