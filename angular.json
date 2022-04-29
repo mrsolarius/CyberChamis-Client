@@ -31,6 +31,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -116,11 +117,8 @@
           }
         }
       }
-    },
-    "styles": [
-      "styles.scss",
-      "./node_modules/leaflet/dist/leaflet.css"
-    ]
+    }
+
   },
   "defaultProject": "escape-game-front"
 }
