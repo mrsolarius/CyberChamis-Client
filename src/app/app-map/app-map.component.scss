@@ -1,3 +1,5 @@
+@import "/src/app-var";
+
 .map-container {
   position: relative;
   margin: 30px;
@@ -13,3 +15,12 @@
 #map {
   height: 100%;
 }
+
+@media screen and(max-width: $max-width-smartphone){
+  .map-container{
+    margin: 0;
+    width: 100%;
+  }
+}
+
+
