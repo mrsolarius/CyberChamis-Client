@@ -26,7 +26,6 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {MaterialModule} from '../material.module';
 import { AppMapComponent } from './app-map/app-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
-//import { LeafletModule } from '@my-project/ngx-leaflet';
 
 @NgModule({
   declarations: [
