@@ -1,12 +1,26 @@
-.map {
-  height: 100%; /* pour mettre le map sur tout l ecran */
-  width: 100%;
-  padding: 0;
-}
-.mapContainer{
-  display: flex;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: hidden;
+@import "/src/app-var";
 
+.map-container {
+  position: relative;
+  margin: 30px;
+  height: 100%;
+  width:  calc( 100% - 60px );
 }
+
+.map-frame {
+  border: 1px solid black;
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+}
+
+@media screen and(max-width: $max-width-smartphone){
+  .map-container{
+    margin: 0;
+    width: 100%;
+  }
+}
+
+

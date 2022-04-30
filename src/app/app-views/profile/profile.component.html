@@ -1,0 +1,30 @@
+<section *ngIf="auth.user | async as user" class="profil-page-container">
+  <div class="profil-img-container">
+    <img src="{{user.photoURL}}" alt="avatar" class="pp" referrerpolicy="no-referrer">
+    <h1>{{user.displayName}}</h1>
+  </div>
+  <div class="card-container">
+    <mat-card class="card-margin">
+      <mat-card-header>
+        <mat-card-title>Votre Profile</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="form-container">
+          <mat-form-field>
+            <input matInput placeholder="login" [(ngModel)]="login" [value]="login">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="age" type="number" min="13" max="122">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="ville" type="text">
+          </mat-form-field>
+          <mat-form-field class="text-area">
+            <textarea matInput placeholder="description" rows="4"></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="updateProfile()">Mettre à jour</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
