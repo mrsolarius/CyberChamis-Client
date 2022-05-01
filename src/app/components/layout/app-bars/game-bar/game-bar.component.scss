@@ -1,5 +1,12 @@
+@import "src/app-var";
+
 .toolbar{
   width: 100vw;
+  align-items: center;
+}
+
+.toolbar-row{
+  width: 50%;
 }
 
 .progress-bar-container{
@@ -18,4 +25,16 @@
   align-self: center;
   margin-right: 16px;
   width: 100%;
+}
+
+@media screen and (max-width: $max-width-tablet) {
+  .toolbar-row{
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: $max-width-smartphone) {
+  .toolbar-row{
+    width: 100%;
+  }
 }
