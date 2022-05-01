@@ -29,11 +29,12 @@ import { AppMapComponent } from './app-map/app-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DefisComponent } from './components/defis/defis.component';
 import { ProfileComponent } from './app-views/profile/profile.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { GameComponent } from './app-views/game/game.component';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 import { GameLayoutComponent } from './components/layout/game-layout/game-layout.component';
 import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
+import { CreateComponent } from './app-views/create/create.component';
 
 
 
@@ -54,6 +55,7 @@ import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar
     AppLayoutComponent,
     GameLayoutComponent,
     GameBarComponent,
+    CreateComponent,
   ],
   imports: [
     LeafletModule,
@@ -75,6 +77,7 @@ import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
