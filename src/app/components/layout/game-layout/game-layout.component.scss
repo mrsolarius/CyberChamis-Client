@@ -1,0 +1,15 @@
+.mobile-layout{
+  display:flex;
+  flex-direction:column;
+  height: 100vh;
+}
+
+.contents{
+  flex: 1 1 auto;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+.app {
+  flex-direction: column;
+}

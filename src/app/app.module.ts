@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {TopBarComponent} from "./app-bars/top-bar/top-bar.component";
-import {NavBarComponent} from "./app-bars/nav-bar/nav-bar.component";
+import {TopBarComponent} from "./components/layout/app-bars/top-bar/top-bar.component";
+import {NavBarComponent} from "./components/layout/app-bars/nav-bar/nav-bar.component";
 import { HomeComponent } from './app-views/home/home.component';
 import {MatCardModule} from "@angular/material/card";
 import { ExploreComponent } from './app-views/explore/explore.component';
@@ -33,6 +33,7 @@ import {FormsModule} from "@angular/forms";
 import { GameComponent } from './app-views/game/game.component';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 import { GameLayoutComponent } from './components/layout/game-layout/game-layout.component';
+import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
 
 
 
@@ -52,6 +53,7 @@ import { GameLayoutComponent } from './components/layout/game-layout/game-layout
     GameComponent,
     AppLayoutComponent,
     GameLayoutComponent,
+    GameBarComponent,
   ],
   imports: [
     LeafletModule,
