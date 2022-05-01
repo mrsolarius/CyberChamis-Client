@@ -34,6 +34,7 @@ import { GameComponent } from './app-views/game/game.component';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 import { GameLayoutComponent } from './components/layout/game-layout/game-layout.component';
 import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
+import { IndiceSheetComponent } from './components/layout/app-bars/game-bar/game-bar.component';
 
 
 
@@ -54,6 +55,7 @@ import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar
     AppLayoutComponent,
     GameLayoutComponent,
     GameBarComponent,
+    IndiceSheetComponent,
   ],
   imports: [
     LeafletModule,
