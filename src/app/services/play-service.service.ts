@@ -64,4 +64,5 @@ export class PlayServiceService {
   isNonNull<T>(value: T): value is NonNullable<T> {
     return value != null && typeof value !== "undefined";
   }
+
 }
