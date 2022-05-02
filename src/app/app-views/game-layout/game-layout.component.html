@@ -1,7 +1,7 @@
 <div class="app" *ngIf="getObsVisite | async as obsVisite">
   <div class="mobile-layout">
     <app-top-bar [backRoute]="'/home'" [title]="getCurrentStepTitle(obsVisite.etapeCourante)"></app-top-bar>
-    <div class="contents">
+    <div class="contents padding">
       <app-game [step]="getEtape(obsVisite)" (response)="checkResponse($event)" ></app-game>
     </div>
     <app-game-bar
@@ -13,3 +13,12 @@
     ></app-game-bar>
   </div>
 </div>
+<div class="app" *ngIf="notFound">
+  <div class="mobile-layout">
+    <app-top-bar [backRoute]="'/home'" [title]="'CyberChamis'"></app-top-bar>
+    <div class="contents">
+      <app-not-found></app-not-found>
+    </div>
+  </div>
+</div>
+

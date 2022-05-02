@@ -18,7 +18,7 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent, data: {animation: 'fadeInOut'}},
     ],
   },
-  {path: 'game',
+  {path: 'game/:id',
     component: GameLayoutComponent,
     data: {animation: 'leftRightAnimation'}
   }

@@ -6,6 +6,8 @@ import {EtapeDto} from "../../api/models/etape-dto";
 import {VisiteDto} from "../../api/models/visite-dto";
 import {IndiceDto} from "../../api/models/indice-dto";
 import {DefiDto} from "../../api/models/defi-dto";
+import {ActivatedRoute} from "@angular/router";
+import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 
 @Component({
   selector: 'app-game-layout',
@@ -14,9 +16,21 @@ import {DefiDto} from "../../api/models/defi-dto";
   animations:[fadeAnimation]
 })
 export class GameLayoutComponent {
+  notFound:boolean = false;
 
 
-  constructor(private gameService:PlayServiceService) { }
+  constructor(private gameService:PlayServiceService,private route: ActivatedRoute,private defiRestControllerService : DefiRestControllerService) {
+    this.route.params.subscribe(params => {
+      defiRestControllerService.getById({id:params['id']}).subscribe({
+        next: (defi) => {
+          this.gameService.startGame(defi.id!);
+        },
+        error: () => {
+          this.notFound = true;
+        },
+      });
+    });
+  }
 
   get getObsEtape() : Observable<EtapeDto>{
     return this.gameService.getObsEtape;
@@ -76,7 +90,7 @@ export class GameLayoutComponent {
   }
 
   checkResponse(response: string) {
-    
+
   }
 
   getEtape(visite: VisiteDto) {

@@ -26,11 +26,12 @@ export class PlayServiceService {
   }
 
   startGame(defiId : string, userId:number = PlayServiceService.idUser){
-    this.gameService.visiteCourante({defiId,userId}).subscribe(v=>{
-      if(v.id!=null){
+    this.gameService.visiteCourante({defiId,userId}).subscribe({
+      next: (v) =>{
+          this.visite.next(v);
+      },
+      error: () =>{
         this.gameService.startGame({defiId,userId}).subscribe((v)=>this.visite.next(v));
-      }else{
-        this.visite.next(v);
       }
     })
   }

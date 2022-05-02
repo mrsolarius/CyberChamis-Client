@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {PlayServiceService} from "../../services/play-service.service";
 import {DefiDto} from "../../api/models/defi-dto";
 
 type Star = "star" | "star_border" | "star_half";
@@ -13,7 +12,7 @@ type Star = "star" | "star_border" | "star_half";
 })
 export class DefiComponent {
   @Input('defi') defi! : DefiDto;
-  constructor(private playService : PlayServiceService) { }
+  constructor() { }
 
   getStar(note: number): Star[] {
     const arr = Array(5).fill("star_border");
@@ -26,10 +25,5 @@ export class DefiComponent {
         return "star_border";
       }
     });
-  }
-
-  play(){
-    console.log("ici")
-    this.playService.startGame(this.defi.id!)
   }
 }
