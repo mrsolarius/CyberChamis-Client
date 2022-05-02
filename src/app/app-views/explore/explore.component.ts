@@ -12,7 +12,7 @@ export class ExploreComponent implements OnInit {
     description: 'Description du défi lalala',
     dateDeCreation: '2018-01-01',
     auteur: {
-      login: 'clement',
+      username: 'clement',
       age: 25,
     }
   },
@@ -21,7 +21,7 @@ export class ExploreComponent implements OnInit {
       description: 'Description du défi lalala',
       dateDeCreation: '2018-01-01',
       auteur: {
-        login: 'quentin',
+        username: 'quentin',
         age: 25,
       }
     },
@@ -30,7 +30,7 @@ export class ExploreComponent implements OnInit {
       description: 'Description du défi lalala',
       dateDeCreation: '2018-01-01',
       auteur: {
-        login: 'paul',
+        username: 'paul',
         age: 25,
       }
     },
@@ -39,7 +39,7 @@ export class ExploreComponent implements OnInit {
       description: 'Description du défi lalala',
       dateDeCreation: '2018-01-01',
       auteur: {
-        login: 'jean',
+        username: 'jean',
         age: 25,
       }
     }];
