@@ -13,7 +13,7 @@
       <button mat-icon-button matTooltip="Étape précédentes">
         <mat-icon>arrow_back_ios_new</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Étape suivante">
+      <button mat-icon-button matTooltip="Étape suivante" (click)="nextStep.emit()">
         <mat-icon>arrow_forward_ios_new</mat-icon>
       </button>
     </div>

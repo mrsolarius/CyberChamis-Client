@@ -21,4 +21,30 @@ export class GameLayoutComponent implements OnInit {
 
   constructor() { }
 
+  getTotalStep(defi: DefiDto | undefined) {
+    if(defi?.etapes) {
+      if (defi.etapes) {
+        return defi.etapes.length;
+      }
+    }
+    return 1;
+  }
+
+  getCurrentStepNumber(etap : EtapeDto | undefined){
+    if (etap) {
+      if (etap.numero) {
+        return etap.numero
+      }
+    }
+    return 1;
+  }
+
+  getCurrentStepTitle(etap : EtapeDto| undefined) {
+    if(etap) {
+      if (etap.titre) {
+        return etap.titre
+      }
+    }
+    return "CyberChamis";
+  }
 }
