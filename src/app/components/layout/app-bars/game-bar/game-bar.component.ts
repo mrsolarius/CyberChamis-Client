@@ -24,6 +24,7 @@ export class GameBarComponent implements OnInit {
   @Input('totalStep') totalStep:number=1;
   @Input('currentStep') currentStep:number=1;
   @Input('currentHintList') currentHintList: IndiceDto[]=[];
+  @Input('nbIndices') nbIndices = 0;
   @Output('nextStep') nextStep = new EventEmitter<void>();
   @Output('previousStep') previousStep = new EventEmitter<void>();
   @Output('revealHint') revealHint = new EventEmitter<void>();
@@ -48,4 +49,6 @@ export class GameBarComponent implements OnInit {
   disableNext() {
     return this.currentStep==this.totalStep;
   }
+
+
 }

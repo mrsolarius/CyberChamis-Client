@@ -65,4 +65,13 @@ export class GameLayoutComponent {
   previous() {
     this.gameService.previousStep();
   }
+
+  getNbIndices(etap: EtapeDto | undefined) : number{
+    if (etap) {
+      if (etap.nbIndices) {
+        return etap.nbIndices
+      }
+    }
+    return 0;
+  }
 }

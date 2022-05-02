@@ -7,6 +7,7 @@
     <app-game-bar
       [currentStep]="getCurrentStepNumber(obsVisite.etapeCourante)"
       [totalStep]="getTotalStep(obsVisite.defi)"
+      [nbIndices]="getNbIndices(obsVisite.etapeCourante)"
       (nextStep)="next()"
       (previousStep)="previous()"
     ></app-game-bar>
