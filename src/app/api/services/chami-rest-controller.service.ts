@@ -9,7 +9,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Chami } from '../models/chami';
+import { ChamiDto } from '../models/chami-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -23,23 +23,23 @@ export class ChamiRestControllerService extends BaseService {
   }
 
   /**
-   * Path part for operation findById1
+   * Path part for operation getById1
    */
-  static readonly FindById1Path = '/api/chamis/{login}';
+  static readonly GetById1Path = '/api/chamis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `findById1()` instead.
+   * To access only the response body, use `getById1()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById1$Response(params: {
-    login: string;
-  }): Observable<StrictHttpResponse<Chami>> {
+  getById1$Response(params: {
+    id: number;
+  }): Observable<StrictHttpResponse<ChamiDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.FindById1Path, 'get');
+    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.GetById1Path, 'get');
     if (params) {
-      rb.path('login', params.login, {});
+      rb.path('id', params.id, {});
     }
 
     return this.http.request(rb.build({
@@ -48,45 +48,45 @@ export class ChamiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Chami>;
+        return r as StrictHttpResponse<ChamiDto>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `findById1$Response()` instead.
+   * To access the full response (for headers, for example), `getById1$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById1(params: {
-    login: string;
-  }): Observable<Chami> {
+  getById1(params: {
+    id: number;
+  }): Observable<ChamiDto> {
 
-    return this.findById1$Response(params).pipe(
-      map((r: StrictHttpResponse<Chami>) => r.body as Chami)
+    return this.getById1$Response(params).pipe(
+      map((r: StrictHttpResponse<ChamiDto>) => r.body as ChamiDto)
     );
   }
 
   /**
-   * Path part for operation putChami1
+   * Path part for operation updateChami
    */
-  static readonly PutChami1Path = '/api/chamis/{login}';
+  static readonly UpdateChamiPath = '/api/chamis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `putChami1()` instead.
+   * To access only the response body, use `updateChami()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  putChami1$Response(params: {
-    login: string;
-    body: Chami
-  }): Observable<StrictHttpResponse<Chami>> {
+  updateChami$Response(params: {
+    id: number;
+    body: ChamiDto
+  }): Observable<StrictHttpResponse<ChamiDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.PutChami1Path, 'put');
+    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.UpdateChamiPath, 'put');
     if (params) {
-      rb.path('login', params.login, {});
+      rb.path('id', params.id, {});
       rb.body(params.body, 'application/json');
     }
 
@@ -96,70 +96,70 @@ export class ChamiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Chami>;
+        return r as StrictHttpResponse<ChamiDto>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `putChami1$Response()` instead.
+   * To access the full response (for headers, for example), `updateChami$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  putChami1(params: {
-    login: string;
-    body: Chami
-  }): Observable<Chami> {
+  updateChami(params: {
+    id: number;
+    body: ChamiDto
+  }): Observable<ChamiDto> {
 
-    return this.putChami1$Response(params).pipe(
-      map((r: StrictHttpResponse<Chami>) => r.body as Chami)
+    return this.updateChami$Response(params).pipe(
+      map((r: StrictHttpResponse<ChamiDto>) => r.body as ChamiDto)
     );
   }
 
   /**
-   * Path part for operation createChami
+   * Path part for operation deleteChami1
    */
-  static readonly CreateChamiPath = '/api/chamis/add';
+  static readonly DeleteChami1Path = '/api/chamis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `createChami()` instead.
+   * To access only the response body, use `deleteChami1()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  createChami$Response(params: {
-    body: Chami
-  }): Observable<StrictHttpResponse<Chami>> {
+  deleteChami1$Response(params: {
+    id: number;
+  }): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.CreateChamiPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.DeleteChami1Path, 'delete');
     if (params) {
-      rb.body(params.body, 'application/json');
+      rb.path('id', params.id, {});
     }
 
     return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'application/json'
+      responseType: 'text',
+      accept: '*/*'
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Chami>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `createChami$Response()` instead.
+   * To access the full response (for headers, for example), `deleteChami1$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  createChami(params: {
-    body: Chami
-  }): Observable<Chami> {
+  deleteChami1(params: {
+    id: number;
+  }): Observable<void> {
 
-    return this.createChami$Response(params).pipe(
-      map((r: StrictHttpResponse<Chami>) => r.body as Chami)
+    return this.deleteChami1$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -175,7 +175,7 @@ export class ChamiRestControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   getChamis$Response(params?: {
-  }): Observable<StrictHttpResponse<Array<Chami>>> {
+  }): Observable<StrictHttpResponse<Array<ChamiDto>>> {
 
     const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.GetChamisPath, 'get');
     if (params) {
@@ -187,7 +187,7 @@ export class ChamiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Chami>>;
+        return r as StrictHttpResponse<Array<ChamiDto>>;
       })
     );
   }
@@ -199,10 +199,56 @@ export class ChamiRestControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   getChamis(params?: {
-  }): Observable<Array<Chami>> {
+  }): Observable<Array<ChamiDto>> {
 
     return this.getChamis$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Chami>>) => r.body as Array<Chami>)
+      map((r: StrictHttpResponse<Array<ChamiDto>>) => r.body as Array<ChamiDto>)
+    );
+  }
+
+  /**
+   * Path part for operation createChami
+   */
+  static readonly CreateChamiPath = '/api/chamis/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `createChami()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  createChami$Response(params: {
+    body: ChamiDto
+  }): Observable<StrictHttpResponse<ChamiDto>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.CreateChamiPath, 'post');
+    if (params) {
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<ChamiDto>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `createChami$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  createChami(params: {
+    body: ChamiDto
+  }): Observable<ChamiDto> {
+
+    return this.createChami$Response(params).pipe(
+      map((r: StrictHttpResponse<ChamiDto>) => r.body as ChamiDto)
     );
   }
 
