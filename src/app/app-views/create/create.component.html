@@ -1,0 +1,63 @@
+
+<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Tu veux créer un défi ? C'est parti ! </ng-template>
+      <p>Tu peux donner un titre à ton défi !</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Titre du défi</mat-label>
+        <input matInput placeholder="" formControlName="firstCtrl" required>
+      </mat-form-field>
+
+      <p>Tu peux nous décrire ton défi ? </p>
+      <mat-form-field appearance="fill">
+        <mat-label>Description du défi </mat-label>
+        <input matInput placeholder="" formControlName="firstCtrl" required>
+      </mat-form-field>
+
+      <p>Ton défi va prendre combien de temps à peu près ?</p>
+      <mat-form-field appearance="fill">
+        <mat-label> Durée du défi </mat-label>
+        <input matInput placeholder="" formControlName="firstCtrl" required>
+      </mat-form-field>
+  <!-- on peut faire une methode qui va calculer le nombre total des points à travers les etapes -->
+      <p>Ton défi va nous faire gagner combien de points ? </p>
+      <mat-form-field appearance="fill">
+        <mat-label> Points du défi </mat-label>
+        <input matInput formControlName="secondCtrl" placeholder="Total points " type="number" name="name" [(ngModel)]="totalPoints"
+               required>
+        <input matInput placeholder="" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </form>
+
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Les étapes du défi </ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre d'étapes</mat-label>
+        <input matInput formControlName="secondCtrl" placeholder="Nombre etapes " type="number" name="name" [(ngModel)]="nombreEtape"
+               required>
+        <input matInput placeholder="" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <app-create-etape></app-create-etape>
+
+      <div>
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
+

@@ -35,6 +35,7 @@ import { AppLayoutComponent } from './components/layout/app-layout/app-layout.co
 import { GameLayoutComponent } from './components/layout/game-layout/game-layout.component';
 import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
 import { CreateComponent } from './app-views/create/create.component';
+import { CreateEtapeComponent } from './app-views/create/create-etape/create-etape.component';
 
 
 
@@ -56,6 +57,7 @@ import { CreateComponent } from './app-views/create/create.component';
     GameLayoutComponent,
     GameBarComponent,
     CreateComponent,
+    CreateEtapeComponent,
   ],
   imports: [
     LeafletModule,

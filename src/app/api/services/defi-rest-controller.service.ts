@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { Defi } from '../models/defi';
+import { DefiDto } from '../models/defi-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -23,21 +24,21 @@ export class DefiRestControllerService extends BaseService {
   }
 
   /**
-   * Path part for operation findById
+   * Path part for operation getById
    */
-  static readonly FindByIdPath = '/api/defis/{id}';
+  static readonly GetByIdPath = '/api/defis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `findById()` instead.
+   * To access only the response body, use `getById()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById$Response(params: {
+  getById$Response(params: {
     id: string;
   }): Observable<StrictHttpResponse<Defi>> {
 
-    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.FindByIdPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetByIdPath, 'get');
     if (params) {
       rb.path('id', params.id, {});
     }
@@ -55,36 +56,36 @@ export class DefiRestControllerService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `findById$Response()` instead.
+   * To access the full response (for headers, for example), `getById$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById(params: {
+  getById(params: {
     id: string;
   }): Observable<Defi> {
 
-    return this.findById$Response(params).pipe(
+    return this.getById$Response(params).pipe(
       map((r: StrictHttpResponse<Defi>) => r.body as Defi)
     );
   }
 
   /**
-   * Path part for operation putChami
+   * Path part for operation updateDefi
    */
-  static readonly PutChamiPath = '/api/defis/{id}';
+  static readonly UpdateDefiPath = '/api/defis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `putChami()` instead.
+   * To access only the response body, use `updateDefi()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  putChami$Response(params: {
+  updateDefi$Response(params: {
     id: string;
     body: Defi
   }): Observable<StrictHttpResponse<Defi>> {
 
-    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.PutChamiPath, 'put');
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.UpdateDefiPath, 'put');
     if (params) {
       rb.path('id', params.id, {});
       rb.body(params.body, 'application/json');
@@ -103,17 +104,63 @@ export class DefiRestControllerService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `putChami$Response()` instead.
+   * To access the full response (for headers, for example), `updateDefi$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  putChami(params: {
+  updateDefi(params: {
     id: string;
     body: Defi
   }): Observable<Defi> {
 
-    return this.putChami$Response(params).pipe(
+    return this.updateDefi$Response(params).pipe(
       map((r: StrictHttpResponse<Defi>) => r.body as Defi)
+    );
+  }
+
+  /**
+   * Path part for operation deleteChami
+   */
+  static readonly DeleteChamiPath = '/api/defis/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `deleteChami()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteChami$Response(params: {
+    id: string;
+  }): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.DeleteChamiPath, 'delete');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `deleteChami$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteChami(params: {
+    id: string;
+  }): Observable<void> {
+
+    return this.deleteChami$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -129,7 +176,7 @@ export class DefiRestControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   getDefis$Response(params?: {
-  }): Observable<StrictHttpResponse<Array<Defi>>> {
+  }): Observable<StrictHttpResponse<Array<DefiDto>>> {
 
     const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisPath, 'get');
     if (params) {
@@ -141,7 +188,7 @@ export class DefiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Defi>>;
+        return r as StrictHttpResponse<Array<DefiDto>>;
       })
     );
   }
@@ -153,10 +200,10 @@ export class DefiRestControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   getDefis(params?: {
-  }): Observable<Array<Defi>> {
+  }): Observable<Array<DefiDto>> {
 
     return this.getDefis$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Defi>>) => r.body as Array<Defi>)
+      map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
     );
   }
 
