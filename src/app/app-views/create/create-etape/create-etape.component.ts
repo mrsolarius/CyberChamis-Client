@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {IndiceDto} from "../../../api/models/indice-dto";
+import {MatIconModule} from '@angular/material/icon'
 
 enum TypeEtape {
   Indication,Tache
@@ -20,7 +22,11 @@ export interface Etape {
   styleUrls: ['./create-etape.component.scss']
 })
 export class CreateEtapeComponent implements OnInit {
-   typeEtape!: TypeEtape;
+   typeEtape!: string;
+   indication!:IndiceDto;
+   pointGagne!: number;
+   pointPerdu!:number;
+  //@Output('ajoutEtape') ajoutEtape = new EventEmitter<void>();
 
   constructor() { }
 

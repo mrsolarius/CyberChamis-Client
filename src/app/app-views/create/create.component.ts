@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {EtapeDto} from "../../api/models/etape-dto";
 
 
 @Component({
@@ -12,15 +13,14 @@ export class CreateComponent implements OnInit {
 
   nombreEtape!: Number;
   totalPoints!:Number;
-  listEtapes =new Array(this.nombreEtape);
-  //listEtapes doit contenir des etapes listEtapes: Etape[]
+  listEtapes !: EtapeDto[];
+
 
 
   isLinear = false;
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
-  listEtape: any;
 
   constructor(private _formBuilder: FormBuilder) {}
 

@@ -1,4 +1,4 @@
-
+<!-- <mat-icon>room</mat-icon> pour icon arret-->
 <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
@@ -43,6 +43,9 @@
                required>
         <input matInput placeholder="" formControlName="firstCtrl" required>
       </mat-form-field>
+      <div class="example-button-row">
+        <button mat-raised-button color="primary">Ajouter une étape </button>
+      </div>
       <app-create-etape></app-create-etape>
 
       <div>
@@ -53,9 +56,9 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <p>Ton défi est crée</p>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperPrevious>Retour</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
