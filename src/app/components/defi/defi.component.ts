@@ -30,6 +30,6 @@ export class DefiComponent {
 
   play(){
     this.playService.startGame(this.defi.id!)
-    
+
   }
 }
