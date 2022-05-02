@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
-import {Defi} from "../../api/models/defi";
+import {Component, Input} from '@angular/core';
+import {PlayServiceService} from "../../services/play-service.service";
+import {DefiDto} from "../../api/models/defi-dto";
 
 type Star = "star" | "star_border" | "star_half";
 
@@ -12,8 +12,8 @@ type Star = "star" | "star_border" | "star_half";
   styleUrls: ['./defi.component.scss']
 })
 export class DefiComponent {
-  @Input() defi! : Defi;
-  constructor() { }
+  @Input('defi') defi! : DefiDto;
+  constructor(private playService : PlayServiceService) { }
 
   getStar(note: number): Star[] {
     const arr = Array(5).fill("star_border");
@@ -29,7 +29,7 @@ export class DefiComponent {
   }
 
   play(){
+    console.log("ici")
     this.playService.startGame(this.defi.id!)
-
   }
 }

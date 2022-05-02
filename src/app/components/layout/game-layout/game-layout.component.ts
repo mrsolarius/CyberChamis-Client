@@ -1,5 +1,11 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {fadeAnimation} from "../../../animations/fadeAnimation";
+import {PlayServiceService} from "../../../services/play-service.service";
+import {Observable} from "rxjs";
+import {EtapeDto} from "../../../api/models/etape-dto";
+import {VisiteDto} from "../../../api/models/visite-dto";
+import {IndiceDto} from "../../../api/models/indice-dto";
+import {DefiDto} from "../../../api/models/defi-dto";
 
 @Component({
   selector: 'app-game-layout',
@@ -7,19 +13,23 @@ import {fadeAnimation} from "../../../animations/fadeAnimation";
   styleUrls: ['./game-layout.component.scss'],
   animations:[fadeAnimation]
 })
-export class GameLayoutComponent implements OnInit {
-  innerWidth: number = 1920;
+export class GameLayoutComponent {
 
-  ngOnInit(): void {
-    this.innerWidth = window.innerWidth;
+
+  constructor(private gameService:PlayServiceService) { }
+
+  get getObsEtape() : Observable<EtapeDto>{
+    return this.gameService.getObsEtape;
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.innerWidth = window.innerWidth;
+  get getObsVisite() : Observable<VisiteDto>{
+    return this.gameService.getObsVisite;
   }
 
-  constructor() { }
+  get getObsIndices() : Observable<IndiceDto[]>{
+    return this.gameService.getObsIndices;
+  }
+
 
   getTotalStep(defi: DefiDto | undefined) {
     if(defi?.etapes) {
@@ -33,7 +43,7 @@ export class GameLayoutComponent implements OnInit {
   getCurrentStepNumber(etap : EtapeDto | undefined){
     if (etap) {
       if (etap.numero) {
-        return etap.numero
+        return etap.numero +1
       }
     }
     return 1;
@@ -46,5 +56,13 @@ export class GameLayoutComponent implements OnInit {
       }
     }
     return "CyberChamis";
+  }
+
+  next() {
+    this.gameService.nextStep();
+  }
+
+  previous() {
+    this.gameService.previousStep();
   }
 }

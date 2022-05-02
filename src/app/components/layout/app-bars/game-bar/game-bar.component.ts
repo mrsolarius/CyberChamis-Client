@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatBottomSheet, MatBottomSheetRef} from "@angular/material/bottom-sheet";
+import {IndiceDto} from "../../../../api/models/indice-dto";
 
 
 @Component({
@@ -20,6 +21,12 @@ export class IndiceSheetComponent {
   styleUrls: ['./game-bar.component.scss']
 })
 export class GameBarComponent implements OnInit {
+  @Input('totalStep') totalStep:number=1;
+  @Input('currentStep') currentStep:number=1;
+  @Input('currentHintList') currentHintList: IndiceDto[]=[];
+  @Output('nextStep') nextStep = new EventEmitter<void>();
+  @Output('previousStep') previousStep = new EventEmitter<void>();
+  @Output('revealHint') revealHint = new EventEmitter<void>();
 
   constructor(private bottomSheet : MatBottomSheet) { }
 
@@ -28,5 +35,17 @@ export class GameBarComponent implements OnInit {
 
   openBottomSheet(): void {
     this.bottomSheet.open(IndiceSheetComponent);
+  }
+
+  toPercent() : number {
+    return this.currentStep/this.totalStep*100
+  }
+
+  disablePrevious() {
+    return this.currentStep==1;
+  }
+
+  disableNext() {
+    return this.currentStep==this.totalStep;
   }
 }

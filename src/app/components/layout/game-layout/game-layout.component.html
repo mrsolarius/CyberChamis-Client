@@ -1,9 +1,14 @@
-<div class="app">
+<div class="app" *ngIf="getObsVisite | async as obsVisite">
   <div class="mobile-layout">
-    <app-top-bar [backRoute]="'/home'" [title]="'CyberChamis'"></app-top-bar>
-    <div class="contents" [@fadeAnimation]="mobileOutlet.isActivated ? mobileOutlet.activatedRoute : ''">
-      <router-outlet #mobileOutlet="outlet"></router-outlet>
+    <app-top-bar [backRoute]="'/home'" [title]="getCurrentStepTitle(obsVisite.etapeCourante)"></app-top-bar>
+    <div class="contents">
+      <app-game></app-game>
     </div>
-    <app-game-bar></app-game-bar>
+    <app-game-bar
+      [currentStep]="getCurrentStepNumber(obsVisite.etapeCourante)"
+      [totalStep]="getTotalStep(obsVisite.defi)"
+      (nextStep)="next()"
+      (previousStep)="previous()"
+    ></app-game-bar>
   </div>
 </div>

@@ -6,14 +6,14 @@
       </button>
     </div>
     <div class="progress-bar-container">
-      <mat-progress-bar color="accent" mode="determinate" value="40" class="progress-flex"></mat-progress-bar>
-      <span>1/8</span>
+      <mat-progress-bar color="accent" mode="determinate" [value]="toPercent()" class="progress-flex"></mat-progress-bar>
+      <span>{{currentStep}}/{{totalStep}}</span>
     </div>
     <div>
-      <button mat-icon-button matTooltip="Étape précédentes">
+      <button mat-icon-button matTooltip="Étape précédentes" (click)="previousStep.emit()" [disabled]="disablePrevious()">
         <mat-icon>arrow_back_ios_new</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Étape suivante" (click)="nextStep.emit()">
+      <button mat-icon-button matTooltip="Étape suivante" (click)="nextStep.emit()" [disabled]="disableNext()">
         <mat-icon>arrow_forward_ios_new</mat-icon>
       </button>
     </div>

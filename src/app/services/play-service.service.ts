@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {EtapeDto} from "../api/models/etape-dto";
 import {VisiteDto} from "../api/models/visite-dto";
 import {IndiceDto} from "../api/models/indice-dto";
+import {filter} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +15,32 @@ export class PlayServiceService {
   private indices : BehaviorSubject<IndiceDto[]|null> = new BehaviorSubject<IndiceDto[] | null>(null);
   private static idUser : number = 1;
 
-  constructor(private gameService : GameRestControllerService) {}
+  constructor(private gameService : GameRestControllerService) {
+    this.getObsEtape.subscribe((e)=>{
+      const v = this.visite.getValue();
+      this.visite.next({
+        ...v,
+        etapeCourante:e
+      })
+    })
+  }
 
   startGame(defiId : string, userId:number = PlayServiceService.idUser){
-    this.gameService.startGame({defiId,userId}).subscribe(this.visite);
+    this.gameService.visiteCourante({defiId,userId}).subscribe(v=>{
+      if(v.id!=null){
+        this.gameService.startGame({defiId,userId}).subscribe((v)=>this.visite.next(v));
+      }else{
+        this.visite.next(v);
+      }
+    })
   }
 
   nextStep(){
-    this.gameService.etapeSuivante({visiteId:this.getVisiteId()}).subscribe(this.etape);
+    this.gameService.etapeSuivante({visiteId:this.getVisiteId()}).subscribe((e)=>this.etape.next(e));
   }
 
   previousStep(){
-    this.gameService.etapePrecedente({visiteId:this.getVisiteId()}).subscribe(this.etape);
+    this.gameService.etapePrecedente({visiteId:this.getVisiteId()}).subscribe((e)=>this.etape.next(e));
   }
 
   async checkResponse(response:string):Promise<boolean>{
@@ -34,12 +49,12 @@ export class PlayServiceService {
   }
 
   editStatus(status : 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'){
-    this.gameService.editStatus({visiteId:this.getVisiteId(),status}).subscribe(this.visite);
+    this.gameService.editStatus({visiteId:this.getVisiteId(),status}).subscribe((v)=>this.visite.next(v));
   }
 
   revealHint(){
     this.gameService.revealIndice({visiteId:this.getVisiteId()}).subscribe({
-      complete: () => this.gameService.getResponseIndices({visiteId:this.getVisiteId()}).subscribe(this.indices)
+      complete: () => this.gameService.getResponseIndices({visiteId:this.getVisiteId()}).subscribe((i)=>this.indices.next(i))
     })
   }
 
@@ -51,6 +66,10 @@ export class PlayServiceService {
       throw new Error("id of current visite is null")
     }
     return  this.visite.getValue()?.id!;
+  }
+
+  get getObsEtape() : Observable<EtapeDto>{
+    return this.etape.asObservable().pipe(filter(this.isNonNull));
   }
 
   get getObsVisite() : Observable<VisiteDto>{
