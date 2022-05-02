@@ -12,5 +12,6 @@ export interface Visite {
   points?: number;
   reponseCourante?: Reponse;
   reponses?: Array<Reponse>;
+  status?: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
   statut?: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
 }

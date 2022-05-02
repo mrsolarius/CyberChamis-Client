@@ -49,7 +49,13 @@ export class PlayServiceService {
   }
 
   editStatus(status : 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'){
-    this.gameService.editStatus({visiteId:this.getVisiteId(),status}).subscribe((v)=>this.visite.next(v));
+    this.gameService.editStatus({visiteId:this.getVisiteId(),status}).subscribe((s)=> {
+      const v = this.visite.getValue();
+      this.visite.next({
+        ...v,
+        statut:s
+      })
+    });
   }
 
   revealHint(){

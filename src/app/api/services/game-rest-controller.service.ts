@@ -11,7 +11,6 @@ import { map, filter } from 'rxjs/operators';
 
 import { EtapeDto } from '../models/etape-dto';
 import { IndiceDto } from '../models/indice-dto';
-import { Visite } from '../models/visite';
 import { VisiteDto } from '../models/visite-dto';
 
 @Injectable({
@@ -226,7 +225,7 @@ export class GameRestControllerService extends BaseService {
   editStatus$Response(params: {
     visiteId: number;
     status: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
-  }): Observable<StrictHttpResponse<Visite>> {
+  }): Observable<StrictHttpResponse<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'>> {
 
     const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.EditStatusPath, 'post');
     if (params) {
@@ -240,7 +239,7 @@ export class GameRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Visite>;
+        return r as StrictHttpResponse<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'>;
       })
     );
   }
@@ -254,10 +253,10 @@ export class GameRestControllerService extends BaseService {
   editStatus(params: {
     visiteId: number;
     status: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
-  }): Observable<Visite> {
+  }): Observable<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'> {
 
     return this.editStatus$Response(params).pipe(
-      map((r: StrictHttpResponse<Visite>) => r.body as Visite)
+      map((r: StrictHttpResponse<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'>) => r.body as 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE')
     );
   }
 
