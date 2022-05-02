@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import {fadeAnimation} from "../../../animations/fadeAnimation";
-import {PlayServiceService} from "../../../services/play-service.service";
+import {fadeAnimation} from "../../animations/fadeAnimation";
+import {PlayServiceService} from "../../services/play-service.service";
 import {Observable} from "rxjs";
-import {EtapeDto} from "../../../api/models/etape-dto";
-import {VisiteDto} from "../../../api/models/visite-dto";
-import {IndiceDto} from "../../../api/models/indice-dto";
-import {DefiDto} from "../../../api/models/defi-dto";
+import {EtapeDto} from "../../api/models/etape-dto";
+import {VisiteDto} from "../../api/models/visite-dto";
+import {IndiceDto} from "../../api/models/indice-dto";
+import {DefiDto} from "../../api/models/defi-dto";
 
 @Component({
   selector: 'app-game-layout',
@@ -73,5 +73,16 @@ export class GameLayoutComponent {
       }
     }
     return 0;
+  }
+
+  checkResponse(response: string) {
+    
+  }
+
+  getEtape(visite: VisiteDto) {
+    if(visite.etapeCourante) {
+        return visite.etapeCourante;
+    }
+    return {};
   }
 }

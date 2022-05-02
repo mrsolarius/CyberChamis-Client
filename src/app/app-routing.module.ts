@@ -4,7 +4,7 @@ import {HomeComponent} from "./app-views/home/home.component";
 import {ExploreComponent} from "./app-views/explore/explore.component";
 import {ProfileComponent} from "./app-views/profile/profile.component";
 import {AppLayoutComponent} from "./components/layout/app-layout/app-layout.component";
-import {GameLayoutComponent} from "./components/layout/game-layout/game-layout.component";
+import {GameLayoutComponent} from "./app-views/game-layout/game-layout.component";
 import {LeftRightAnimationStateService} from "./left-right-animation-state.service";
 
 const routes: Routes = [

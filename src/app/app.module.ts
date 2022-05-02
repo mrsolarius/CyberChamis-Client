@@ -30,9 +30,9 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DefisComponent } from './components/defis/defis.component';
 import { ProfileComponent } from './app-views/profile/profile.component';
 import {FormsModule} from "@angular/forms";
-import { GameComponent } from './app-views/game/game.component';
+import { GameComponent } from './components/game/game.component';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
-import { GameLayoutComponent } from './components/layout/game-layout/game-layout.component';
+import { GameLayoutComponent } from './app-views/game-layout/game-layout.component';
 import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
 import { IndiceSheetComponent } from './components/layout/app-bars/game-bar/game-bar.component';
 
