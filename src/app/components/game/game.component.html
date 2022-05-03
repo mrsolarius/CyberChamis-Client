@@ -10,12 +10,18 @@
     <mat-card-title>Question</mat-card-title>
     <mat-card-subtitle>{{step.question}}</mat-card-subtitle>
     <mat-card-content>
-      <form class="form-container" (submit)="checkButton(input.value)">
+      <form class="form-container" (submit)="checkButton(input.value);input.value=getResponseValue()">
         <mat-form-field appearance="fill">
           <mat-label>Réponse</mat-label>
-          <input matInput placeholder="Reponse" #input required [value]="getResponseValue()" [disabled]="getResponseValue()!==''">
+          <input matInput placeholder="Reponse" required
+                 [value]="getResponseValue()"
+                 [disabled]="getHasResponse()"
+                 #input>
         </mat-form-field>
-        <button mat-stroked-button type="submit" color="primary" [disabled]="getResponseValue()!==''">Vérifier</button>
+        <button mat-stroked-button
+                type="submit"
+                color="primary"
+                [disabled]="getHasResponse()">Vérifier</button>
       </form>
     </mat-card-content>
   </mat-card>

@@ -9,7 +9,7 @@ import {ReponseDto} from "../../api/models/reponse-dto";
 })
 export class GameComponent implements OnInit {
   @Input('step') step! : EtapeDto;
-  @Input('responseDTO') responseDTO: ReponseDto | null = null;
+  @Input('responseDTO') responseDTO: ReponseDto | undefined = {};
   @Output('response') response = new EventEmitter<string>();
 
   constructor() { }
@@ -27,7 +27,15 @@ export class GameComponent implements OnInit {
     }
   }
 
-  getResponseValue():string {
-    return this.responseDTO===null?"":this.responseDTO.reponseUtilisateur==undefined?"":this.responseDTO.reponseUtilisateur;
+  getResponseValue():string{
+    return this.responseDTO?.reponseUtilisateur!;
   }
+
+  getHasResponse() {
+    if(this.responseDTO?.hasResponse === undefined){
+      return false
+    }
+    return <boolean> this.responseDTO?.hasResponse;
+  }
+
 }

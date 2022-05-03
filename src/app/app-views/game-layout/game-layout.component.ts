@@ -4,11 +4,11 @@ import {PlayServiceService} from "../../services/play-service.service";
 import {Observable} from "rxjs";
 import {EtapeDto} from "../../api/models/etape-dto";
 import {VisiteDto} from "../../api/models/visite-dto";
-import {IndiceDto} from "../../api/models/indice-dto";
 import {DefiDto} from "../../api/models/defi-dto";
 import {ActivatedRoute} from "@angular/router";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {ReponseDto} from "../../api/models/reponse-dto";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-game-layout',
@@ -20,7 +20,11 @@ export class GameLayoutComponent {
   notFound:boolean = false;
 
 
-  constructor(private gameService:PlayServiceService,private route: ActivatedRoute,private defiRestControllerService : DefiRestControllerService) {
+  constructor(private gameService:PlayServiceService,
+              private route: ActivatedRoute,
+              private defiRestControllerService : DefiRestControllerService,
+              private snackBar: MatSnackBar
+  ) {
     this.route.params.subscribe(params => {
       defiRestControllerService.getById({id:params['id']}).subscribe({
         next: (defi) => {
@@ -33,16 +37,8 @@ export class GameLayoutComponent {
     });
   }
 
-  get getObsEtape() : Observable<EtapeDto>{
-    return this.gameService.getObsEtape;
-  }
-
   get getObsVisite() : Observable<VisiteDto>{
     return this.gameService.getObsVisite;
-  }
-
-  get getObsIndices() : Observable<IndiceDto[]>{
-    return this.gameService.getObsIndices;
   }
 
   getTotalStep(defi: DefiDto | undefined) {
@@ -89,8 +85,9 @@ export class GameLayoutComponent {
     return 0;
   }
 
-  checkResponse(response: string) {
-    this.gameService.checkResponse(response);
+  async checkResponse(response: string) {
+    const r = await this.gameService.checkResponse(response);
+    this.openSnackBar(r);
   }
 
   getEtape(visite: VisiteDto) {
@@ -100,10 +97,17 @@ export class GameLayoutComponent {
     return {};
   }
 
-  getCurrentResponse(reponse: Array<ReponseDto> | undefined, numero: number|undefined) {
+  getCurrentResponse(reponse: ReponseDto | undefined, numero: number|undefined) {
     if(numero!=undefined && reponse !=undefined)
-      return reponse.filter(r=>r.numero===numero)[0];
+      return (reponse.numero===numero);
     else
       return null
+  }
+
+  openSnackBar(bool: boolean) {
+    if(bool)
+      this.snackBar.open('Bonne réponse !', 'Cacher');
+    else
+      this.snackBar.open('Ohhhh tu tes tromper c\'est dommage' , 'Cacher');
   }
 }

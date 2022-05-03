@@ -6,10 +6,9 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 import { RequestBuilder } from '../request-builder';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { EtapeDto } from '../models/etape-dto';
 import { IndiceDto } from '../models/indice-dto';
 import { VisiteDto } from '../models/visite-dto';
 
@@ -132,7 +131,7 @@ export class GameRestControllerService extends BaseService {
    */
   etapePrecedente$Response(params: {
     visiteId: number;
-  }): Observable<StrictHttpResponse<EtapeDto>> {
+  }): Observable<StrictHttpResponse<VisiteDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.EtapePrecedentePath, 'post');
     if (params) {
@@ -145,7 +144,7 @@ export class GameRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<EtapeDto>;
+        return r as StrictHttpResponse<VisiteDto>;
       })
     );
   }
@@ -158,10 +157,10 @@ export class GameRestControllerService extends BaseService {
    */
   etapePrecedente(params: {
     visiteId: number;
-  }): Observable<EtapeDto> {
+  }): Observable<VisiteDto> {
 
     return this.etapePrecedente$Response(params).pipe(
-      map((r: StrictHttpResponse<EtapeDto>) => r.body as EtapeDto)
+      map((r: StrictHttpResponse<VisiteDto>) => r.body as VisiteDto)
     );
   }
 
@@ -178,7 +177,7 @@ export class GameRestControllerService extends BaseService {
    */
   etapeSuivante$Response(params: {
     visiteId: number;
-  }): Observable<StrictHttpResponse<EtapeDto>> {
+  }): Observable<StrictHttpResponse<VisiteDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.EtapeSuivantePath, 'post');
     if (params) {
@@ -191,7 +190,7 @@ export class GameRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<EtapeDto>;
+        return r as StrictHttpResponse<VisiteDto>;
       })
     );
   }
@@ -204,10 +203,10 @@ export class GameRestControllerService extends BaseService {
    */
   etapeSuivante(params: {
     visiteId: number;
-  }): Observable<EtapeDto> {
+  }): Observable<VisiteDto> {
 
     return this.etapeSuivante$Response(params).pipe(
-      map((r: StrictHttpResponse<EtapeDto>) => r.body as EtapeDto)
+      map((r: StrictHttpResponse<VisiteDto>) => r.body as VisiteDto)
     );
   }
 
