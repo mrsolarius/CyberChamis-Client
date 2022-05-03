@@ -2,7 +2,7 @@
   <mat-toolbar-row class="toolbar-row">
     <div>
       <button mat-icon-button matTooltip="Indice" (click)="openBottomSheet()" [disabled]="nbIndices<1">
-        <mat-icon [matBadge]="nbIndices<1?null:nbIndices" matBadgeColor="accent" >lightbulb</mat-icon>
+        <mat-icon [matBadge]="getAvailablesIndices()" matBadgeColor="accent" >lightbulb</mat-icon>
       </button>
     </div>
     <div class="progress-bar-container">

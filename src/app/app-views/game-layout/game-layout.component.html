@@ -11,6 +11,7 @@
       [currentStep]="getCurrentStepNumber(obsVisite.etapeCourante)"
       [totalStep]="getTotalStep(obsVisite.defi)"
       [nbIndices]="getNbIndices(obsVisite.etapeCourante)"
+      [nbIndicesUsed]="getNbIndicesUtilises(obsVisite.reponseCourante)+1"
       (nextStep)="next()"
       (previousStep)="previous()"
       (finishGame)="finish()"

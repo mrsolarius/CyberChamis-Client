@@ -22,15 +22,27 @@ export class PlayServiceService {
   async startGame(defiId: string, userId: number = PlayServiceService.idUser) {
     try {
       const v = await lastValueFrom(this.gameService.visiteCourante({defiId, userId}))
+      let i : IndiceDto[] = []
+      try{
+        i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:v.id!}))
+      }catch (e){
+        console.log(e)
+      }
+      console.log(v)
+      console.log(i)
       this.visite.next({
         ...v,
-        currentIndices:[]
+        currentIndices:i
       });
     } catch (e) {
       const v = await lastValueFrom(this.gameService.startGame({defiId, userId}))
+      let i : IndiceDto[] = []
+      try{
+        i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:v.id!}))
+      }catch (_){}
       this.visite.next({
         ...v,
-        currentIndices:[]
+        currentIndices:i,
       })
     }
   }
@@ -93,12 +105,17 @@ export class PlayServiceService {
 
   async revealHint(){
     const i = await lastValueFrom(this.gameService.revealIndice({visiteId:this.getVisiteId()}));
-    const newCurrentIndice = []
-    newCurrentIndice.push(i)
     const v = this.visite.value;
+    const newCurrentIndice = v?.currentIndices ? v.currentIndices : [];
+    newCurrentIndice.push(i)
+    const response = v?.reponseCourante;
     this.visite.next({
       ...v,
-      currentIndices:newCurrentIndice
+      currentIndices:newCurrentIndice,
+      reponseCourante:{
+        ...response,
+        nbIndicesUtilises:response?.nbIndicesUtilises ? response.nbIndicesUtilises+1 : 0
+      }
     })
   }
 
@@ -112,7 +129,7 @@ export class PlayServiceService {
     return this.visite.value?.id!;
   }
 
-  get getObsVisite() : Observable<VisiteDto>{
+  get getObsVisite() : Observable<VisiteImpl>{
     return this.visite.asObservable().pipe(filter(this.isNonNull))
   }
 

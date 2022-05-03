@@ -87,6 +87,15 @@ export class GameLayoutComponent {
     return 0;
   }
 
+  getNbIndicesUtilises(reponse:ReponseDto|undefined) : number{
+    if(reponse){
+      if(reponse.nbIndicesUtilises){
+        return reponse.nbIndicesUtilises;
+      }
+    }
+    return 0;
+  }
+
   async checkResponse(response: string) {
     const r = await this.gameService.checkResponse(response);
     this.openSnackBar(r);
@@ -118,7 +127,7 @@ export class GameLayoutComponent {
   }
 
   async finish() {
-    this.gameService.updateVisiteFromSrv();
+    await this.gameService.editStatus("FINISHED");
     this.finishView = true;
 
   }
