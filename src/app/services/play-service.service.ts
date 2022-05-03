@@ -10,9 +10,9 @@ import {filter} from "rxjs/operators";
   providedIn: 'root'
 })
 export class PlayServiceService {
-  private etape : BehaviorSubject<EtapeDto|null> = new BehaviorSubject<EtapeDto | null>(null);
-  private visite : BehaviorSubject<VisiteDto|null> = new BehaviorSubject<VisiteDto | null>(null);
-  private indices : BehaviorSubject<IndiceDto[]|null> = new BehaviorSubject<IndiceDto[] | null>(null);
+  private etape = new BehaviorSubject<EtapeDto | null>(null);
+  private visite = new BehaviorSubject<VisiteDto | null>(null);
+  private indices = new BehaviorSubject<IndiceDto[]>([]);
   private static idUser : number = 1;
 
   constructor(private gameService : GameRestControllerService) {

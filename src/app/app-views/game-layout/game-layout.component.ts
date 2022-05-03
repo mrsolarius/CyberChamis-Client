@@ -8,6 +8,7 @@ import {IndiceDto} from "../../api/models/indice-dto";
 import {DefiDto} from "../../api/models/defi-dto";
 import {ActivatedRoute} from "@angular/router";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
+import {ReponseDto} from "../../api/models/reponse-dto";
 
 @Component({
   selector: 'app-game-layout',
@@ -43,7 +44,6 @@ export class GameLayoutComponent {
   get getObsIndices() : Observable<IndiceDto[]>{
     return this.gameService.getObsIndices;
   }
-
 
   getTotalStep(defi: DefiDto | undefined) {
     if(defi?.etapes) {
@@ -90,7 +90,7 @@ export class GameLayoutComponent {
   }
 
   checkResponse(response: string) {
-
+    this.gameService.checkResponse(response);
   }
 
   getEtape(visite: VisiteDto) {
@@ -98,5 +98,12 @@ export class GameLayoutComponent {
         return visite.etapeCourante;
     }
     return {};
+  }
+
+  getCurrentResponse(reponse: Array<ReponseDto> | undefined, numero: number|undefined) {
+    if(numero!=undefined && reponse !=undefined)
+      return reponse.filter(r=>r.numero===numero)[0];
+    else
+      return null
   }
 }

@@ -2,7 +2,7 @@
   <div class="mobile-layout">
     <app-top-bar [backRoute]="'/home'" [title]="getCurrentStepTitle(obsVisite.etapeCourante)"></app-top-bar>
     <div class="contents padding">
-      <app-game [step]="getEtape(obsVisite)" (response)="checkResponse($event)" ></app-game>
+      <app-game [step]="getEtape(obsVisite)" (response)="checkResponse($event)" [responseDTO]="getCurrentResponse(obsVisite.reponse, obsVisite.etapeCourante?.numero)" ></app-game>
     </div>
     <app-game-bar
       [currentStep]="getCurrentStepNumber(obsVisite.etapeCourante)"

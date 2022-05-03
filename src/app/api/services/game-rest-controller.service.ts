@@ -6,7 +6,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 import { RequestBuilder } from '../request-builder';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { EtapeDto } from '../models/etape-dto';

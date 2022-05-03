@@ -13,9 +13,9 @@
       <form class="form-container" (submit)="checkButton(input.value)">
         <mat-form-field appearance="fill">
           <mat-label>Réponse</mat-label>
-          <input matInput placeholder="Reponse" #input required>
+          <input matInput placeholder="Reponse" #input required [value]="getResponseValue()" [disabled]="getResponseValue()!==''">
         </mat-form-field>
-        <button mat-stroked-button type="submit" color="primary">Vérifier</button>
+        <button mat-stroked-button type="submit" color="primary" [disabled]="getResponseValue()!==''">Vérifier</button>
       </form>
     </mat-card-content>
   </mat-card>
