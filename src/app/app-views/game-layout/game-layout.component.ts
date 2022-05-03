@@ -106,8 +106,12 @@ export class GameLayoutComponent {
 
   openSnackBar(bool: boolean) {
     if(bool)
-      this.snackBar.open('Bonne réponse !', 'Cacher');
+      this.snackBar.open('Bonne réponse ! Tu es un petit génie !', 'Cacher', {
+        duration: 3000,
+        panelClass: ['mat-toolbar', 'green-snackbar','snack-up']});
     else
-      this.snackBar.open('Ohhhh tu tes tromper c\'est dommage' , 'Cacher');
+      this.snackBar.open('Ohhhh non, tu t\'es trompé c\'est dommage...' , 'Cacher', {
+        duration: 3000,
+        panelClass: ['mat-toolbar', 'red-snackbar', 'snack-up']});
   }
 }
