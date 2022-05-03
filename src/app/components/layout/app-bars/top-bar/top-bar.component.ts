@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from 'firebase/compat/app';
+import {UserService} from "../../../../user/user.service";
 
 @Component({
   selector: 'app-top-bar',
@@ -14,15 +15,20 @@ export class TopBarComponent implements OnInit {
   @Input() search: boolean = false;
   @Input() backRoute: string | null = null;
 
-  constructor(public auth : AngularFireAuth) { }
+  constructor(public auth : AngularFireAuth, public cham: UserService) { }
 
   loginButton(): void {
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.setCustomParameters({
       prompt: 'select_account'
     });
-    this.auth.signInWithPopup(provider);
+    this.auth.signInWithPopup(provider).then(() =>
+      this.auth.currentUser.then(() => {
+        this.cham.isAlreadyChami(this.auth);
+      })
+    );
   }
+
   logout(): void {
     this.auth.signOut();
   }
