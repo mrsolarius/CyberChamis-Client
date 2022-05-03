@@ -398,9 +398,55 @@ export class GameRestControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation getVisites
+   */
+  static readonly GetVisitesPath = '/api/game/get-visite';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getVisites()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVisites$Response(params: {
+    visiteId: number;
+  }): Observable<StrictHttpResponse<VisiteDto>> {
+
+    const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.GetVisitesPath, 'get');
+    if (params) {
+      rb.query('visiteId', params.visiteId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<VisiteDto>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getVisites$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVisites(params: {
+    visiteId: number;
+  }): Observable<VisiteDto> {
+
+    return this.getVisites$Response(params).pipe(
+      map((r: StrictHttpResponse<VisiteDto>) => r.body as VisiteDto)
+    );
+  }
+
+  /**
    * Path part for operation visiteCourante
    */
-  static readonly VisiteCourantePath = '/api/game/get-visite';
+  static readonly VisiteCourantePath = '/api/game/continue-visite';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.

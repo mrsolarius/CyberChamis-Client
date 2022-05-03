@@ -36,6 +36,7 @@ import { GameLayoutComponent } from './app-views/game-layout/game-layout.compone
 import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
 import { IndiceSheetComponent } from './components/layout/app-bars/game-bar/game-bar.component';
 import { NotFoundComponent } from './app-views/not-found/not-found.component';
+import { FinishComponent } from './components/finish/finish.component';
 
 
 
@@ -58,6 +59,7 @@ import { NotFoundComponent } from './app-views/not-found/not-found.component';
     GameBarComponent,
     IndiceSheetComponent,
     NotFoundComponent,
+    FinishComponent,
   ],
   imports: [
     LeafletModule,
