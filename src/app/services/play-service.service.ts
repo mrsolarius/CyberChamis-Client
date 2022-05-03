@@ -77,13 +77,18 @@ export class PlayServiceService {
   }
 
   async editStatus(status : 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'){
-    const s = await lastValueFrom(this.gameService.editStatus({visiteId:this.getVisiteId(),status}));
-    const v = this.visite.getValue();
-    this.visite.next({
-      ...v,
-      statut:s,
-      currentIndices:v?.currentIndices?v.currentIndices:[],
-    });
+    try {
+      const v = this.visite.value
+      await lastValueFrom(this.gameService.editStatus({visiteId:this.getVisiteId(),status}));
+      const nv = lastValueFrom(this.gameService.getVisites({visiteId:this.getVisiteId()}));
+      this.visite.next({
+        ...nv,
+        currentIndices:v?.currentIndices?v.currentIndices:[],
+      });
+      return true;
+    }catch (e) {
+      return false;
+    }
   }
 
   async revealHint(){
@@ -115,4 +120,12 @@ export class PlayServiceService {
     return value != null && typeof value !== "undefined";
   }
 
+  async updateVisiteFromSrv() {
+    const v = this.visite.value
+    const nv = await lastValueFrom(this.gameService.getVisites({visiteId:this.getVisiteId()}));
+    this.visite.next({
+      ...nv,
+      currentIndices:v?.currentIndices?v.currentIndices:[],
+    });
+  }
 }

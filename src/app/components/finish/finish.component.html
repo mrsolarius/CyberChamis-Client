@@ -1,0 +1,8 @@
+<mat-card>
+  <mat-card-title>Bravo !</mat-card-title>
+  <mat-card-subtitle>Tu à fini le defis</mat-card-subtitle>
+  <mat-card-content>
+    <mat-progress-bar [value]="toPersent()" color="accent"></mat-progress-bar>
+    <span>{{getPoints()}}/{{getPointsTotal()}}</span>
+  </mat-card-content>
+</mat-card>

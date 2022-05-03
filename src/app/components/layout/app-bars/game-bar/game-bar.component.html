@@ -13,8 +13,11 @@
       <button mat-icon-button matTooltip="Étape précédentes" (click)="previousStep.emit()" [disabled]="disablePrevious()">
         <mat-icon>arrow_back_ios_new</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Étape suivante" (click)="nextStep.emit()" [disabled]="disableNext()">
+      <button *ngIf="!disableNext()" mat-icon-button matTooltip="Étape suivante" (click)="nextStep.emit()">
         <mat-icon>arrow_forward_ios_new</mat-icon>
+      </button>
+      <button *ngIf="disableNext()" mat-icon-button matTooltip="Étape suivante" (click)="finishGame.emit()">
+        <mat-icon>done</mat-icon>
       </button>
     </div>
   </mat-toolbar-row>

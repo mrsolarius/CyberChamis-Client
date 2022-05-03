@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class GameLayoutComponent {
   notFound:boolean = false;
+  finishView:boolean = false;
 
 
   constructor(private gameService:PlayServiceService,
@@ -29,6 +30,7 @@ export class GameLayoutComponent {
       defiRestControllerService.getById({id:params['id']}).subscribe({
         next: (defi) => {
           this.gameService.startGame(defi.id!);
+          this.finishView = false;
         },
         error: () => {
           this.notFound = true;
@@ -113,5 +115,11 @@ export class GameLayoutComponent {
       this.snackBar.open('Ohhhh non, tu t\'es trompé c\'est dommage...' , 'Cacher', {
         duration: 3000,
         panelClass: ['mat-toolbar', 'red-snackbar', 'snack-up']});
+  }
+
+  async finish() {
+    this.gameService.updateVisiteFromSrv();
+    this.finishView = true;
+
   }
 }

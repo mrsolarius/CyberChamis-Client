@@ -28,6 +28,7 @@ export class GameBarComponent implements OnInit {
   @Output('nextStep') nextStep = new EventEmitter<void>();
   @Output('previousStep') previousStep = new EventEmitter<void>();
   @Output('revealHint') revealHint = new EventEmitter<void>();
+  @Output('finishGame') finishGame = new EventEmitter<void>();
 
   constructor(private bottomSheet : MatBottomSheet) { }
 
