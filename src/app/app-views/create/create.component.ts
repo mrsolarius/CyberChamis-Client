@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {EtapeDto} from "../../api/models/etape-dto";
 
 
@@ -14,6 +14,8 @@ export class CreateComponent implements OnInit {
   nombreEtape!: Number;
   totalPoints!:Number;
   listEtapes !: EtapeDto[];
+  nombreTotalEtapes = new FormControl(undefined);
+  myGroup!:any;
 
 
 
@@ -22,7 +24,11 @@ export class CreateComponent implements OnInit {
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder) {
+    this.myGroup = new FormGroup({
+      firstName: new FormControl()
+    });
+  }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({

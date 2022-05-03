@@ -32,22 +32,22 @@
         <button mat-button matStepperNext>Suivant</button>
       </div>
     </form>
-
+    <div [formGroup]="myGroup">
+      <input formControlName="firstName">
+    </div>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Les étapes du défi </ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Nombre d'étapes</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Nombre etapes " type="number" name="name" [(ngModel)]="nombreEtape"
-               required>
-        <input matInput placeholder="" formControlName="firstCtrl" required>
+        <input matInput type="number" placeholder="Nombre etapes " [formControl]="nombreTotalEtapes" min="1" max="20"/>
       </mat-form-field>
-      <div class="example-button-row">
-        <button mat-raised-button color="primary">Ajouter une étape </button>
-      </div>
-      <app-create-etape></app-create-etape>
 
+      <!-- <p>-{{ monSuperbeFormControl.value }}-</p> -->
+      <div *ngFor="let e of [].constructor(nombreTotalEtapes.value)">
+      <app-create-etape></app-create-etape>
+      </div>
       <div>
         <button mat-button matStepperPrevious>Retour</button>
         <button mat-button matStepperNext>Suivant</button>
