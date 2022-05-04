@@ -19,18 +19,22 @@ export class CreateComponent implements OnInit {
   nombreEtape!: Number;
   totalPoints!:Number;
   listEtapes !: EtapeDto[];
+
   nombreTotalEtapes = new FormControl(undefined);
+
+  // variable de vue
   myGroup!:any;
-
   action:any="";
-
   messageFi:any ="Créer mon défi";
   isLinear = false;
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar) {
+  constructor(private _formBuilder: FormBuilder,
+              private _snackBar: MatSnackBar,
+
+  ) {
     this.myGroup = new FormGroup({
       firstName: new FormControl()
     });
@@ -49,7 +53,11 @@ export class CreateComponent implements OnInit {
 
   }
   openSnackBar(message: string, action: string) {
-    this._snackBar.open("Ton défi est créé !", "");
+    this._snackBar.open("Ton défi est créé !", "",{
+      duration: 3000,
+      panelClass: ['mat-toolbar', 'green-snackbar','snack-up']});
+
+
   }
 
 

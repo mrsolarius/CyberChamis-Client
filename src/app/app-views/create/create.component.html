@@ -3,31 +3,40 @@
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Tu veux créer un défi ? C'est parti ! </ng-template>
+
+      <!-- Titre du défi -->
       <p>Tu peux donner un titre à ton défi !</p>
       <mat-form-field appearance="fill">
         <mat-label>Titre du défi</mat-label>
-        <input matInput placeholder="" formControlName="firstCtrl" required>
+        <input matInput placeholder="" formControlName="firstCtrl" [(ngModel)]="titre" required>
       </mat-form-field>
 
+
+      <!-- Description -->
       <p>Tu peux nous décrire ton défi ? </p>
       <mat-form-field appearance="fill">
         <mat-label>Description du défi </mat-label>
-        <input matInput placeholder="" formControlName="firstCtrl" required>
+        <input matInput placeholder="" formControlName="firstCtrl" [(ngModel)]="description" required>
       </mat-form-field>
+
+      <!-- Arret -->
       <div class="step-content-left">
         <p>Ici tu dois choisir de quel arrêt de la Métropole le visiteur devra partir pour commencer le défi</p>
         <mat-form-field appearance="outline">
           <mat-label>Arrêt de départ</mat-label>
           <input #input (input)="(input.value)" [(ngModel)]="arret" matInput
                  placeholder="Chavant, Condillac Université, etc..." required>
-          <mat-icon matSuffix style="cursor: pointer;" >refresh</mat-icon>
+          <mat-icon matSuffix style="cursor: pointer;" >room</mat-icon>
         </mat-form-field>
       </div>
+
+      <!-- Duree du défi -->
       <p>Ton défi va prendre combien de temps à peu près ?</p>
       <mat-form-field appearance="fill">
         <mat-label> Durée du défi </mat-label>
-        <input matInput placeholder="Durée du défi" formControlName="firstCtrl" type="number" name="duree"  min="1"  required>
+        <input matInput placeholder="Durée du défi" formControlName="firstCtrl" type="number" name="duree"  min="1"  [(ngModel)]="dureeDefi" required>
       </mat-form-field>
+
   <!-- on peut faire une methode qui va calculer le nombre total des points à travers les etapes -->
       <p>Ton défi va nous faire gagner combien de points ? </p>
       <mat-form-field appearance="fill">
@@ -47,6 +56,8 @@
       <ng-template matStepLabel>Les étapes du défi </ng-template>
       <mat-form-field appearance="fill">
 
+
+      <!-- Creation des étapes -->
         <mat-label>Nombre d'étapes</mat-label>
         <input matInput type="number" placeholder="Nombre etapes " [formControl]="nombreTotalEtapes" min="1" max="20" />
       </mat-form-field>
@@ -65,9 +76,9 @@
     <!--<button mat-stroked-button (click)="openSnackBar(messageFi,action)">Créer mon défi</button>-->
 
     <br>
+    <!-- Modification de ce qu'on a fait -->
     <div>
-      <p class="TextModifierDefi">
-        Tu as changé d'avis ? <p>
+      <p class="TextModifierDefi"> Tu as changé d'avis ? <p>
       <p>Tu peux encore le modifier</p>
       <button mat-icon-button matStepperPrevious color="warn" aria-label="Example icon button with a home icon"(click)="openSnackBar(messageFi,action)">
         Modifier le défi
@@ -78,18 +89,11 @@
     <br>
 
     <div>
-      <button class="bttonCree"mat-icon-button  "color="primary" aria-label="Example icon button with a home icon"(click)="openSnackBar(messageFi,action)">
+      <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" (click)="openSnackBar(messageFi,action)" >
         Créer le défi
         <mat-icon>task_alt</mat-icon>
       </button>
     </div>
-
-
-    <!--<div>
-      <p>Tu as changé ton avis ? Tu peux encore modifier ton défi</p>
-      <button mat-button matStepperPrevious> Retour </button>
-       <button mat-button (click)="stepper.reset()">Reset</button>
-    </div>-->
   </mat-step>
 </mat-stepper>
 

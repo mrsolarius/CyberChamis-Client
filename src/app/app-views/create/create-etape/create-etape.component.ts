@@ -25,12 +25,18 @@ export interface Etape {
   styleUrls: ['./create-etape.component.scss']
 })
 export class CreateEtapeComponent implements OnInit {
-  nbetape!:number
+
   typeEtape!: string;
    indication!:IndiceDto;
+   question!: string;
+   reponse!: string;
+   indice!:string;
    pointGagne!: number;
    pointPerdu!:number;
    motCles: string[] = [];
+
+  selectable = true;
+  removable = true;
   //@Output('ajoutEtape') ajoutEtape = new EventEmitter<void>();
   stepper: any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
