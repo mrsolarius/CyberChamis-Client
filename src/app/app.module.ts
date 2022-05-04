@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {TopBarComponent} from "./app-bars/top-bar/top-bar.component";
-import {NavBarComponent} from "./app-bars/nav-bar/nav-bar.component";
+import {TopBarComponent} from "./components/layout/app-bars/top-bar/top-bar.component";
+import {NavBarComponent} from "./components/layout/app-bars/nav-bar/nav-bar.component";
 import { HomeComponent } from './app-views/home/home.component';
 import {MatCardModule} from "@angular/material/card";
 import { ExploreComponent } from './app-views/explore/explore.component';
@@ -29,7 +29,17 @@ import { AppMapComponent } from './app-map/app-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DefisComponent } from './components/defis/defis.component';
 import { ProfileComponent } from './app-views/profile/profile.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { GameComponent } from './components/game/game.component';
+import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
+import { GameLayoutComponent } from './app-views/game-layout/game-layout.component';
+import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
+import { IndiceSheetComponent } from './components/layout/app-bars/game-bar/game-bar.component';
+import { NotFoundComponent } from './app-views/not-found/not-found.component';
+import { FinishComponent } from './components/finish/finish.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { CreateComponent } from './app-views/create/create.component';
+import { CreateEtapeComponent } from './app-views/create/create-etape/create-etape.component';
 
 
 @NgModule({
@@ -45,6 +55,16 @@ import {FormsModule} from "@angular/forms";
     AppMapComponent,
     DefisComponent,
     ProfileComponent,
+    GameComponent,
+    AppLayoutComponent,
+    GameLayoutComponent,
+    GameBarComponent,
+    CreateComponent,
+    CreateEtapeComponent,
+    IndiceSheetComponent,
+    NotFoundComponent,
+    FinishComponent,
+    StarRatingComponent,
   ],
   imports: [
     LeafletModule,
@@ -66,6 +86,7 @@ import {FormsModule} from "@angular/forms";
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

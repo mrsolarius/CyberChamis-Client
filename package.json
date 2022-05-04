@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-extensions/fab-menu": "^4.0.0",
     "@angular/animations": "~13.2.0",
     "@angular/cdk": "^13.3.3",
     "@angular/common": "~13.2.0",

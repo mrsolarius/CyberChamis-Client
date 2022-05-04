@@ -1,23 +1,16 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {fadeAnimation} from "./animations/fadeAnimation";
+import {Component} from '@angular/core';
+import {leftRightAnimation} from "./animations/leftRightAnimation";
+import {LeftRightAnimationStateService} from "./left-right-animation-state.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations:[fadeAnimation]
+  animations:[leftRightAnimation]
 })
-export class AppComponent implements OnInit {
-  title = 'escape-game-front';
-  innerWidth: number = 1920;
+export class AppComponent{
 
-  ngOnInit(): void {
-    this.innerWidth = window.innerWidth;
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.innerWidth = window.innerWidth;
+  constructor(public state: LeftRightAnimationStateService) {
   }
 
 }

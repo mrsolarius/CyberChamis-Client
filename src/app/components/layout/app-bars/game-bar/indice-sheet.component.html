@@ -1,0 +1,18 @@
+<ng-container *ngIf="getObsVisite | async as obs">
+  <mat-list>
+    <ng-container *ngIf="obs.currentIndices.length>0">
+      <div mat-subheader>Indice découvert</div>
+      <mat-list-item *ngFor="let indice of obs.currentIndices">
+        <h4 mat-line>Indice numéro {{indice.numIndice}}</h4>
+        <p mat-line>{{indice.indice}}</p>
+      </mat-list-item>
+    </ng-container>
+  </mat-list>
+  <mat-nav-list *ngIf="getNbIndicesUtilises(obs.reponseCourante)<getNbIndices(obs.etapeCourante)-1">
+    <div mat-subheader>Actions</div>
+    <button mat-list-item (click)="revealIndice()">
+      <mat-icon>lightbulb</mat-icon>
+      Révéler un indice
+    </button>
+  </mat-nav-list>
+</ng-container>

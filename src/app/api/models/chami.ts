@@ -1,8 +1,11 @@
 /* tslint:disable */
 /* eslint-disable */
-import { Defi } from './defi';
+import { Visite } from './visite';
 export interface Chami {
   age?: number;
-  defis?: Array<Defi>;
-  login?: string;
+  bio?: string;
+  id?: number;
+  idGoogle?: string;
+  username?: string;
+  vistes?: Array<Visite>;
 }

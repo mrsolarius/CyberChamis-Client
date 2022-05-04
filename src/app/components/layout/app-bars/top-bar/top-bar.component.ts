@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from 'firebase/compat/app';
 
@@ -9,9 +9,14 @@ import firebase from 'firebase/compat/app';
 })
 
 export class TopBarComponent implements OnInit {
+  @Input() title: string = "";
+  @Input() profile: boolean = false;
+  @Input() search: boolean = false;
+  @Input() backRoute: string | null = null;
+
   constructor(public auth : AngularFireAuth) { }
 
-  login(): void {
+  loginButton(): void {
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.setCustomParameters({
       prompt: 'select_account'

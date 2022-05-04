@@ -6,6 +6,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { DefiRestControllerService } from './services/defi-rest-controller.service';
 import { ChamiRestControllerService } from './services/chami-rest-controller.service';
+import { GameRestControllerService } from './services/game-rest-controller.service';
 
 /**
  * Module that provides all services and configuration.
@@ -17,6 +18,7 @@ import { ChamiRestControllerService } from './services/chami-rest-controller.ser
   providers: [
     DefiRestControllerService,
     ChamiRestControllerService,
+    GameRestControllerService,
     ApiConfiguration
   ],
 })

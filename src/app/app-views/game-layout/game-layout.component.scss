@@ -1,0 +1,24 @@
+.mobile-layout{
+  display:flex;
+  flex-direction:column;
+  height: 100vh;
+}
+
+.contents{
+  flex: 1 1 auto;
+  overflow-x: auto;
+}
+
+.padding{
+  padding: 1em;
+}
+
+.app {
+  flex-direction: column;
+}
+
+
+.snack-up{
+  position: relative;
+  margin-bottom: 20%;
+}
