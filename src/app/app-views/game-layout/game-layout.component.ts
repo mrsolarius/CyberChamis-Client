@@ -90,6 +90,7 @@ export class GameLayoutComponent {
   getNbIndicesUtilises(reponse:ReponseDto|undefined) : number{
     if(reponse){
       if(reponse.nbIndicesUtilises){
+        console.log(reponse)
         return reponse.nbIndicesUtilises;
       }
     }
@@ -128,7 +129,16 @@ export class GameLayoutComponent {
 
   async finish() {
     await this.gameService.editStatus("FINISHED");
+    await this.gameService.updateVisiteFromSrv();
     this.finishView = true;
+  }
 
+  getDefiTitre(defi: DefiDto | undefined) {
+    if(defi){
+      if(defi.titre){
+        return defi.titre;
+      }
+    }
+    return "";
   }
 }

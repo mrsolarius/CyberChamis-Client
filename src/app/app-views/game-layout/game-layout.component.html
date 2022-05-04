@@ -1,6 +1,7 @@
 <div class="app" *ngIf="getObsVisite | async as obsVisite">
   <div class="mobile-layout">
-    <app-top-bar [backRoute]="'/home'" [title]="getCurrentStepTitle(obsVisite.etapeCourante)"></app-top-bar>
+    <app-top-bar [backRoute]="finishView?null:'/home'"
+                 [title]="finishView?getDefiTitre(obsVisite.defi):getCurrentStepTitle(obsVisite.etapeCourante)"></app-top-bar>
     <div class="contents padding">
       <app-game *ngIf="!finishView" [step]="getEtape(obsVisite)"
                 (response)="checkResponse($event)"

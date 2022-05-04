@@ -53,8 +53,6 @@ export class PlayServiceService {
     try{
       i = await lastValueFrom(this.gameService.getResponseIndices({visiteId: this.getVisiteId()}));
     }catch(_){}
-
-    console.log(v);
     this.visite.next({
       ...v,
       currentIndices:i,
@@ -104,18 +102,12 @@ export class PlayServiceService {
   }
 
   async revealHint(){
-    const i = await lastValueFrom(this.gameService.revealIndice({visiteId:this.getVisiteId()}));
-    const v = this.visite.value;
-    const newCurrentIndice = v?.currentIndices ? v.currentIndices : [];
-    newCurrentIndice.push(i)
-    const response = v?.reponseCourante;
+    await lastValueFrom(this.gameService.revealIndice({visiteId:this.getVisiteId()}));
+    const v = await lastValueFrom(this.gameService.getVisites({visiteId:this.getVisiteId()}))
+    const is = await lastValueFrom(this.gameService.getResponseIndices({visiteId:this.getVisiteId()}))
     this.visite.next({
       ...v,
-      currentIndices:newCurrentIndice,
-      reponseCourante:{
-        ...response,
-        nbIndicesUtilises:response?.nbIndicesUtilises ? response.nbIndicesUtilises+1 : 0
-      }
+      currentIndices:is,
     })
   }
 
