@@ -82,8 +82,8 @@ export class DefiRestControllerService extends BaseService {
    */
   updateDefi$Response(params: {
     id: string;
-    body: Defi
-  }): Observable<StrictHttpResponse<Defi>> {
+    body: DefiDto
+  }): Observable<StrictHttpResponse<DefiDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.UpdateDefiPath, 'put');
     if (params) {
@@ -97,7 +97,7 @@ export class DefiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Defi>;
+        return r as StrictHttpResponse<DefiDto>;
       })
     );
   }
@@ -110,30 +110,30 @@ export class DefiRestControllerService extends BaseService {
    */
   updateDefi(params: {
     id: string;
-    body: Defi
-  }): Observable<Defi> {
+    body: DefiDto
+  }): Observable<DefiDto> {
 
     return this.updateDefi$Response(params).pipe(
-      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
+      map((r: StrictHttpResponse<DefiDto>) => r.body as DefiDto)
     );
   }
 
   /**
-   * Path part for operation deleteChami
+   * Path part for operation deleteDefi
    */
-  static readonly DeleteChamiPath = '/api/defis/{id}';
+  static readonly DeleteDefiPath = '/api/defis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `deleteChami()` instead.
+   * To access only the response body, use `deleteDefi()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteChami$Response(params: {
+  deleteDefi$Response(params: {
     id: string;
   }): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.DeleteChamiPath, 'delete');
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.DeleteDefiPath, 'delete');
     if (params) {
       rb.path('id', params.id, {});
     }
@@ -151,15 +151,15 @@ export class DefiRestControllerService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `deleteChami$Response()` instead.
+   * To access the full response (for headers, for example), `deleteDefi$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteChami(params: {
+  deleteDefi(params: {
     id: string;
   }): Observable<void> {
 
-    return this.deleteChami$Response(params).pipe(
+    return this.deleteDefi$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
@@ -219,8 +219,8 @@ export class DefiRestControllerService extends BaseService {
    * This method sends `application/json` and handles request body of type `application/json`.
    */
   createDefi$Response(params: {
-    body: Defi
-  }): Observable<StrictHttpResponse<Defi>> {
+    body: DefiDto
+  }): Observable<StrictHttpResponse<DefiDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.CreateDefiPath, 'post');
     if (params) {
@@ -233,7 +233,7 @@ export class DefiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Defi>;
+        return r as StrictHttpResponse<DefiDto>;
       })
     );
   }
@@ -245,11 +245,11 @@ export class DefiRestControllerService extends BaseService {
    * This method sends `application/json` and handles request body of type `application/json`.
    */
   createDefi(params: {
-    body: Defi
-  }): Observable<Defi> {
+    body: DefiDto
+  }): Observable<DefiDto> {
 
     return this.createDefi$Response(params).pipe(
-      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
+      map((r: StrictHttpResponse<DefiDto>) => r.body as DefiDto)
     );
   }
 

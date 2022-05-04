@@ -28,6 +28,7 @@ export class CreateEtapeComponent implements OnInit {
    pointGagne!: number;
    pointPerdu!:number;
   //@Output('ajoutEtape') ajoutEtape = new EventEmitter<void>();
+  stepper: any;
 
   constructor() { }
 
