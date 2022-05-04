@@ -1,0 +1,67 @@
+
+
+<mat-form-field appearance="fill">
+  <p>Il s'agit d'une indication ou une tache ?</p>
+  <mat-label></mat-label>
+  <mat-select [(ngModel)]="typeEtape" >
+    <mat-option value="Indication" >Indication</mat-option>
+    <mat-option value="Tache">Tache</mat-option>
+  </mat-select>
+
+</mat-form-field>
+<div *ngIf="typeEtape==='Indication'">
+  <p>Saisir une indication</p>
+  <input matInput placeholder="" formControlName="firstCtrl" required>
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+
+      <mat-label>Indication</mat-label>
+      <input matInput placeholder="Ex. Dans cette etape on va découvrire un tel streetArt" value="">
+    </mat-form-field>
+
+  </form>
+</div>
+<div *ngIf="typeEtape==='Tache'">
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Question</mat-label>
+      <input matInput placeholder="Question">
+      <mat-icon matSuffix>question_mark</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Réponse</mat-label>
+      <input matInput placeholder="Réponse">
+      <mat-icon matSuffix>done</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Indice</mat-label>
+      <input matInput placeholder="Indice">
+      <mat-icon matSuffix>lightbulb</mat-icon>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label> Points gagnés </mat-label>
+      <input matInput formControlName="secondCtrl" placeholder="Points gagnés " type="number" name="name" [(ngModel)]="pointGagne"
+             required>
+      <input matInput placeholder="" formControlName="firstCtrl" required>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label> Points perdus </mat-label>
+      <input matInput formControlName="secondCtrl" placeholder="Points perdus " type="number" name="name" [(ngModel)]="pointPerdu"
+             required>
+      <input matInput placeholder="" formControlName="firstCtrl" required>
+    </mat-form-field>
+  </p>
+  <div class="example-button-row">
+    <button mat-raised-button color="primary">Primary</button>
+  </div>
+</div>
