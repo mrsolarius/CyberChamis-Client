@@ -118,21 +118,21 @@ export class ChamiRestControllerService extends BaseService {
   }
 
   /**
-   * Path part for operation deleteChami
+   * Path part for operation deleteChami1
    */
-  static readonly DeleteChamiPath = '/api/chamis/{id}';
+  static readonly DeleteChami1Path = '/api/chamis/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `deleteChami()` instead.
+   * To access only the response body, use `deleteChami1()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteChami$Response(params: {
+  deleteChami1$Response(params: {
     id: number;
   }): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.DeleteChamiPath, 'delete');
+    const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.DeleteChami1Path, 'delete');
     if (params) {
       rb.path('id', params.id, {});
     }
@@ -150,15 +150,15 @@ export class ChamiRestControllerService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `deleteChami$Response()` instead.
+   * To access the full response (for headers, for example), `deleteChami1$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  deleteChami(params: {
+  deleteChami1(params: {
     id: number;
   }): Observable<void> {
 
-    return this.deleteChami$Response(params).pipe(
+    return this.deleteChami1$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
