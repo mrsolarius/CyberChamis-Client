@@ -18,7 +18,6 @@ const routes: Routes = [
       {path: 'explore', component: ExploreComponent, data: {animation: 'fadeInOut'}},
       {path: 'profile', component: ProfileComponent, data: {animation: 'fadeInOut'}},
       {path: 'create', component: CreateComponent, data: {animation: 'fadeInOut'}}
-
     ],
   },
   {path: 'game/:id',
