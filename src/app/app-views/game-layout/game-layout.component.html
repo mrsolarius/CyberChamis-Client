@@ -3,7 +3,8 @@
     <app-top-bar [backRoute]="finishView?null:'/home'"
                  [title]="finishView?getDefiTitre(obsVisite.defi):getCurrentStepTitle(obsVisite.etapeCourante)"></app-top-bar>
     <div class="contents padding">
-      <app-game *ngIf="!finishView" [step]="getEtape(obsVisite)"
+      <app-game *ngIf="!finishView"
+                [step]="getEtape(obsVisite)"
                 (response)="checkResponse($event)"
                 [responseDTO]="obsVisite.reponseCourante"></app-game>
       <app-finish *ngIf="finishView" [visite]="obsVisite"></app-finish>

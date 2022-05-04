@@ -26,4 +26,5 @@ export class FinishComponent implements OnInit {
   getPointsTotal(){
     return this.visite.defi?.pointTotaux?this.visite.defi?.pointTotaux:1;
   }
+
 }
