@@ -9,7 +9,6 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Note } from '../models/note';
 import { NoteDto } from '../models/note-dto';
 
 @Injectable({
@@ -86,7 +85,7 @@ export class NoteRestControllerService extends BaseService {
   updateNote$Response(params: {
     defiId: string;
     utilistateurId: number;
-    body: Note
+    body: number
   }): Observable<StrictHttpResponse<NoteDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, NoteRestControllerService.UpdateNotePath, 'put');
@@ -116,7 +115,7 @@ export class NoteRestControllerService extends BaseService {
   updateNote(params: {
     defiId: string;
     utilistateurId: number;
-    body: Note
+    body: number
   }): Observable<NoteDto> {
 
     return this.updateNote$Response(params).pipe(

@@ -11,10 +11,10 @@
     <div class="points-container">
       <h2>As-tu aimé ?</h2>
       <div class="star-container">
-        <app-star-rating></app-star-rating>
+        <app-star-rating [rating]="getRating()" (rating)="updateNote($event)"></app-star-rating>
       </div>
     </div>
   </mat-card-content>
-  <a mat-raised-button color="primary" class="big-blue-button" routerLink="/home">Continuer</a>
+  <a mat-raised-button color="primary" class="big-blue-button" routerLink="/home">Terminer</a>
 </mat-card>
 </div>

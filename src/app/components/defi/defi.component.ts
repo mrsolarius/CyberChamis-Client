@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
+import {ArretDto} from "../../api/models/arret-dto";
 
 type Star = "star" | "star_border" | "star_half";
 
@@ -25,5 +26,15 @@ export class DefiComponent {
         return "star_border";
       }
     });
+  }
+
+  getNomArret(arret : ArretDto | undefined) {
+    if(arret){
+      if(arret.nomArret)
+        return arret.nomArret;
+      else
+        return undefined;
+    }else
+      return undefined;
   }
 }
