@@ -1,10 +1,11 @@
+export { Note } from './models/note';
+export { NoteDto } from './models/note-dto';
 export { Arret } from './models/arret';
 export { Chami } from './models/chami';
 export { Commentaire } from './models/commentaire';
 export { Defi } from './models/defi';
 export { Etape } from './models/etape';
 export { Indice } from './models/indice';
-export { Note } from './models/note';
 export { Reponse } from './models/reponse';
 export { Tag } from './models/tag';
 export { Visite } from './models/visite';
