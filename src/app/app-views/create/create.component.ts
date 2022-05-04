@@ -12,12 +12,16 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 
 export class CreateComponent implements OnInit {
 
+  titre!:string;
+  description!:string;
+  arret!:string;
+  dureeDefi!:Number;
   nombreEtape!: Number;
   totalPoints!:Number;
   listEtapes !: EtapeDto[];
   nombreTotalEtapes = new FormControl(undefined);
   myGroup!:any;
-  arret!:string;
+
   action:any="";
 
   messageFi:any ="Créer mon défi";

@@ -62,13 +62,34 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>On arrive à la fin ! </ng-template>
+    <!--<button mat-stroked-button (click)="openSnackBar(messageFi,action)">Créer mon défi</button>-->
 
-    <button mat-stroked-button (click)="openSnackBar(messageFi,action)">Créer mon défi</button>
+    <br>
     <div>
+      <p class="TextModifierDefi">
+        Tu as changé d'avis ? <p>
+      <p>Tu peux encore le modifier</p>
+      <button mat-icon-button matStepperPrevious color="warn" aria-label="Example icon button with a home icon"(click)="openSnackBar(messageFi,action)">
+        Modifier le défi
+        <mat-icon>update</mat-icon>
+      </button>
+    </div>
+
+    <br>
+
+    <div>
+      <button class="bttonCree"mat-icon-button  "color="primary" aria-label="Example icon button with a home icon"(click)="openSnackBar(messageFi,action)">
+        Créer le défi
+        <mat-icon>task_alt</mat-icon>
+      </button>
+    </div>
+
+
+    <!--<div>
       <p>Tu as changé ton avis ? Tu peux encore modifier ton défi</p>
       <button mat-button matStepperPrevious> Retour </button>
-      <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
-    </div>
+       <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>-->
   </mat-step>
 </mat-stepper>
 

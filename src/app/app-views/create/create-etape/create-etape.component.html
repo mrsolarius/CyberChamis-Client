@@ -1,3 +1,21 @@
+<!-- Tags -->
+
+<div class="step-content-left mots-cles">
+  <mat-form-field appearance="outline">
+    <mat-label>Mot-clés du défi</mat-label>
+    <mat-chip-list #chipList aria-label="Mot Clés">
+      <mat-chip *ngFor="let item of motCles" selectable removable (removed)="remove(item)">
+        {{item}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="Decouverte, StreetArt , etc..." [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur
+             (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+  </mat-form-field>
+</div>
+
+<!-- Choix entre indication et tache -->
 
 <mat-form-field appearance="fill">
   <p>Il s'agit d'une indication ou une tache ?</p>
@@ -6,21 +24,25 @@
     <mat-option value="Indication" >Indication</mat-option>
     <mat-option value="Tache">Tache</mat-option>
   </mat-select>
-
 </mat-form-field>
+
+<!-- Indication -->
+
 <div *ngIf="typeEtape==='Indication'">
   <p>Saisir une indication</p>
   <input matInput placeholder="" formControlName="firstCtrl" required>
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
-
       <mat-label>Indication</mat-label>
       <input matInput placeholder="Ex. Dans cette etape on va découvrire un tel streetArt" value="">
     </mat-form-field>
-
   </form>
 </div>
+
+<!-- Tache -->
+
 <div *ngIf="typeEtape==='Tache'">
+  <!-- Question -->
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Question</mat-label>
@@ -28,6 +50,7 @@
       <mat-icon matSuffix>question_mark</mat-icon>
     </mat-form-field>
   </p>
+  <!-- Reponse -->
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Réponse</mat-label>
@@ -35,6 +58,7 @@
       <mat-icon matSuffix>done</mat-icon>
     </mat-form-field>
   </p>
+  <!-- Indice ( pour le moment un seul indice ) -->
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Indice</mat-label>
@@ -42,7 +66,16 @@
       <mat-icon matSuffix>lightbulb</mat-icon>
     </mat-form-field>
   </p>
-
+  <p>
+    <mat-form-field appearance="fill">
+      <p>Nombre de points perdus quand on utilise cet indice</p>
+      <mat-label>Points perdus</mat-label>
+      <input matInput formControlName="secondCtrl" placeholder="Points perdus " type="number" name="name" min="1" [(ngModel)]="pointPerdu"
+             required>
+      <input matInput placeholder="" formControlName="firstCtrl" required>
+    </mat-form-field>
+  </p>
+<!-- Points gagnés grace à cette question -->
   <p>
     <mat-form-field appearance="fill">
       <mat-label> Points gagnés </mat-label>
@@ -51,14 +84,5 @@
       <input matInput placeholder="" formControlName="firstCtrl" required>
     </mat-form-field>
   </p>
-
-  <p>
-    <mat-form-field appearance="fill">
-      <mat-label> Points perdus </mat-label>
-      <input matInput formControlName="secondCtrl" placeholder="Points perdus " type="number" name="name" [(ngModel)]="pointPerdu"
-             required>
-      <input matInput placeholder="" formControlName="firstCtrl" required>
-    </mat-form-field>
-  </p>
-
 </div>
+
