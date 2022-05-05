@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RatingDefiDto} from "../../api/models/rating-defi-dto";
+import {RatingDto} from "../../api/models/rating-dto";
 
 @Component({
   selector: 'app-rating-view',
@@ -26,6 +27,15 @@ export class RatingViewComponent implements OnInit {
         return "star_border";
       }
     });
+  }
+
+  getSortList(list : RatingDto[]|undefined){
+    if(typeof list !== 'undefined' && list.length>0){
+      return list.sort((a,b)=>{
+        return b.note!-a.note!;
+      });
+    }
+    return [];
   }
 
   toPersent(nbAt : number, total : number){

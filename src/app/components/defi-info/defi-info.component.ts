@@ -52,4 +52,8 @@ export class DefiInfoComponent implements OnInit {
       return defi.titre;
     return "HELLO";
   }
+
+  checkIfNote(defi: DefiDto) {
+    return !isNaN(defi.noteMoyenne!);
+  }
 }

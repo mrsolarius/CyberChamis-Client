@@ -1,15 +1,19 @@
 <div class="rating-container">
-  <div class="sub-container">
-    <h1>{{avg}}</h1>
+  <div class="rate-container">
+    <h1 class="rate-title">{{avg.toFixed(1).replace('.',',')}}</h1>
     <div class="star-container">
-      <mat-icon *ngFor="let star of getStar(avg)">{{star}}</mat-icon>
+      <mat-icon *ngFor="let star of getStar(avg)" class="star" color="accent">{{star}}</mat-icon>
     </div>
-    <span>{{rating.nbTotalGrade}}</span>
+    <span mat-card-subtitle class="small-span">{{rating.nbTotalGrade}}</span>
   </div>
-  <div>
-    <div *ngFor="let ratingNote of rating.gradeList">
-      <span>{{ratingNote.note}}</span>
-      <mat-progress-bar [value]="toPersent(ratingNote.note!,rating.nbTotalGrade!)" color="accent"></mat-progress-bar>
+  <div class="rates-bars-container">
+    <div *ngFor="let ratingNote of getSortList(rating.gradeList!)" class="bar-container">
+      <span class="small-span">{{ratingNote.note}}</span>
+      <mat-progress-bar
+        class="bar"
+        [value]="toPersent(ratingNote.number!,rating.nbTotalGrade!)"
+        color="accent">
+      </mat-progress-bar>
     </div>
   </div>
 </div>

@@ -1,15 +1,52 @@
 .rating-container{
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
-.sub-container{
+.rate-container{
   display: flex;
   flex-direction: column;
+  margin-right: 24px;
+}
+
+.rates-bars-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .bar-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    span{
+      margin-right: 8px;
+    }
+    .bar{
+      height: 8px;
+      border-radius: 4px;
+    }
+  }
+}
+
+.small-span{
+  font-size: 10px;
+  line-height: 10px;
+  margin: 4px 0 ;
+}
+
+.rate-title{
+  font-size: 3.5rem;
+  line-height: 3.5rem;
+  margin-bottom: 5px;
 }
 
 .star-container{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  .star {
+    font-size: 15px;
+    height: 15px;
+    width: 15px;
+  }
 }

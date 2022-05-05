@@ -4,9 +4,12 @@
   <mat-card-header>
     <mat-card-title>{{defi.titre}}</mat-card-title>
   </mat-card-header>
-  <mat-card-content *ngIf="obsRating | async as rating">
-    <app-rating-view [rating]="rating" [avg]="defi.pointTotaux!"></app-rating-view>
-  </mat-card-content>
+  <ng-container *ngIf="checkIfNote(defi)">
+    <h4>Notes</h4>
+    <mat-card-content *ngIf="obsRating | async as rating">
+      <app-rating-view [rating]="rating" [avg]="defi.noteMoyenne!"></app-rating-view>
+    </mat-card-content>
+  </ng-container>
 </mat-card>
 <mat-list *ngIf="obsCom | async as comm">
   <app-commentaire *ngFor="let com of comm" [commentaire]="com"></app-commentaire>
