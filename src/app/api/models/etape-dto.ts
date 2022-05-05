@@ -4,6 +4,7 @@ export interface EtapeDto {
   description?: string;
   id?: number;
   image?: string;
+  nbIndices?: number;
   numero?: number;
   point?: number;
   question?: string;

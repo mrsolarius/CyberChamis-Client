@@ -1,3 +1,4 @@
+export { NoteDto } from './models/note-dto';
 export { Arret } from './models/arret';
 export { Chami } from './models/chami';
 export { Commentaire } from './models/commentaire';
@@ -8,11 +9,11 @@ export { Note } from './models/note';
 export { Reponse } from './models/reponse';
 export { Tag } from './models/tag';
 export { Visite } from './models/visite';
-export { ChamiDto } from './models/chami-dto';
 export { ArretDto } from './models/arret-dto';
+export { ChamiDto } from './models/chami-dto';
 export { DefiDto } from './models/defi-dto';
 export { EtapeDto } from './models/etape-dto';
-export { ReponseDto } from './models/reponse-dto';
 export { TagDto } from './models/tag-dto';
+export { ReponseDto } from './models/reponse-dto';
 export { VisiteDto } from './models/visite-dto';
 export { IndiceDto } from './models/indice-dto';

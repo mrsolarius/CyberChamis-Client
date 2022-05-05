@@ -36,7 +36,7 @@ export class DefiRestControllerService extends BaseService {
    */
   getById$Response(params: {
     id: string;
-  }): Observable<StrictHttpResponse<Defi>> {
+  }): Observable<StrictHttpResponse<DefiDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetByIdPath, 'get');
     if (params) {
@@ -49,7 +49,7 @@ export class DefiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Defi>;
+        return r as StrictHttpResponse<DefiDto>;
       })
     );
   }
@@ -62,10 +62,10 @@ export class DefiRestControllerService extends BaseService {
    */
   getById(params: {
     id: string;
-  }): Observable<Defi> {
+  }): Observable<DefiDto> {
 
     return this.getById$Response(params).pipe(
-      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
+      map((r: StrictHttpResponse<DefiDto>) => r.body as DefiDto)
     );
   }
 
@@ -83,7 +83,7 @@ export class DefiRestControllerService extends BaseService {
   updateDefi$Response(params: {
     id: string;
     body: Defi
-  }): Observable<StrictHttpResponse<Defi>> {
+  }): Observable<StrictHttpResponse<DefiDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.UpdateDefiPath, 'put');
     if (params) {
@@ -97,7 +97,7 @@ export class DefiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Defi>;
+        return r as StrictHttpResponse<DefiDto>;
       })
     );
   }
@@ -111,10 +111,10 @@ export class DefiRestControllerService extends BaseService {
   updateDefi(params: {
     id: string;
     body: Defi
-  }): Observable<Defi> {
+  }): Observable<DefiDto> {
 
     return this.updateDefi$Response(params).pipe(
-      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
+      map((r: StrictHttpResponse<DefiDto>) => r.body as DefiDto)
     );
   }
 
