@@ -34,7 +34,7 @@
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Indication</mat-label>
-      <input matInput placeholder="Ex. Dans cette etape on va découvrire un tel streetArt" value="">
+      <input matInput placeholder="Ex. Dans cette etape on va découvrire un tel streetArt" value="" [(ngModel)]="indication">
     </mat-form-field>
   </form>
 </div>
@@ -46,7 +46,7 @@
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Question</mat-label>
-      <input matInput placeholder="Question">
+      <input matInput placeholder="Question" [(ngModel)]="question">
       <mat-icon matSuffix>question_mark</mat-icon>
     </mat-form-field>
   </p>
@@ -54,7 +54,7 @@
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Réponse</mat-label>
-      <input matInput placeholder="Réponse">
+      <input matInput placeholder="Réponse" [(ngModel)]="reponse">
       <mat-icon matSuffix>done</mat-icon>
     </mat-form-field>
   </p>
@@ -62,7 +62,7 @@
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Indice</mat-label>
-      <input matInput placeholder="Indice">
+      <input matInput placeholder="Indice" [(ngModel)]="indice">
       <mat-icon matSuffix>lightbulb</mat-icon>
     </mat-form-field>
   </p>

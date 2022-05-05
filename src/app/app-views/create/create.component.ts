@@ -18,7 +18,7 @@ export class CreateComponent implements OnInit {
   dureeDefi!:Number;
   nombreEtape!: Number;
   totalPoints!:Number;
-  listEtapes !: EtapeDto[];
+
 
   nombreTotalEtapes = new FormControl(undefined);
 

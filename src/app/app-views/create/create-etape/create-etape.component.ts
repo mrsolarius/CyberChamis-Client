@@ -4,6 +4,7 @@ import {MatIconModule} from '@angular/material/icon'
 import {FormControl} from "@angular/forms";
 import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {EtapeDto} from "../../../api/models/etape-dto";
 
 enum TypeEtape {
   Indication,Tache
@@ -27,13 +28,14 @@ export interface Etape {
 export class CreateEtapeComponent implements OnInit {
 
   typeEtape!: string;
-   indication!:IndiceDto;
+   indication!:string;
    question!: string;
    reponse!: string;
    indice!:string;
    pointGagne!: number;
    pointPerdu!:number;
    motCles: string[] = [];
+   listEtapes !: string[];
 
   selectable = true;
   removable = true;
@@ -66,6 +68,31 @@ export class CreateEtapeComponent implements OnInit {
     if (index >= 0) {
       this.motCles.splice(index, 1);
     }
+  }
+  /*typeEtape!: string;
+   indication!:IndiceDto;
+   question!: string;
+   reponse!: string;
+   indice!:string;
+   pointGagne!: number;
+   pointPerdu!:number;
+   motCles: string[] = [];
+   listEtapes !: EtapeDto[];*/
+
+  /*createList permet de récupérer les éléments saisie dans une listeEtape
+  return void*/
+  createList():void{
+
+      if(this.typeEtape=="Indication"){
+        //this.listEtapes.(this.indication)
+      }
+      else {
+
+
+      }
+
+
+
   }
 
 }
