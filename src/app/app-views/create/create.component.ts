@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {EtapeDto} from "../../api/models/etape-dto";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ChamiRestControllerService} from "../../api/services/chami-rest-controller.service";
+import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 
 
 @Component({
@@ -33,13 +35,20 @@ export class CreateComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar,
+              private ds: DefiRestControllerService
+
 
   ) {
     this.myGroup = new FormGroup({
       firstName: new FormControl()
     });
   }
-
+ /* constructor(private cm : ChamiRestControllerService) {
+    this.cm.getChamis().subscribe(data => {
+      this.chamis = data;
+    });
+  }
+*/
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
