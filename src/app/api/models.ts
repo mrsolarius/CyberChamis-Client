@@ -1,3 +1,4 @@
+export { NoteDto } from './models/note-dto';
 export { Arret } from './models/arret';
 export { Chami } from './models/chami';
 export { Commentaire } from './models/commentaire';

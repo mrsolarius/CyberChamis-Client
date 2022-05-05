@@ -7,10 +7,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./star-rating.component.scss']
 })
 export class StarRatingComponent implements OnInit {
-  @Input('rating') private rating: number = 3;
-  @Input('starCount') private starCount: number = 5;
-  @Input('color') private color: string = 'accent';
-  @Output() private ratingUpdated = new EventEmitter();
+  @Input('rating') rating: number = 3;
+  @Input('starCount') starCount: number = 5;
+  @Input('color') color: string = 'accent';
+  @Output('rating') ratingUpdated = new EventEmitter<number>();
 
   private snackBarDuration: number = 2000;
   ratingArr:number[] = [];
@@ -20,18 +20,17 @@ export class StarRatingComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("a "+this.starCount)
     for (let index = 0; index < this.starCount; index++) {
       this.ratingArr.push(index);
     }
   }
 
   onClick(rating:number) {
-    console.log(rating)
-    this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
+    this.snackBar.open('Vous avez noté ' + rating + ' / ' + this.starCount, '', {
       duration: this.snackBarDuration
     });
     this.ratingUpdated.emit(rating);
+    this.rating = rating;
     return false;
   }
 

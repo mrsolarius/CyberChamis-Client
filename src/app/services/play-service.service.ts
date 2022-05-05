@@ -90,7 +90,7 @@ export class PlayServiceService {
     try {
       const v = this.visite.value
       await lastValueFrom(this.gameService.editStatus({visiteId:this.getVisiteId(),status}));
-      const nv = lastValueFrom(this.gameService.getVisites({visiteId:this.getVisiteId()}));
+      const nv = await lastValueFrom(this.gameService.getVisites({visiteId:this.getVisiteId()}));
       this.visite.next({
         ...nv,
         currentIndices:v?.currentIndices?v.currentIndices:[],
@@ -131,7 +131,7 @@ export class PlayServiceService {
 
   async updateVisiteFromSrv() {
     const v = this.visite.value
-    const nv = await lastValueFrom(this.gameService.getVisites({visiteId:this.getVisiteId()}));
+    const nv = await lastValueFrom(this.gameService.getVisites({visiteId:v?.id!}));
     this.visite.next({
       ...nv,
       currentIndices:v?.currentIndices?v.currentIndices:[],
