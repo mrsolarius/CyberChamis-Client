@@ -43,6 +43,7 @@ import { CreateEtapeComponent } from './app-views/create/create-etape/create-eta
 import { DefiInfoComponent } from './components/defi-info/defi-info.component';
 import { CommentaireComponent } from './components/commentaire/commentaire.component';
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { RatingViewComponent } from './components/rating-view/rating-view.compon
     DefiInfoComponent,
     CommentaireComponent,
     RatingViewComponent,
+    AddCommentComponent,
   ],
   imports: [
     LeafletModule,

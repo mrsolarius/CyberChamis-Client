@@ -1,0 +1,25 @@
+<ng-container *ngIf="userService.getUserId() | async as id">
+  <div class="card-container" *ngIf="id!==-1">
+    <form [formGroup]="angForm" (ngSubmit)="submitForm()">
+      <mat-form-field class="input">
+        <input matInput placeholder="Ajouter un commentaire" formControlName="comment">
+      </mat-form-field>
+      <button mat-mini-fab
+              type="submit"
+              color="primary"
+              [disabled]="angForm.invalid"
+              aria-label="Envoyer">
+        <mat-icon>send</mat-icon>
+      </button>
+    </form>
+    <!--Error handeling-->
+    <mat-error *ngIf="angForm.controls['comment'].invalid && !angForm.controls['comment'].pristine">
+    <span *ngIf="angForm.controls['comment'].hasError('minlength')">
+          Ce champ doit contenir au moins 5 caractères
+        </span>
+      <span *ngIf="angForm.controls['comment'].hasError('maxlength')">
+          Ce champ ne doit pas dépasser 128 caractères
+        </span>
+    </mat-error>
+  </div>
+</ng-container>

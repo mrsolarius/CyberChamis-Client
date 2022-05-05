@@ -1,0 +1,13 @@
+.card-container{
+  margin: 20px 0;
+  width: 100%;
+  form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .input{
+      flex-grow: 1;
+    }
+  }
+}
+

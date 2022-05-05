@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
 import {ActivatedRoute} from "@angular/router";
 import {BehaviorSubject, firstValueFrom, lastValueFrom} from "rxjs";
@@ -55,5 +55,9 @@ export class DefiInfoComponent implements OnInit {
 
   checkIfNote(defi: DefiDto) {
     return !isNaN(defi.noteMoyenne!);
+  }
+
+  apendNewComment($event: CommentaireDto) {
+    this.obsCom.next([...this.obsCom.value, $event]);
   }
 }
