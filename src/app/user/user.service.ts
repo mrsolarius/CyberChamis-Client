@@ -32,12 +32,22 @@ export class UserService {
 
   async createChami(user: firebase.User) {  // create a chami
     const chamiName = user?.displayName!.substring(0, user.displayName!.indexOf(' ')).substring(0,20);
-    console.log(chamiName)
     let chami: ChamiDto = {
       username: chamiName,
       idGoogle: user?.uid,
-    };
-    return await firstValueFrom(this.cm.createChami({body: chami}));
+    }
+    let id = 1;
+    let chamiCreated = false;
+    while (!chamiCreated) {
+      try {
+        chami = await firstValueFrom(this.cm.createChami({body: chami}));
+        chamiCreated = true;
+      } catch (e) {
+        chami.username = chamiName + ' '+ id;
+        id++;
+      }
+    }
+    return chami;
   }
 
   /*  getChamis(auth : AngularFireAuth){  // get la liste des chamis
