@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ChamiRestControllerService} from "../api/services/chami-rest-controller.service";
-import {Chami} from "../api/models/chami";
+import {ChamiDto} from "../api/models/chami-dto";
 
 @Component({
   selector: 'app-chamis',
@@ -8,7 +8,7 @@ import {Chami} from "../api/models/chami";
   styleUrls: ['./chamis.component.scss']
 })
 export class ChamisComponent implements OnInit {
-  chamis: Array<Chami> = [];
+  chamis: Array<ChamiDto> = [];
 
   constructor(private cm : ChamiRestControllerService) {
     this.cm.getChamis().subscribe(data => {

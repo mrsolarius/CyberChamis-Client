@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ChamiRestControllerService} from "../api/services/chami-rest-controller.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {Chami,ChamiDto} from "../api/models";
+import {ChamiDto} from "../api/models";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class UserService {
 
   createChami(auth : AngularFireAuth){  // create a chami
     auth.currentUser.then(user => {
-      let chami : Chami = {
+      let chami : ChamiDto= {
         username: user?.displayName!,
         idGoogle: user?.uid,
       };

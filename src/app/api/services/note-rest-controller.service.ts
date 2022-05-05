@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { NoteDto } from '../models/note-dto';
+import { RatingDefiDto } from '../models/rating-defi-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class NoteRestControllerService extends BaseService {
   /**
    * Path part for operation getNote
    */
-  static readonly GetNotePath = '/api/note/{defiId}/{utilistateurId}';
+  static readonly GetNotePath = '/api/notes/{defiId}/{utilistateurId}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -74,7 +75,7 @@ export class NoteRestControllerService extends BaseService {
   /**
    * Path part for operation updateNote
    */
-  static readonly UpdateNotePath = '/api/note/{defiId}/{utilistateurId}';
+  static readonly UpdateNotePath = '/api/notes/{defiId}/{utilistateurId}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -126,7 +127,7 @@ export class NoteRestControllerService extends BaseService {
   /**
    * Path part for operation createNote
    */
-  static readonly CreateNotePath = '/api/note/';
+  static readonly CreateNotePath = '/api/notes/';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -166,6 +167,52 @@ export class NoteRestControllerService extends BaseService {
 
     return this.createNote$Response(params).pipe(
       map((r: StrictHttpResponse<NoteDto>) => r.body as NoteDto)
+    );
+  }
+
+  /**
+   * Path part for operation getNbByValue
+   */
+  static readonly GetNbByValuePath = '/api/notes/{defiId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getNbByValue()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getNbByValue$Response(params: {
+    defiId: string;
+  }): Observable<StrictHttpResponse<RatingDefiDto>> {
+
+    const rb = new RequestBuilder(this.rootUrl, NoteRestControllerService.GetNbByValuePath, 'get');
+    if (params) {
+      rb.path('defiId', params.defiId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RatingDefiDto>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getNbByValue$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getNbByValue(params: {
+    defiId: string;
+  }): Observable<RatingDefiDto> {
+
+    return this.getNbByValue$Response(params).pipe(
+      map((r: StrictHttpResponse<RatingDefiDto>) => r.body as RatingDefiDto)
     );
   }
 
