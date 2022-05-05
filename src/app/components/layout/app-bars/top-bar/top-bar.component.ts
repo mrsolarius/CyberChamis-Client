@@ -22,11 +22,7 @@ export class TopBarComponent implements OnInit {
     provider.setCustomParameters({
       prompt: 'select_account'
     });
-    this.auth.signInWithPopup(provider).then(() =>
-      this.auth.currentUser.then(() => {
-        this.cham.isAlreadyChami(this.auth);
-      })
-    );
+    this.auth.signInWithPopup(provider);
   }
 
   logout(): void {

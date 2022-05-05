@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import {GameRestControllerService} from "../api/services/game-rest-controller.service";
-import {BehaviorSubject, lastValueFrom, Observable} from "rxjs";
+import {BehaviorSubject, firstValueFrom, lastValueFrom, Observable} from "rxjs";
 import {VisiteDto} from "../api/models/visite-dto";
 import {IndiceDto} from "../api/models/indice-dto";
 import {filter} from "rxjs/operators";
+import {UserService} from "../user/user.service";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface VisiteImpl extends VisiteDto{
   currentIndices:IndiceDto[];
@@ -16,35 +19,39 @@ export class PlayServiceService {
   private visite = new BehaviorSubject<VisiteImpl | null>(null);
   private static idUser : number = 1;
 
-  constructor(private gameService : GameRestControllerService) {
+  constructor(private gameService : GameRestControllerService, private userService : UserService,private router: Router,private snackBar: MatSnackBar) {
   }
 
-  async startGame(defiId: string, userId: number = PlayServiceService.idUser) {
-    try {
-      const v = await lastValueFrom(this.gameService.visiteCourante({defiId, userId}))
-      let i : IndiceDto[] = []
-      try{
-        i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:v.id!}))
-      }catch (e){
-        console.log(e)
+  async startGame(defiId: string) {
+      const id = await firstValueFrom(this.userService.getUserId());
+      if(id!==-1) {
+        try {
+        const v = await lastValueFrom(this.gameService.visiteCourante({defiId, userId: id}));
+        let i: IndiceDto[] = []
+        try {
+          i = await lastValueFrom(this.gameService.getResponseIndices({visiteId: v.id!}))
+        } catch (e) {}
+        this.visite.next({
+          ...v,
+          currentIndices: i
+        });
+        } catch (e) {
+          const v = await lastValueFrom(this.gameService.startGame({defiId, userId:id}))
+          let i : IndiceDto[] = []
+          try{
+            i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:v.id!}))
+          }catch (_){}
+          this.visite.next({
+            ...v,
+            currentIndices:i,
+          })
+        }
+      }else{
+        await this.router.navigate(['/home']);
+        this.snackBar.open("Veuillez vous connecter pour jouer", "fermer", {
+          duration: 10000,
+        });
       }
-      console.log(v)
-      console.log(i)
-      this.visite.next({
-        ...v,
-        currentIndices:i
-      });
-    } catch (e) {
-      const v = await lastValueFrom(this.gameService.startGame({defiId, userId}))
-      let i : IndiceDto[] = []
-      try{
-        i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:v.id!}))
-      }catch (_){}
-      this.visite.next({
-        ...v,
-        currentIndices:i,
-      })
-    }
   }
 
   async nextStep(){
@@ -65,7 +72,6 @@ export class PlayServiceService {
     try{
       i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:this.getVisiteId()}))
     }catch (_){}
-    console.log(v);
     this.visite.next({
       ...v,
       currentIndices:i
