@@ -29,7 +29,7 @@ import { AppMapComponent } from './app-map/app-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DefisComponent } from './components/defis/defis.component';
 import { ProfileComponent } from './app-views/profile/profile.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { GameComponent } from './app-views/game/game.component';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 import { GameLayoutComponent } from './components/layout/game-layout/game-layout.component';
@@ -57,27 +57,28 @@ import { IndiceSheetComponent } from './components/layout/app-bars/game-bar/game
     GameBarComponent,
     IndiceSheetComponent,
   ],
-  imports: [
-    LeafletModule,
-    ApiModule,
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTreeModule,
-    MatDividerModule,
-    MatListModule,
-    MaterialModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    AngularFireModule.initializeApp(environment.firebase),
-    FormsModule,
-  ],
+    imports: [
+        LeafletModule,
+        ApiModule,
+        HttpClientModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatTreeModule,
+        MatDividerModule,
+        MatListModule,
+        MaterialModule,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+        AngularFireModule.initializeApp(environment.firebase),
+        FormsModule,
+        ReactiveFormsModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

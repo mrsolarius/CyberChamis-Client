@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ChamiRestControllerService} from "../api/services/chami-rest-controller.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {Chami} from "../api/models";
+import {Chami,ChamiDto} from "../api/models";
 
 @Injectable({
   providedIn: 'root'
@@ -22,23 +22,49 @@ export class UserService {
     });
   }
 
-  getChamis(auth : AngularFireAuth){  // get la liste des chamis
+/*  getChamis(auth : AngularFireAuth){  // get la liste des chamis
     auth.currentUser.then(() => {
       this.cm.getChamis().subscribe(res => {
         console.log(res);
       });
     });
+  }*/
+
+  /*async getChamis(auth : AngularFireAuth) {
+    let chami : ChamiDto | undefined;
+    await auth.currentUser.then(user => {
+      this.cm.getChamis().subscribe(chamis => {
+        const chamiTab = chamis.filter(chami => chami.idGoogle === user?.uid);
+        if (chamiTab.length > 0) {
+          chami = chamiTab.pop();
+        }
+      })
+    });
+    return chami;
+  }*/
+
+  async getUsername(auth : AngularFireAuth, login : String) {
+    let chami : ChamiDto;
+    const user = await auth.currentUser
+    console.log("hello");
+    console.log("user id -> ",user?.uid);
+    this.cm.getByIdGoogle({idGoogle : user?.uid!}).pipe().subscribe(value => {
+      chami = value;
+      console.log("coucou -> ", chami);
+      console.log("ce que je veux recup -> ",chami.username);
+      login = chami.username!;
+    });
   }
 
   isAlreadyChami(auth : AngularFireAuth) : void { // check si le user est déjà dans la liste des chamis
     auth.currentUser.then(user => {
-      this.cm.getChamis().subscribe(res => {
+      this.cm.getChamis().subscribe(chamis => {
         console.log("uid -> ",user?.uid);
-        const ress = res.filter(chami => chami.idGoogle === user?.uid);
-        if (ress.length > 0) {
-          console.log("ress present -> ",ress);
+        const chami = chamis.filter(chami => chami.idGoogle === user?.uid);
+        if (chami.length > 0) {
+          console.log("ress present -> ",chami);
         } else {
-          console.log("ress pas present -> ",ress);
+          console.log("ress pas present -> ",chami);
           this.createChami(auth);
         }
     });
