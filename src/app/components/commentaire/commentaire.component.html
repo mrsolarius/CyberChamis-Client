@@ -1,0 +1,7 @@
+<mat-list-item *ngIf="obsChami | async as user">
+  <mat-icon>account_circle</mat-icon>
+  <h3>{{user.username}}</h3>
+  <p>{{commentaire.text}}</p>
+</mat-list-item>
+<mat-divider></mat-divider>
+

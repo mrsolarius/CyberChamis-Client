@@ -1,0 +1,15 @@
+<div class="rating-container">
+  <div class="sub-container">
+    <h1>{{avg}}</h1>
+    <div class="star-container">
+      <mat-icon *ngFor="let star of getStar(avg)">{{star}}</mat-icon>
+    </div>
+    <span>{{rating.nbTotalGrade}}</span>
+  </div>
+  <div>
+    <div *ngFor="let ratingNote of rating.gradeList">
+      <span>{{ratingNote.note}}</span>
+      <mat-progress-bar [value]="toPersent(ratingNote.note!,rating.nbTotalGrade!)" color="accent"></mat-progress-bar>
+    </div>
+  </div>
+</div>

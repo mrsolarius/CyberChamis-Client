@@ -1,0 +1,15 @@
+.rating-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.sub-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.star-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
