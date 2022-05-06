@@ -23,8 +23,11 @@
 
     <p>Saisir votre indication</p>
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Indication</mat-label>
-      <input matInput placeholder="Ex. Dans cette etape on va découvrire un tel streetArt" value="" [(ngModel)]="indication">
+      <mat-label>Description de l'indication</mat-label>
+      <input matInput placeholder="Ex. Dans cette etape on va découvrir tel streetArt" value=""
+             formControlName="indication" required>
+      <mat-error *ngIf="checkError('indication', 'required')">La description de l'indication doit être renseigné
+      </mat-error>
     </mat-form-field>
   </form>
 </div>

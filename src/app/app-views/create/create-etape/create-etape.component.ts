@@ -34,65 +34,23 @@ export class CreateEtapeComponent implements OnInit {
    indice!:string;
    pointGagne!: number;
    pointPerdu!:number;
-   motCles: string[] = [];
+
    listEtapes !: string[];
 
   selectable = true;
   removable = true;
   //@Output('ajoutEtape') ajoutEtape = new EventEmitter<void>();
   stepper: any;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  myGroup!:any;
+  etape!: FormGroup;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
 
-    // Add our fruit
-    if ((value || '').trim()) {
-      if (this.motCles.filter((v) => v === value)?.length === 0) {
-        this.motCles.push(value.trim());
-      }
-    }
-    if (input) {
-      input.value = '';
-    }
+  checkError(controlName: string, errorName: string) {
+    return this.etape.controls[controlName].hasError(errorName);
   }
-
-  remove(mot: string): void {
-    const index = this.motCles.indexOf(mot);
-
-    if (index >= 0) {
-      this.motCles.splice(index, 1);
-    }
-  }
-  /*typeEtape!: string;
-   indication!:IndiceDto;
-   question!: string;
-   reponse!: string;
-   indice!:string;
-   pointGagne!: number;
-   pointPerdu!:number;
-   motCles: string[] = [];
-   listEtapes !: EtapeDto[];*/
-
-  /*createList permet de récupérer les éléments saisie dans une listeEtape
-  return void*/
-  createList():void{
-
-      if(this.typeEtape=="Indication"){
-        //this.listEtapes.(this.indication)
-      }
-      else {
-
-
-      }
-
-
-
-  }
-
 }

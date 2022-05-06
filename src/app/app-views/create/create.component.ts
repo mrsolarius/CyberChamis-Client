@@ -20,8 +20,9 @@ export class CreateComponent implements OnInit {
   dureeDefi!:Number;
   nombreEtape!: Number;
   totalPoints!:Number;
+  listeTags: string[] = [];
 
-
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   nombreTotalEtapes = new FormControl(undefined);
 
   // variable de vue
