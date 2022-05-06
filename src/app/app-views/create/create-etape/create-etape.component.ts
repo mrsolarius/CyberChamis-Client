@@ -27,7 +27,7 @@ export interface Etape {
 })
 export class CreateEtapeComponent implements OnInit {
 
-  typeEtape!: string;
+   typeEtape!: string;
    indication!:string;
    question!: string;
    reponse!: string;
@@ -45,7 +45,19 @@ export class CreateEtapeComponent implements OnInit {
   myGroup!:any;
   etape!: FormGroup;
 
-  constructor() { }
+  constructor(private _formBuilder: FormBuilder) {
+    this.etape = this._formBuilder.group({
+      typeEtape: ['', [Validators.required]],
+      indicationTitre : ['', [Validators.required]],
+      indication : ['', [Validators.required]],
+      tacheTitre : ['', [Validators.required]],
+      question : ['', [Validators.required]],
+      reponse : ['', [Validators.required]],
+      indice : ['', [Validators.required]],
+      pointsPerdus : ['', [Validators.required,Validators.min(1)]],
+      pointsGagnes : ['', [Validators.required,Validators.min(1)]],
+    });
+  }
 
   ngOnInit(): void {
   }

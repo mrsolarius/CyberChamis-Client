@@ -9,7 +9,13 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {showError: true},
+    },
+  ],
 })
 
 export class CreateComponent implements OnInit {
@@ -25,8 +31,10 @@ export class CreateComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   nombreTotalEtapes = new FormControl(undefined);
 
+  nbEtapes!: number;
+  etapes = Array(this.nbEtapes).fill(0).map((x,i)=>i);
+
   // variable de vue
-  myGroup!:any;
   action:any="";
   messageFi:any ="Créer mon défi";
   isLinear = false;
@@ -39,8 +47,19 @@ export class CreateComponent implements OnInit {
 
 
   ) {
-    this.myGroup = new FormGroup({
-      firstName: new FormControl()
+    this.firstFormGroup = this._formBuilder.group({
+      titre: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      arret: ['', [Validators.required]],
+      duree: ['', [Validators.required, Validators.min(1)]],
+      //to do pb sur le pattern, il le considère juste alors qu'il ne le devrait pas
+      listeTags:['',[Validators.pattern(/[a-zA-Z ]*/g)]],
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      nbEtapes: ['0', [Validators.required,Validators.min(1)]]
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      secondCtrl: ['', [Validators.required]],
     });
 
     //ajout des arrêt de bus depuis le json de l'api
@@ -66,15 +85,7 @@ export class CreateComponent implements OnInit {
   }
 */
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    this.thirdFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
+
 
   }
   openSnackBar(message: string, action: string) {
@@ -85,5 +96,36 @@ export class CreateComponent implements OnInit {
 
   }
 
+  checkError(controlName: string, errorName: string){
+    return this.firstFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  checkError2(controlName: string, errorName: string){
+    return this.secondFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      if (this.listeTags.filter((v) => v === value)?.length === 0) {
+        this.listeTags.push(value.trim());
+      }
+    }
+    if (input) {
+      input.value = '';
+    }
+  }
+
+
+  remove(mot: string): void {
+    const index = this.listeTags.indexOf(mot);
+
+    if (index >= 0) {
+      this.listeTags.splice(index, 1);
+    }
+  }
 
 }

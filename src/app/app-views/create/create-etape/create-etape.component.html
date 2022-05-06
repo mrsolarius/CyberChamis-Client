@@ -10,7 +10,7 @@
     <mat-error *ngIf="checkError('typeEtape', 'required')">Le type d'étape doit être renseigné</mat-error>
   </mat-form-field>
 
-<!-- Indication -->
+  <!-- Indication -->
 
   <div *ngIf="etape.controls['typeEtape'].value==='Indication'">
     <p>Saisir le titre de l'indication</p>
@@ -29,10 +29,9 @@
       <mat-error *ngIf="checkError('indication', 'required')">La description de l'indication doit être renseigné
       </mat-error>
     </mat-form-field>
-  </form>
-</div>
+  </div>
 
-<!-- Tache -->
+  <!-- Tache -->
 
   <div *ngIf="etape.controls['typeEtape'].value==='Tache'">
 
