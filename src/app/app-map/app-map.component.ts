@@ -1,8 +1,6 @@
-import {AfterViewInit, Component, EventEmitter} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import * as Leaflet from 'leaflet';
 import {GeolocService} from "../geoLoc/geoloc.service";
-import {BehaviorSubject} from "rxjs";
-import {LeafletEvent} from "leaflet";
 
 @Component({
   selector: 'app-map',
@@ -14,14 +12,14 @@ export class AppMapComponent implements AfterViewInit {
   private map !: Leaflet.Map;
   private circle!: Leaflet.Circle;
   private localPlace!: Leaflet.Circle;
-  private eeZoom = new EventEmitter<LeafletEvent>();
 
   private async initMap(): Promise<void> {
     const postion = await getPosition()
     this.map = Leaflet.map('map', {
       layers: getLayers(),
-      zoom: 13,
-      center: new Leaflet.LatLng(postion.coords.latitude, postion.coords.longitude)
+      zoom: 16,
+      center: new Leaflet.LatLng(postion.coords.latitude, postion.coords.longitude),
+      minZoom: 2
     });
 
     console.log(postion)
@@ -48,16 +46,8 @@ export class AppMapComponent implements AfterViewInit {
 
     tiles.addTo(this.map);
 
-    //A modifier pour le radius en fonction du zoom
-    this.eeZoom.subscribe((event) => {
-      console.log(event)
-      var currentZoom = this.map.getZoom();
-      if (currentZoom > 6) {
-        this.localPlace.setRadius(8);
-      } else {
-        this.localPlace.setRadius(2);
-      }
-    });
+
+    const update = () => this.setRadius();
 
     this.loc.getLocObs().subscribe((val) => {
       console.log("loc update", val)
@@ -73,9 +63,32 @@ export class AppMapComponent implements AfterViewInit {
       })
     })
 
-    this.map.on('zoomend', this.eeZoom.next,);
+    update();
+    this.map.on('zoomend', update);
   }
 
+  setRadius(){
+    if (this.map.getZoom()<=3)
+      this.localPlace.setRadius(50000)
+    else if (this.map.getZoom()<6)
+      this.localPlace.setRadius(10000)
+    else if (this.map.getZoom()<7)
+      this.localPlace.setRadius(8000)
+    else if (this.map.getZoom()<8)
+      this.localPlace.setRadius(5000)
+    else if (this.map.getZoom()<9)
+      this.localPlace.setRadius(1000)
+    else if (this.map.getZoom()<10)
+      this.localPlace.setRadius(500)
+    else if (this.map.getZoom()<12)
+      this.localPlace.setRadius(100)
+    else if (this.map.getZoom()<14)
+      this.localPlace.setRadius(50)
+    else if (this.map.getZoom()<16)
+      this.localPlace.setRadius(10)
+    else
+      this.localPlace.setRadius(2.5)
+  }
   constructor(private loc: GeolocService) {
 
   }
