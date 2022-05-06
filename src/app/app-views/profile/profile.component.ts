@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {ChamiRestControllerService} from "../../api/services/chami-rest-controller.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {firstValueFrom} from "rxjs";
+import {firstValueFrom, lastValueFrom} from "rxjs";
 import {ChamiDto} from "../../api/models/chami-dto";
 
 @Component({
@@ -40,7 +40,9 @@ export class ProfileComponent implements OnInit {
       username:this.angForm.controls['username'].value,
       profileImg:this.imgProfile==null?undefined:this.imgProfile,
     }
-    await firstValueFrom(this.cm.updateChami1({idGoogle: this.idGoogle, body: model}));
+
+    console.log("update profile",model)
+    await lastValueFrom(this.cm.updateChami1({idGoogle: this.idGoogle, body: model}));
     this.angForm.reset();
     this.angForm.controls['username'].patchValue(model.username);
     this.angForm.controls['bio'].patchValue(model.bio);

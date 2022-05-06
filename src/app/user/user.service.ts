@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ChamiRestControllerService} from "../api/services/chami-rest-controller.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {ChamiDto} from "../api/models";
-import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
+import {BehaviorSubject, firstValueFrom, last, lastValueFrom, Observable} from "rxjs";
 import firebase from "firebase/compat/app";
 
 @Injectable({
@@ -15,10 +15,11 @@ export class UserService {
     this.afAuth.authState.subscribe(async user => {
       if (user) {
         try {
-          const chami = await firstValueFrom(this.cm.getByIdGoogle({idGoogle: user.uid}));
+          const chami = await lastValueFrom(this.cm.getByIdGoogle({idGoogle: user.uid}));
           this.userId.next(chami.id!);
         } catch (e) {
           const newUser = await this.createChami(user);
+          console.log(newUser);
           this.userId.next(newUser.id!);
         }
       } else {
@@ -41,7 +42,7 @@ export class UserService {
     let chamiCreated = false;
     while (!chamiCreated) {
       try {
-        chami = await firstValueFrom(this.cm.createChami({body: chami}));
+        chami = await lastValueFrom(this.cm.createChami({body: chami}));
         chamiCreated = true;
       } catch (e) {
         chami.username = chamiName + ' '+ id;
