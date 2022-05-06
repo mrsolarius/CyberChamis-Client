@@ -224,6 +224,7 @@ export class ChamiRestControllerService extends BaseService {
     idGoogle: string;
     body: ChamiDto
   }): Observable<StrictHttpResponse<ChamiDto>> {
+
     const rb = new RequestBuilder(this.rootUrl, ChamiRestControllerService.UpdateChami1Path, 'put');
     if (params) {
       rb.path('idGoogle', params.idGoogle, {});

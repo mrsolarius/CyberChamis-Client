@@ -1,5 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import * as Leaflet from 'leaflet';
+import {GeolocService} from "../geoLoc/geoloc.service";
 
 @Component({
   selector: 'app-map',
@@ -10,6 +11,7 @@ export class AppMapComponent implements AfterViewInit {
   title = 'AngularOSM';
   private map !: Leaflet.Map;
   private circle!: Leaflet.Circle;
+  private localPlace! : Leaflet.Circle;
 
   private async initMap(): Promise<void> {
 
@@ -21,14 +23,19 @@ export class AppMapComponent implements AfterViewInit {
       center: new Leaflet.LatLng(postion.coords.latitude,postion.coords.longitude)
     });
 
-    navigator.geolocation.watchPosition(this.updatePosition);
-
     console.log(postion)
     this.circle = Leaflet.circle([postion.coords.latitude,postion.coords.longitude], {
-      color: 'red',
-      fillColor: '#f03',
+      color: 'rgba(78,118,250,0.63)',
+      fillColor: 'rgba(89,122,231,0.48)',
       fillOpacity: 0.5,
-      radius: 1
+      radius: 5
+    }).addTo(this.map);
+
+    this.localPlace = Leaflet.circle([postion.coords.latitude,postion.coords.longitude], {
+      color: 'rgb(0,60,255)',
+      fillColor: 'rgb(29,81,252)',
+      fillOpacity: 1,
+      radius: 8
     }).addTo(this.map);
 
 
@@ -41,23 +48,26 @@ export class AppMapComponent implements AfterViewInit {
     tiles.addTo(this.map);
   }
 
-  constructor() {
+  constructor(private loc:GeolocService) {
+
+    this.loc.getLocObs().subscribe((val)=>{
+      console.log("loc update",val)
+      console.log(val.coords.speed)
+      this.circle.setLatLng({
+        lat:val.coords.latitude,
+        lng:val.coords.longitude,
+      });
+      this.circle.setRadius(val.coords.accuracy);
+      this.localPlace.setLatLng({
+        lat:val.coords.latitude,
+        lng:val.coords.longitude,
+      })
+    })
   }
 
   ngAfterViewInit(): void {
     this.initMap();
   }
-
-  updatePosition(newPost:GeolocationPosition){
-    console.log('new position')
-    console.log(newPost)
-    this.circle.setLatLng({
-      lat:newPost.coords.latitude,
-      lng:newPost.coords.longitude
-    })
-  }
-
-
  }
 
   export const
