@@ -5,5 +5,6 @@ export interface ChamiDto {
   bio?: string;
   id?: number;
   idGoogle?: string;
+  profileImg?: string;
   username?: string;
 }

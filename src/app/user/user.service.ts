@@ -35,6 +35,7 @@ export class UserService {
     let chami: ChamiDto = {
       username: chamiName,
       idGoogle: user?.uid,
+      profileImg: user?.photoURL==null?undefined:user?.photoURL,
     }
     let id = 1;
     let chamiCreated = false;

@@ -38,19 +38,12 @@ export class DefiInfoComponent implements OnInit {
     const param = await firstValueFrom(this.route.params)
     const id = param['id'];
     const defi = await lastValueFrom(this.defiRestControllerService.getById({id}));
-    console.log("onload : ",defi)
     if (defi)
       this.obsDefi.next(defi);
   }
 
   ngOnInit(): void {
     this.loadDefi();
-  }
-
-  getTitre(defi: DefiDto) {
-    if(typeof defi.titre !=="undefined")
-      return defi.titre;
-    return "HELLO";
   }
 
   checkIfNote(defi: DefiDto) {
