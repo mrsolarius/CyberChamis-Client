@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {EtapeDto} from "../../api/models/etape-dto";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ChamiRestControllerService} from "../../api/services/chami-rest-controller.service";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
-
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import {MatChipInputEvent} from "@angular/material/chips";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-create',
@@ -34,15 +34,30 @@ export class CreateComponent implements OnInit {
   thirdFormGroup!: FormGroup;
 
   constructor(private _formBuilder: FormBuilder,
-              private _snackBar: MatSnackBar,
-              private ds: DefiRestControllerService
+              private _snackBar: MatSnackBar
 
 
   ) {
     this.myGroup = new FormGroup({
       firstName: new FormControl()
     });
+
+    //ajout des arrêt de bus depuis le json de l'api
+    let lstarret  = ''
+    fetch('https://data.mobilites-m.fr/api/points/json?types=stops')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        lstarret=myJson
+        console.log(lstarret)
+      });
+
+    /*lstarret.foreach(function(arret){console.log(arret.name)});*/
+
+
   }
+
  /* constructor(private cm : ChamiRestControllerService) {
     this.cm.getChamis().subscribe(data => {
       this.chamis = data;
