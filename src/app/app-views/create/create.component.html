@@ -34,12 +34,24 @@
       <!-- Arret -->
       <div class="step-content-left">
         <p>Choisis l'arrêt dans la Métropole qui servira de point de départ au visiteur pour commencer ton défi</p>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="fill" style="width: 100%;">
           <mat-label>Arrêt de départ</mat-label>
-          <input #input (input)="(input.value)" matInput
-                 placeholder="Chavant, Condillac Université, etc..." formControlName="arret" required>
+          <input matInput
+                 placeholder="Chavant, Condillac Université, etc..."
+                 formControlName="arret"
+                 [matAutocomplete]="auto"
+                 required>
           <mat-icon matSuffix style="cursor: pointer;">room</mat-icon>
           <mat-error *ngIf="checkError('arret', 'required')">L'arrêt doit être renseigné</mat-error>
+          <mat-error *ngIf="checkError('arret', 'notfound')">L'arrêt na pas été trouvé</mat-error>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">Chargement...</mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let stop of stops" [value]="stop.properties.name" [id]="stop.properties.id">
+                <span><b>{{stop.properties.name}}</b> ({{stop.properties.city}})</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
@@ -121,7 +133,6 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-    <pre *ngIf="getEtapesObservable() | async as etapes">{{etapes | json}}</pre>
     <div>
       <button mat-button matStepperPrevious>Retour</button>
       <button mat-button matStepperNext>Suivant</button>

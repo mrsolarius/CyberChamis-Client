@@ -1,12 +1,17 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {CreateEtapeService, EtapeForm} from "./create-etape.service";
-import {Observable} from "rxjs";
+import {debounceTime, distinctUntilChanged, finalize, Observable, switchMap, tap} from "rxjs";
+import {MetroboliliteService} from "../../api-metro/metrobolilite.service";
+import {GeoJSON} from "geojson";
+import {featureStop} from "../../api-metro/models/stops";
+import {filter, map} from "rxjs/operators";
+import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
 
 @Component({
@@ -28,6 +33,12 @@ export class CreateComponent implements OnInit {
   listeTags: string[] = [];
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  //Autocomplete arrets de bus
+  minSearchLength: number = 2;
+  stops: featureStop[] = [];
+  selectedStop: featureStop|null = null;
+  isLoading: boolean = false;
+
   // variable de vue
   action: any = "";
   firstFormGroup!: FormGroup;
@@ -37,13 +48,14 @@ export class CreateComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar,
-              private etapeService: CreateEtapeService
+              private etapeService: CreateEtapeService,
+              private metro: MetroboliliteService
   ) {
 
     this.firstFormGroup = this._formBuilder.group({
       titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
       description: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
-      arret: ['', [Validators.required]],
+      arret: ['', [Validators.required,this.isArretSelected.bind(this)]],
       duree: ['1', [Validators.required, Validators.min(1)]],
       //to do pb sur le pattern, il le considère juste alors qu'il ne le devrait pas
       listeTags: ['', [Validators.pattern(/[a-zA-Z ]*/g)]],
@@ -70,7 +82,6 @@ export class CreateComponent implements OnInit {
         this.secondFormGroup.controls['etapes'].setErrors({'invalid': true});
       }
     });
-
     /*//ajout des arrêt de bus depuis le json de l'api
     let lstarret  = ''
     fetch('https://data.mobilites-m.fr/api/points/json?types=stops')
@@ -89,6 +100,36 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
+    this.firstFormGroup.controls['arret'].valueChanges.pipe(
+      filter(value => value.length >= this.minSearchLength),
+      map(value => value.trim().toLowerCase()),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(()=>{
+        this.selectedStop = null;
+        this.stops = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.metro.getPoints({
+          types: "stops",
+          query: value
+        }).pipe(
+          finalize(() => {
+            this.isLoading = false;
+          }),
+        )
+      )
+    ).subscribe((points: GeoJSON) => {
+      if (points.type === "FeatureCollection") {
+        this.stops = points.features
+          .map((o) => (<featureStop>o))
+          //Supression des arret qui on le même nom et la même ville
+          .filter((value, index, self) =>
+            index === self.findIndex((t) => (
+              t.properties.name === value.properties.name && t.properties.city === value.properties.city
+            )));
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -174,5 +215,21 @@ export class CreateComponent implements OnInit {
 
   delete(numero: number) {
     this.etapeService.removeEtape(numero);
+  }
+
+  onSelected(event: MatAutocompleteSelectedEvent) {
+    //get theleced id
+    const id = event.option.id;
+    const selectedStop = this.stops.find((stop) => stop.properties.id === id);
+    this.selectedStop = typeof selectedStop === 'undefined' ? null : selectedStop;
+    this.firstFormGroup.controls['arret'].setErrors(null)
+  }
+
+  isArretSelected(): ValidationErrors | null {
+    if (this.selectedStop === null) {
+      return {'notfound': true};
+    }else {
+      return null;
+    }
   }
 }
