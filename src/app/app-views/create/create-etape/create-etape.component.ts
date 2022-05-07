@@ -34,7 +34,13 @@ export class CreateEtapeComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.etape) {
-      this.typeEtapeValidator.controls['typeEtape'].setValue(this.etape.typeEtape);
+      if(this.etape.typeEtape === TypeEtape.Indication) {
+        this.typeEtapeValidator.controls['typeEtape'].setValue("Indication");
+      }else if (this.etape.typeEtape === TypeEtape.Tache) {
+        this.typeEtapeValidator.controls['typeEtape'].setValue("Tache");
+      }else {
+        this.typeEtapeValidator.controls['typeEtape'].setValue("NonDefinie");
+      }
       this.etapeIndication.controls['indicationTitre'].setValue(this.etape.titre);
       this.etapeIndication.controls['indication'].setValue(this.etape.indication);
       this.etapeTache.controls['tacheTitre'].setValue(this.etape.titre);
@@ -44,6 +50,7 @@ export class CreateEtapeComponent implements OnInit {
       this.etapeTache.controls['pointsPerdus'].setValue(this.etape.pointsPerdus);
       this.etapeTache.controls['pointsGagnes'].setValue(this.etape.pointsGagnes);
     }
+
     this.typeEtapeValidator.valueChanges.subscribe(() => {
       this.updateEtape();
       this.createEtapeService.editEtape(this.etape.numero, this.etape);

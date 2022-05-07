@@ -129,12 +129,13 @@
               <mat-icon cdkDragHandle color="primary">
                 drag_handle
               </mat-icon>
-              <div style="width: 10px"></div>
-              Etape {{e.numero + 1}} : {{e.titre}}
+              <span *ngIf="innerWidth<600;else titleFull">Etape {{num+1}}</span>
+              <ng-template #titleFull>
+                <span>Etape {{e.numero + 1}} : {{e.titre}}</span>
+              </ng-template>
             </mat-panel-title>
             <mat-panel-description>
-              <mat-error *ngIf="!e.isValide" style="margin-right: 10px">Attention, il y a des erreurs dans cette étape
-              </mat-error>
+              <mat-error *ngIf="!e.isValide && innerWidth>=1080" style="margin-right: 10px">Attention, il y a des erreurs dans cette étape</mat-error>
               <mat-icon color="warn" *ngIf="!e.isValide">error</mat-icon>
               <button mat-icon-button (click)="delete(e.numero)" *ngIf="etapes.length!==1">
                 <mat-icon>delete</mat-icon>
@@ -142,7 +143,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div>
-            <app-create-etape [etape]="e" #error></app-create-etape>
+            <app-create-etape [etape]="e"></app-create-etape>
           </div>
         </mat-expansion-panel>
       </mat-accordion>
@@ -161,8 +162,7 @@
       <br>
       <!-- Modification de ce qu'on a fait -->
       <div>
-        <p class="TextModifierDefi"> Tu as changé d'avis ?
-        <p>
+        <p class="TextModifierDefi"> Tu as changé d'avis ?</p>
         <p>Tu peux encore le modifier</p>
         <button mat-icon-button matStepperPrevious color="warn" aria-label="Example icon button with a home icon">
           Modifier le défi
