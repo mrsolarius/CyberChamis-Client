@@ -3,96 +3,106 @@
   <mat-step [stepControl]="firstFormGroup" errorMessage="Info du défi non remplies en totalité">
     <form [formGroup]="firstFormGroup" novalidate>
       <ng-template matStepLabel>Tu veux créer un défi ? C'est parti !</ng-template>
+      <div class="step-container">
+        <!-- Titre du défi -->
+        <div class="form-items">
+          <p>Tu dois donner un titre à ton défi !</p>
+          <mat-form-field appearance="outline">
+            <mat-label>Titre du défi</mat-label>
+            <input matInput placeholder="" formControlName="titre" required>
+            <mat-error *ngIf="checkError('titre', 'required')">Le titre doit être renseigné</mat-error>
+            <mat-error *ngIf="checkError('titre', 'maxlength')">Le titre est trop
+              longue {{firstFormGroup.controls['titre'].value.length}}/45
+            </mat-error>
+            <mat-error *ngIf="checkError('titre', 'minlength')">Le titre est trop courte
+              de {{5 - firstFormGroup.controls['titre'].value.length}}</mat-error>
+          </mat-form-field>
+        </div>
 
-      <!-- Titre du défi -->
-      <p>Tu dois donner un titre à ton défi !</p>
-      <mat-form-field appearance="fill">
-        <mat-label>Titre du défi</mat-label>
-        <input matInput placeholder="" formControlName="titre" required>
-        <mat-error *ngIf="checkError('titre', 'required')">Le titre doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('titre', 'maxlength')">Le titre est trop
-          longue {{firstFormGroup.controls['titre'].value.length}}/45
-        </mat-error>
-        <mat-error *ngIf="checkError('titre', 'minlength')">Le titre est trop courte
-          de {{5 - firstFormGroup.controls['titre'].value.length}}</mat-error>
-      </mat-form-field>
-
-
-      <!-- Description -->
-      <p>Décris-nous ton défi ?</p>
-      <mat-form-field appearance="fill">
-        <mat-label>Description du défi</mat-label>
-        <textarea matInput placeholder="" formControlName="description" required #description></textarea>
-        <mat-error *ngIf="checkError('description', 'required')">La description doit être renseignée</mat-error>
-        <mat-error *ngIf="checkError('description', 'maxlength')">La description est trop
-          longue {{firstFormGroup.controls['description'].value.length}}/128
-        </mat-error>
-        <mat-error *ngIf="checkError('description', 'minlength')">La description est trop courte
-          de {{10 - firstFormGroup.controls['description'].value.length}}</mat-error>
-      </mat-form-field>
-
-      <!-- Arret -->
-      <div class="step-content-left">
-        <p>Choisis l'arrêt dans la Métropole qui servira de point de départ au visiteur pour commencer ton défi</p>
-        <mat-form-field appearance="fill" style="width: 100%;">
-          <mat-label>Arrêt de départ</mat-label>
-          <input matInput
-                 placeholder="Chavant, Condillac Université, etc..."
-                 formControlName="arret"
-                 [matAutocomplete]="auto"
-                 required>
-          <mat-icon matSuffix style="cursor: pointer;">room</mat-icon>
-          <mat-error *ngIf="checkError('arret', 'required')">L'arrêt doit être renseigné</mat-error>
-          <mat-error *ngIf="checkError('arret', 'notfound')">L'arrêt na pas été trouvé</mat-error>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)">
-            <mat-option *ngIf="isLoading" class="is-loading">Chargement...</mat-option>
-            <ng-container *ngIf="!isLoading">
-              <mat-option *ngFor="let stop of stops" [value]="stop.properties.name" [id]="stop.properties.id">
-                <span><b>{{stop.properties.name}}</b> ({{stop.properties.city}})</span>
-              </mat-option>
-            </ng-container>
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
-
-      <!-- Duree du défi -->
-      <p>Combien de temps estimes-tu nécessaire
-        e pour effectuer ton défi (en minutes) ?</p>
-      <mat-form-field appearance="fill">
-        <mat-label> Durée du défi</mat-label>
-        <input matInput placeholder="Durée du défi" formControlName="duree" type="number" name="duree" min="1" required>
-        <mat-error *ngIf="checkError('duree', 'required')">La durée doit être renseignée</mat-error>
-        <mat-error *ngIf="checkError('duree', 'min')">La durée doit être d'une minute minimum</mat-error>
-      </mat-form-field>
-
-      <!-- on peut faire une methode qui va calculer le nombre total des points à travers les etapes -->
-      <!--      <p>Ton défi va nous faire gagner combien de points ? </p>
-            <mat-form-field appearance="fill">
-              <mat-label> Points du défi </mat-label>
-              <input matInput placeholder="Total points " type="number" name="pointDefi" min="1" [(ngModel)]="totalPoints"
+        <!-- Description -->
+        <div class="form-items">
+          <p>Décris-nous ton défi ?</p>
+          <mat-form-field appearance="outline">
+            <mat-label>Description du défi</mat-label>
+            <textarea matInput placeholder="" formControlName="description" required #description></textarea>
+            <mat-error *ngIf="checkError('description', 'required')">La description doit être renseignée</mat-error>
+            <mat-error *ngIf="checkError('description', 'maxlength')">La description est trop
+              longue {{firstFormGroup.controls['description'].value.length}}/128
+            </mat-error>
+            <mat-error *ngIf="checkError('description', 'minlength')">La description est trop courte
+              de {{10 - firstFormGroup.controls['description'].value.length}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="split-container">
+          <div class="form-items">
+            <!-- Arret -->
+            <p>Choisis l'arrêt dans la Métropole qui servira de point de départ au visiteur pour commencer ton défi.</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Arrêt de départ</mat-label>
+              <input matInput
+                     placeholder="Chavant, Condillac Université, etc..."
+                     formControlName="arret"
+                     [matAutocomplete]="auto"
                      required>
-              <mat-error *ngIf="checkError('pointDefi', 'requiered')">Le total de point doit être renseignée</mat-error>
-            </mat-form-field>-->
+              <mat-icon matSuffix style="cursor: pointer;">room</mat-icon>
+              <mat-error *ngIf="checkError('arret', 'required')">L'arrêt doit être renseigné</mat-error>
+              <mat-error *ngIf="checkError('arret', 'notfound')">L'arrêt na pas été trouvé</mat-error>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)">
+                <mat-option *ngIf="isLoading" class="is-loading">Chargement...</mat-option>
+                <ng-container *ngIf="!isLoading">
+                  <mat-option *ngFor="let stop of stops" [value]="stop.properties.name" [id]="stop.properties.id">
+                    <span><b>{{stop.properties.name}}</b> ({{stop.properties.city}})</span>
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <!-- Duree du défi -->
+          <div class="form-items">
+            <p>Combien de temps estimes-tu nécessaire
+              e pour effectuer ton défi (en minutes) ?</p>
+            <mat-form-field appearance="outline">
+              <mat-label> Durée du défi</mat-label>
+              <input matInput placeholder="Durée du défi" formControlName="duree" type="number" name="duree" min="1"
+                     required>
+              <mat-error *ngIf="checkError('duree', 'required')">La durée doit être renseignée</mat-error>
+              <mat-error *ngIf="checkError('duree', 'min')">La durée doit être d'une minute minimum</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
 
-      <!-- Tags -->
+        <!-- on peut faire une methode qui va calculer le nombre total des points à travers les etapes -->
+        <!--      <p>Ton défi va nous faire gagner combien de points ? </p>
+              <mat-form-field appearance="fill">
+                <mat-label> Points du défi </mat-label>
+                <input matInput placeholder="Total points " type="number" name="pointDefi" min="1" [(ngModel)]="totalPoints"
+                       required>
+                <mat-error *ngIf="checkError('pointDefi', 'requiered')">Le total de point doit être renseignée</mat-error>
+              </mat-form-field>-->
 
-      <div class="step-content-left mots-cles">
-        <mat-form-field appearance="outline">
-          <mat-label>Mot-clés du défi</mat-label>
-          <mat-chip-list #chipList aria-label="Mot Clés">
-            <mat-chip *ngFor="let item of listeTags" selectable removable (removed)="remove(item)">
-              {{item}}
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-            <input pattern="[a-zA-Z ]*" name="tags" placeholder="Decouverte, StreetArt , etc..."
+        <!-- Tags -->
+
+        <div class="form-items">
+          <p>Sa aidera les autres chamis à retrouver ton defis</p>
+          <mat-form-field appearance="outline">
+            <mat-label>Mot-clés du défi</mat-label>
+            <mat-chip-list #chipList aria-label="Mot Clés">
+              <mat-chip *ngFor="let item of listeTags" selectable removable (removed)="remove(item)">
+                {{item}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+            <input pattern="[a-zA-Z ]*"
+                   name="tags"
+                   placeholder="Decouverte, StreetArt , etc..."
                    [matChipInputFor]="chipList"
                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur
                    (matChipInputTokenEnd)="add($event)">
-          </mat-chip-list>
-        </mat-form-field>
-      </div>
-      <div>
-        <button mat-button matStepperNext>Suivant</button>
+          </mat-form-field>
+        </div>
+        <div class="form-items stepper-next-container">
+          <button mat-button matStepperNext color="primary">Suivant</button>
+        </div>
       </div>
     </form>
   </mat-step>
