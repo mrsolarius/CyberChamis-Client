@@ -5,7 +5,7 @@ import {CreateEtapeService, EtapeForm, TypeEtape} from "../create-etape.service"
 @Component({
   selector: 'app-create-etape',
   templateUrl: './create-etape.component.html',
-  styleUrls: ['./create-etape.component.scss']
+  styleUrls: ['../create.component.scss']
 })
 export class CreateEtapeComponent implements OnInit {
   @Input('etape') etape!: EtapeForm;

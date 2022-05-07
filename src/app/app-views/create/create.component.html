@@ -108,44 +108,49 @@
   </mat-step>
 
   <mat-step [stepControl]="secondFormGroup" errorMessage="Info des étapes non remplie en totalité">
-
-    <p>Dans notre communauté, une étape peut être une indication ou une tache à faire ! Combien d'étapes contient ton
-      défi ?</p>
     <ng-template matStepLabel>Les étapes du défi</ng-template>
-    <!-- Creation des étapes -->
-    <button mat-button (click)="addEtape()">Ajouter une étape</button>
-    <mat-accordion cdkDropList
-                   *ngIf="getEtapesObservable() | async as etapes"
-                   [cdkDropListData]="etapes"
-                   (cdkDropListDropped)="drop($event)">
-      <mat-expansion-panel
-        cdkDrag
-        *ngFor="let e of etapes;let num = index; trackBy: trackById">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon cdkDragHandle color="primary">
-              drag_handle
-            </mat-icon>
-            <div style="width: 10px"></div>
-            Etape {{e.numero + 1}} : {{e.titre}}
-          </mat-panel-title>
-          <mat-panel-description>
-            <mat-error *ngIf="!e.isValide" style="margin-right: 10px">Attention, il y a des erreurs dans cette étape
-            </mat-error>
-            <mat-icon color="warn" *ngIf="!e.isValide">error</mat-icon>
-            <button mat-icon-button (click)="delete(e.numero)" *ngIf="etapes.length!==1">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div>
-          <app-create-etape [etape]="e" #error></app-create-etape>
+    <div class="step-container">
+      <div class="form-items">
+      <p>Dans notre communauté, une étape peut être une indication ou une tache à faire ! Combien d'étapes contient ton
+        défi ?</p>
+      <!-- Creation des étapes -->
+      <button mat-raised-button (click)="addEtape()" color="primary" class="stepper-next-container">Ajouter une étape</button>
+      </div>
+      <div class="form-items">
+      <mat-accordion cdkDropList
+                     *ngIf="getEtapesObservable() | async as etapes"
+                     [cdkDropListData]="etapes"
+                     (cdkDropListDropped)="drop($event)">
+        <mat-expansion-panel
+          cdkDrag
+          *ngFor="let e of etapes;let num = index; trackBy: trackById">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon cdkDragHandle color="primary">
+                drag_handle
+              </mat-icon>
+              <div style="width: 10px"></div>
+              Etape {{e.numero + 1}} : {{e.titre}}
+            </mat-panel-title>
+            <mat-panel-description>
+              <mat-error *ngIf="!e.isValide" style="margin-right: 10px">Attention, il y a des erreurs dans cette étape
+              </mat-error>
+              <mat-icon color="warn" *ngIf="!e.isValide">error</mat-icon>
+              <button mat-icon-button (click)="delete(e.numero)" *ngIf="etapes.length!==1">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            <app-create-etape [etape]="e" #error></app-create-etape>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
         </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-    <div>
-      <button mat-button matStepperPrevious>Retour</button>
-      <button mat-button matStepperNext>Suivant</button>
+      <div class="split-container stepper-next-container">
+        <button mat-button matStepperPrevious color="primary">Retour</button>
+        <button mat-button matStepperNext color="primary">Suivant</button>
+      </div>
     </div>
   </mat-step>
   <mat-step>

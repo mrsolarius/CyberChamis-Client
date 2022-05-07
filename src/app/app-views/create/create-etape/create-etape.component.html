@@ -1,92 +1,116 @@
 <!-- Choix entre indication et tache -->
-<div>
-  <p>S'agit-il d'une indication ou d'une tache ?</p>
-  <mat-form-field appearance="fill">
-    <mat-label>Indication ou Tache</mat-label>
-    <form [formGroup]="typeEtapeValidator">
-      <mat-select formControlName="typeEtape">
-        <mat-option [value]="'Indication'">Indication</mat-option>
-        <mat-option [value]="'Tache'">Tache</mat-option>
-      </mat-select>
-    </form>
-    <mat-error *ngIf="checkError('typeEtape', 'required')">Le type d'étape doit être renseigné</mat-error>
-  </mat-form-field>
+<div class="step-container">
+  <div class="form-items">
+    <p>S'agit-il d'une indication ou d'une tache ?</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Indication ou Tache</mat-label>
+      <form [formGroup]="typeEtapeValidator">
+        <mat-select formControlName="typeEtape">
+          <mat-option [value]="'Indication'">Indication</mat-option>
+          <mat-option [value]="'Tache'">Tache</mat-option>
+        </mat-select>
+      </form>
+      <mat-error *ngIf="checkError('typeEtape', 'required')">Le type d'étape doit être renseigné</mat-error>
+    </mat-form-field>
+  </div>
 
   <!-- Indication -->
-
   <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Indication'" [formGroup]="etapeIndication">
-    <p>Saisir le titre de l'indication</p>
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Titre de l'indication</mat-label>
-      <input matInput formControlName="indicationTitre" placeholder="nom d'indication" required>
-      <mat-error *ngIf="checkError('indicationTitre', 'required')">Le titre de l'indication doit être renseigné
-      </mat-error>
-    </mat-form-field>
+    <div class="form-items">
+      <p>Saisir le titre de l'indication</p>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Titre de l'indication</mat-label>
+        <input matInput formControlName="indicationTitre" placeholder="nom d'indication" required>
+        <mat-error *ngIf="checkError('indicationTitre', 'required')">Le titre de l'indication doit être renseigné
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-    <p>Saisir votre indication</p>
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Description de l'indication</mat-label>
-      <input matInput placeholder="Ex. Dans cette etape on va découvrir tel streetArt" value=""
-             formControlName="indication" required>
-      <mat-error *ngIf="checkError('indication', 'required')">La description de l'indication doit être renseigné
-      </mat-error>
-    </mat-form-field>
+    <div class="form-items">
+      <p>Saisir votre indication</p>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Description de l'indication</mat-label>
+        <input matInput placeholder="Ex. Dans cette etape on va découvrir tel streetArt" value=""
+               formControlName="indication" required>
+        <mat-error *ngIf="checkError('indication', 'required')">La description de l'indication doit être renseigné
+        </mat-error>
+      </mat-form-field>
+    </div>
   </form>
 
   <!-- Tache -->
 
   <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Tache'" [formGroup]="etapeTache">
-
-    <p>Saisir le titre d'une tache </p>
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Titre de la tache</mat-label>
-      <input matInput formControlName="tacheTitre" placeholder="nom de la tache" required>
-      <mat-error *ngIf="checkError('tacheTitre', 'required')">Le titre de la tache doit être renseigné</mat-error>
-    </mat-form-field>
+    <div class="form-items">
+      <p>Saisir le titre d'une tache </p>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Titre de la tache</mat-label>
+        <input matInput formControlName="tacheTitre" placeholder="nom de la tache" required>
+        <mat-error *ngIf="checkError('tacheTitre', 'required')">Le titre de la tache doit être renseigné</mat-error>
+      </mat-form-field>
+    </div>
     <!-- Question -->
-    <p>Entrez votre question </p>
-    <mat-form-field appearance="outline">
-      <mat-label>Question</mat-label>
-      <input formControlName="question" matInput placeholder="Question" required>
-      <mat-icon matSuffix>question_mark</mat-icon>
-      <mat-error *ngIf="checkError('question', 'required')">La question doit être renseigné</mat-error>
-    </mat-form-field>
-    <!-- Reponse -->
-    <p>Entrez votre réponse</p>
-    <mat-form-field appearance="outline">
-      <mat-label>Réponse</mat-label>
-      <input formControlName="reponse" matInput placeholder="Réponse">
-      <mat-icon matSuffix>done</mat-icon>
-      <mat-error *ngIf="checkError('reponse', 'required')">La reponse doit être renseigné</mat-error>
-    </mat-form-field>
+    <div class="split-container">
+      <div class="form-items">
+        <p>Entrez votre question </p>
+        <mat-form-field appearance="outline">
+          <mat-label>Question</mat-label>
+          <input formControlName="question" matInput placeholder="Question" required>
+          <mat-icon matSuffix>question_mark</mat-icon>
+          <mat-error *ngIf="checkError('question', 'required')">La question doit être renseigné</mat-error>
+        </mat-form-field>
+      </div>
+      <!-- Reponse -->
+
+      <div class="form-items">
+        <p>Entrez votre réponse</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Réponse</mat-label>
+          <input formControlName="reponse" matInput placeholder="Réponse">
+          <mat-icon matSuffix>done</mat-icon>
+          <mat-error *ngIf="checkError('reponse', 'required')">La reponse doit être renseigné</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
     <!-- Indice ( pour le moment un seul indice ) -->
-    <p>Blabla Indice</p>
-    <mat-form-field appearance="outline">
-      <mat-label>Indice</mat-label>
-      <input formControlName="indice" matInput placeholder="Indice">
-      <mat-icon matSuffix>lightbulb</mat-icon>
-      <mat-error *ngIf="checkError('indice', 'required')">L'indice doit être renseigné</mat-error>
-    </mat-form-field>
-    <p>Nombre de points perdus quand on utilise cet indice</p>
-    <mat-form-field appearance="fill">
-      <mat-label>Points perdus</mat-label>
-      <input matInput formControlName="pointsPerdus" placeholder="Points perdus " type="number" name="name" min="1"
-             required>
-      <mat-error *ngIf="checkError('pointsPerdus', 'required')">Le montant de points perdus doit être renseigné
-      </mat-error>
-      <mat-error *ngIf="checkError('pointsPerdus', 'min')">Le montant de points perdus ne doit pas être inférieur à 1
-      </mat-error>
-    </mat-form-field>
+    <div class="split-container">
+      <div class="form-items">
+        <p>Blabla Indice</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Indice</mat-label>
+          <input formControlName="indice" matInput placeholder="Indice">
+          <mat-icon matSuffix>lightbulb</mat-icon>
+          <mat-error *ngIf="checkError('indice', 'required')">L'indice doit être renseigné</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-items">
+        <p>Nombre de points perdus quand on utilise cet indice</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Points perdus</mat-label>
+          <input matInput formControlName="pointsPerdus" placeholder="Points perdus " type="number" name="name" min="1"
+                 required>
+          <mat-error *ngIf="checkError('pointsPerdus', 'required')">Le montant de points perdus doit être renseigné
+          </mat-error>
+          <mat-error *ngIf="checkError('pointsPerdus', 'min')">Le montant de points perdus ne doit pas être inférieur à
+            1
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
     <!-- Points gagnés grace à cette question -->
-    <p> Nombre de points gagnés quand on répond à cette etape </p>
-    <mat-form-field appearance="fill">
-      <mat-label> Points gagnés</mat-label>
-      <input matInput formControlName="pointsGagnes" placeholder="Points gagnés" type="number" name="name"
-             required>
-      <mat-error *ngIf="checkError('pointsGagnes', 'required')">Le montant de points gagnés doit être renseigné
-      </mat-error>
-      <mat-error *ngIf="checkError('pointsGagnes', 'min')">Le montant de points gagnés ne doit pas être inférieur à 1
-      </mat-error>
-    </mat-form-field>
+
+    <div class="form-items">
+      <p> Nombre de points gagnés quand on répond à cette etape </p>
+      <mat-form-field appearance="outline">
+        <mat-label> Points gagnés</mat-label>
+        <input matInput formControlName="pointsGagnes" placeholder="Points gagnés" type="number" name="name"
+               required>
+        <mat-error *ngIf="checkError('pointsGagnes', 'required')">Le montant de points gagnés doit être renseigné
+        </mat-error>
+        <mat-error *ngIf="checkError('pointsGagnes', 'min')">Le montant de points gagnés ne doit pas être inférieur à 1
+        </mat-error>
+      </mat-form-field>
+    </div>
   </form>
 </div>
