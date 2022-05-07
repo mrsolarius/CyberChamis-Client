@@ -19,16 +19,16 @@ export class CreateEtapeComponent implements OnInit {
       typeEtape: new FormControl('', Validators.required)
     })
     this.etapeIndication = this._formBuilder.group({
-      indicationTitre: ['', [Validators.required]],
-      indication: ['', [Validators.required]],
+      indicationTitre: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
+      indication: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(255)]],
     });
     this.etapeTache = this._formBuilder.group({
-      tacheTitre: ['', [Validators.required]],
-      question: ['', [Validators.required]],
-      reponse: ['', [Validators.required]],
-      indice: ['', [Validators.required]],
-      pointsPerdus: ['', [Validators.required, Validators.min(1)]],
-      pointsGagnes: ['', [Validators.required, Validators.min(1)]],
+      tacheTitre: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
+      question: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(360)]],
+      reponse: ['', [Validators.required,Validators.min(1),Validators.maxLength(50)]],
+      indice: ['', [Validators.minLength(5),Validators.maxLength(1024)]],
+      pointsPerdus: ['0', [Validators.required, Validators.min(0),Validators.max(5)]],
+      pointsGagnes: ['1', [Validators.required, Validators.min(1),Validators.max(10)]],
     });
   }
 
