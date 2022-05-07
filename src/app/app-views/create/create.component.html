@@ -1,5 +1,5 @@
 <!-- <mat-icon>room</mat-icon> pour icon arret-->
-<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+<mat-stepper [orientation]="innerWidth<600?'vertical':'horizontal'" [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup" errorMessage="Info du défi non remplies en totalité">
     <form [formGroup]="firstFormGroup" novalidate>
       <ng-template matStepLabel>Tu veux créer un défi ? C'est parti !</ng-template>
@@ -10,6 +10,8 @@
         <mat-label>Titre du défi</mat-label>
         <input matInput placeholder="" formControlName="titre" required>
         <mat-error *ngIf="checkError('titre', 'required')">Le titre doit être renseigné</mat-error>
+        <mat-error *ngIf="checkError('titre', 'maxlength')">Le titre est trop longue {{firstFormGroup.controls['titre'].value.length}}/45</mat-error>
+        <mat-error *ngIf="checkError('titre', 'minlength')">Le titre est trop courte de {{5-firstFormGroup.controls['titre'].value.length}}</mat-error>
       </mat-form-field>
 
 
@@ -17,8 +19,10 @@
       <p>Décris-nous ton défi ?</p>
       <mat-form-field appearance="fill">
         <mat-label>Description du défi</mat-label>
-        <input matInput placeholder="" formControlName="description" required>
+        <textarea matInput placeholder="" formControlName="description" required #description></textarea>
         <mat-error *ngIf="checkError('description', 'required')">La description doit être renseignée</mat-error>
+        <mat-error *ngIf="checkError('description', 'maxlength')">La description est trop longue {{firstFormGroup.controls['description'].value.length}}/128</mat-error>
+        <mat-error *ngIf="checkError('description', 'minlength')">La description est trop courte de {{10-firstFormGroup.controls['description'].value.length}}</mat-error>
       </mat-form-field>
 
       <!-- Arret -->
@@ -82,14 +86,28 @@
       <ng-template matStepLabel>Les étapes du défi</ng-template>
       <mat-form-field appearance="fill">
         <!-- Creation des étapes -->
-       <mat-label>Nombre d'étapes</mat-label>
-        <input matInput type="number" placeholder="Nombre d'etapes" formControlName="nbEtapes" min="1" max="20" required/>
+        <mat-label>Nombre d'étapes</mat-label>
+        <input matInput type="number" placeholder="Nombre d'etapes" formControlName="nbEtapes" min="1" max="99" required/>
         <mat-error *ngIf="checkError2('nbEtapes', 'required')">Le nombre d'etapes doit être renseignée</mat-error>
         <mat-error *ngIf="checkError2('nbEtapes', 'min')">Le nombre d'etapes doit être d'une étape minimum</mat-error>
-     </mat-form-field>
-        <div *ngFor="let e of [].constructor(secondFormGroup.controls['nbEtapes'].value)">
-            <app-create-etape></app-create-etape>
-        </div>
+        <mat-error *ngIf="checkError2('nbEtapes', 'max')">Le nombre d'etapes doit être de 99 étape maximum</mat-error>
+      </mat-form-field>
+      <mat-accordion *ngIf="!secondFormGroup.controls['nbEtapes'].invalid">
+        <mat-expansion-panel *ngFor="let e of [].constructor(secondFormGroup.controls['nbEtapes'].value);let num = index;">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Etape {{num + 1}}
+            </mat-panel-title>
+            <mat-panel-description *ngIf="checkEtapeErrors(num)">
+              Attention, il y a des erreurs dans cette étape
+              <mat-icon color="warn" >error</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            <app-create-etape (group)="addForm($event,num)" #error></app-create-etape>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
       <div>
         <button mat-button matStepperPrevious>Retour</button>
         <button mat-button matStepperNext>Suivant</button>
@@ -97,7 +115,7 @@
     </form>
   </mat-step>
   <mat-step>
-    <form (ngSubmit)="openSnackBar(messageFi,action)">
+    <form (ngSubmit)="openSnackBar()">
       <ng-template matStepLabel>On arrive à la fin !</ng-template>
       <!--<button mat-stroked-button (click)="openSnackBar(messageFi,action)">Créer mon défi</button>-->
 
@@ -116,7 +134,9 @@
       <br>
 
       <div>
-        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" [disabled]="firstFormGroup.invalid || firstFormGroup.pristine || secondFormGroup.invalid || secondFormGroup.pristine" type="submit">
+        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"
+                [disabled]="firstFormGroup.invalid || firstFormGroup.pristine || secondFormGroup.invalid || secondFormGroup.pristine"
+                type="submit">
           Créer le défi
           <mat-icon>task_alt</mat-icon>
         </button>

@@ -1,18 +1,20 @@
 <!-- Choix entre indication et tache -->
-<form [formGroup]="etape">
+<div>
   <p>S'agit-il d'une indication ou d'une tache ?</p>
   <mat-form-field appearance="fill">
     <mat-label>Indication ou Tache</mat-label>
-    <mat-select formControlName="typeEtape">
-      <mat-option value="Indication">Indication</mat-option>
-      <mat-option value="Tache">Tache</mat-option>
-    </mat-select>
+    <form [formGroup]="typeEtapeValidator">
+      <mat-select formControlName="typeEtape">
+        <mat-option [value]="'Indication'">Indication</mat-option>
+        <mat-option [value]="'Tache'">Tache</mat-option>
+      </mat-select>
+    </form>
     <mat-error *ngIf="checkError('typeEtape', 'required')">Le type d'étape doit être renseigné</mat-error>
   </mat-form-field>
 
   <!-- Indication -->
 
-  <div *ngIf="etape.controls['typeEtape'].value==='Indication'">
+  <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Indication'" [formGroup]="etapeIndication">
     <p>Saisir le titre de l'indication</p>
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Titre de l'indication</mat-label>
@@ -29,11 +31,11 @@
       <mat-error *ngIf="checkError('indication', 'required')">La description de l'indication doit être renseigné
       </mat-error>
     </mat-form-field>
-  </div>
+  </form>
 
   <!-- Tache -->
 
-  <div *ngIf="etape.controls['typeEtape'].value==='Tache'">
+  <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Tache'" [formGroup]="etapeTache">
 
     <p>Saisir le titre d'une tache </p>
     <mat-form-field class="example-full-width" appearance="fill">
@@ -83,5 +85,5 @@
         <mat-error *ngIf="checkError('pointsGagnes', 'min')">Le montant de points gagnés ne doit pas être inférieur à 1</mat-error>
       </mat-form-field>
     </p>
-  </div>
-</form>
+  </form>
+</div>

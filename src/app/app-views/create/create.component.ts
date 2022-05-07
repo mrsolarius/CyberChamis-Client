@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -19,20 +18,9 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 })
 
 export class CreateComponent implements OnInit {
-
-  titre!:string;
-  description!:string;
-  arret!:string;
-  dureeDefi!:Number;
-  nombreEtape!: Number;
-  totalPoints!:Number;
+  innerWidth: number=1920;
   listeTags: string[] = [];
-
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  nombreTotalEtapes = new FormControl(undefined);
-
-  nbEtapes!: number;
-  etapes = Array(this.nbEtapes).fill(0).map((x,i)=>i);
 
   // variable de vue
   action:any="";
@@ -41,6 +29,7 @@ export class CreateComponent implements OnInit {
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
+  etapes:FormGroup[]=[];
 
   constructor(private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar
@@ -48,15 +37,16 @@ export class CreateComponent implements OnInit {
 
   ) {
     this.firstFormGroup = this._formBuilder.group({
-      titre: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
+      description: ['', [Validators.required, Validators.maxLength(128),Validators.minLength(10)]],
       arret: ['', [Validators.required]],
-      duree: ['', [Validators.required, Validators.min(1)]],
+      duree: ['1', [Validators.required, Validators.min(1)]],
       //to do pb sur le pattern, il le considère juste alors qu'il ne le devrait pas
       listeTags:['',[Validators.pattern(/[a-zA-Z ]*/g)]],
     });
     this.secondFormGroup = this._formBuilder.group({
-      nbEtapes: ['0', [Validators.required,Validators.min(1)]]
+      nbEtapes: ['1', [Validators.required,Validators.min(1),Validators.max(99)]],
+      etapes: new FormControl(null),
     });
     this.thirdFormGroup = this._formBuilder.group({
       secondCtrl: ['', [Validators.required]],
@@ -78,22 +68,19 @@ export class CreateComponent implements OnInit {
 
   }
 
- /* constructor(private cm : ChamiRestControllerService) {
-    this.cm.getChamis().subscribe(data => {
-      this.chamis = data;
-    });
-  }
-*/
   ngOnInit() {
-
-
+    this.innerWidth = window.innerWidth;
   }
-  openSnackBar(message: string, action: string) {
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.innerWidth = window.innerWidth;
+  }
+
+  openSnackBar() {
     this._snackBar.open("Ton défi est créé !", "",{
       duration: 3000,
       panelClass: ['mat-toolbar', 'green-snackbar','snack-up']});
-
-
   }
 
   checkError(controlName: string, errorName: string){
@@ -108,7 +95,6 @@ export class CreateComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || '').trim()) {
       if (this.listeTags.filter((v) => v === value)?.length === 0) {
         this.listeTags.push(value.trim());
@@ -128,4 +114,20 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  addForm($event: FormGroup, index: number) {
+    console.log($event)
+    this.etapes[index]=$event;
+    if ($event.invalid || $event.pristine) {
+      this.secondFormGroup.controls['etapes'].setErrors({'invalid': true});
+    }else {
+      this.secondFormGroup.controls['etapes'].setErrors(null);
+    }
+  }
+
+  checkEtapeErrors(index: number):boolean{
+    if(this.etapes[index]==null){
+      return false;
+    }
+    return this.etapes[index].invalid;
+  }
 }
