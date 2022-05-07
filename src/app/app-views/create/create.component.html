@@ -1,5 +1,5 @@
 <!-- <mat-icon>room</mat-icon> pour icon arret-->
-<mat-stepper [orientation]="innerWidth<600?'vertical':'horizontal'" [linear]="isLinear" #stepper>
+<mat-stepper [orientation]="innerWidth<600?'vertical':'horizontal'" linear="false">
   <mat-step [stepControl]="firstFormGroup" errorMessage="Info du défi non remplies en totalité">
     <form [formGroup]="firstFormGroup" novalidate>
       <ng-template matStepLabel>Tu veux créer un défi ? C'est parti !</ng-template>
@@ -10,8 +10,11 @@
         <mat-label>Titre du défi</mat-label>
         <input matInput placeholder="" formControlName="titre" required>
         <mat-error *ngIf="checkError('titre', 'required')">Le titre doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('titre', 'maxlength')">Le titre est trop longue {{firstFormGroup.controls['titre'].value.length}}/45</mat-error>
-        <mat-error *ngIf="checkError('titre', 'minlength')">Le titre est trop courte de {{5-firstFormGroup.controls['titre'].value.length}}</mat-error>
+        <mat-error *ngIf="checkError('titre', 'maxlength')">Le titre est trop
+          longue {{firstFormGroup.controls['titre'].value.length}}/45
+        </mat-error>
+        <mat-error *ngIf="checkError('titre', 'minlength')">Le titre est trop courte
+          de {{5 - firstFormGroup.controls['titre'].value.length}}</mat-error>
       </mat-form-field>
 
 
@@ -21,8 +24,11 @@
         <mat-label>Description du défi</mat-label>
         <textarea matInput placeholder="" formControlName="description" required #description></textarea>
         <mat-error *ngIf="checkError('description', 'required')">La description doit être renseignée</mat-error>
-        <mat-error *ngIf="checkError('description', 'maxlength')">La description est trop longue {{firstFormGroup.controls['description'].value.length}}/128</mat-error>
-        <mat-error *ngIf="checkError('description', 'minlength')">La description est trop courte de {{10-firstFormGroup.controls['description'].value.length}}</mat-error>
+        <mat-error *ngIf="checkError('description', 'maxlength')">La description est trop
+          longue {{firstFormGroup.controls['description'].value.length}}/128
+        </mat-error>
+        <mat-error *ngIf="checkError('description', 'minlength')">La description est trop courte
+          de {{10 - firstFormGroup.controls['description'].value.length}}</mat-error>
       </mat-form-field>
 
       <!-- Arret -->
@@ -80,39 +86,46 @@
   </mat-step>
 
   <mat-step [stepControl]="secondFormGroup" errorMessage="Info des étapes non remplie en totalité">
-    <form [formGroup]="secondFormGroup">
-      <p>Dans notre communauté, une étape peut être une indication ou une tache à faire ! Combien d'étapes contient ton
-        défi ?</p>
-      <ng-template matStepLabel>Les étapes du défi</ng-template>
-      <mat-form-field appearance="fill">
-        <!-- Creation des étapes -->
-        <mat-label>Nombre d'étapes</mat-label>
-        <input matInput type="number" placeholder="Nombre d'etapes" formControlName="nbEtapes" min="1" max="99" required/>
-        <mat-error *ngIf="checkError2('nbEtapes', 'required')">Le nombre d'etapes doit être renseignée</mat-error>
-        <mat-error *ngIf="checkError2('nbEtapes', 'min')">Le nombre d'etapes doit être d'une étape minimum</mat-error>
-        <mat-error *ngIf="checkError2('nbEtapes', 'max')">Le nombre d'etapes doit être de 99 étape maximum</mat-error>
-      </mat-form-field>
-      <mat-accordion *ngIf="!secondFormGroup.controls['nbEtapes'].invalid">
-        <mat-expansion-panel *ngFor="let e of [].constructor(secondFormGroup.controls['nbEtapes'].value);let num = index;">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Etape {{num + 1}}
-            </mat-panel-title>
-            <mat-panel-description *ngIf="checkEtapeErrors(num)">
-              Attention, il y a des erreurs dans cette étape
-              <mat-icon color="warn" >error</mat-icon>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div>
-            <app-create-etape (group)="addForm($event,num)" #error></app-create-etape>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-      <div>
-        <button mat-button matStepperPrevious>Retour</button>
-        <button mat-button matStepperNext>Suivant</button>
-      </div>
-    </form>
+
+    <p>Dans notre communauté, une étape peut être une indication ou une tache à faire ! Combien d'étapes contient ton
+      défi ?</p>
+    <ng-template matStepLabel>Les étapes du défi</ng-template>
+    <!-- Creation des étapes -->
+    <button mat-button (click)="addEtape()">Ajouter une étape</button>
+    <mat-accordion cdkDropList
+                   *ngIf="getEtapesObservable() | async as etapes"
+                   [cdkDropListData]="etapes"
+                   (cdkDropListDropped)="drop($event)">
+      <mat-expansion-panel
+        cdkDrag
+        *ngFor="let e of etapes;let num = index; trackBy: trackById">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon cdkDragHandle color="primary">
+              drag_handle
+            </mat-icon>
+            <div style="width: 10px"></div>
+            Etape {{e.numero + 1}} : {{e.titre}}
+          </mat-panel-title>
+          <mat-panel-description>
+            <mat-error *ngIf="!e.isValide" style="margin-right: 10px">Attention, il y a des erreurs dans cette étape
+            </mat-error>
+            <mat-icon color="warn" *ngIf="!e.isValide">error</mat-icon>
+            <button mat-icon-button (click)="delete(e.numero)" *ngIf="etapes.length!==1">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div>
+          <app-create-etape [etape]="e" #error></app-create-etape>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <pre *ngIf="getEtapesObservable() | async as etapes">{{etapes | json}}</pre>
+    <div>
+      <button mat-button matStepperPrevious>Retour</button>
+      <button mat-button matStepperNext>Suivant</button>
+    </div>
   </mat-step>
   <mat-step>
     <form (ngSubmit)="openSnackBar()">
