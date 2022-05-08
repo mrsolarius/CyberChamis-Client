@@ -1,8 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {DefiDto} from "../../api/models/defi-dto";
 import {Component, Input} from '@angular/core';
-import {DefiDto} from "../../api/models/defi-dto";
 import {ArretDto} from "../../api/models/arret-dto";
 
 type Star = "star" | "star_border" | "star_half";
