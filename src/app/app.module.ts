@@ -38,6 +38,7 @@ import { CreateComponent } from './app-views/create/create.component';
 import { CreateEtapeComponent } from './app-views/create/create-etape/create-etape.component';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CreateIndiceComponent } from './app-views/create/create-indice/create-indice.component';
+import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { CreateIndiceComponent } from './app-views/create/create-indice/create-i
     CreateComponent,
     CreateEtapeComponent,
     CreateIndiceComponent,
+    SlidesDefisComponent,
   ],
   imports: [
     DragDropModule,
