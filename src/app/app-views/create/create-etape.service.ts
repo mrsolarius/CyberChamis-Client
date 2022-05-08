@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AbstractForm, FormCollection} from "./form-collection";
+import {IndiceForm} from "./create-indice.service";
 
 export enum TypeEtape {
   Indication, Tache, NonDefinie
@@ -11,10 +12,8 @@ export interface EtapeForm extends AbstractForm {
   indication: string;
   question: string;
   reponse: string;
-  indice: string;
-  pointsPerdus: number;
+  indices: IndiceForm[];
   pointsGagnes: number;
-  isValide: boolean;
 }
 
 export const defaultEtape: EtapeForm = {
@@ -25,8 +24,7 @@ export const defaultEtape: EtapeForm = {
   indication: '',
   question: '',
   reponse: '',
-  indice: '',
-  pointsPerdus: 0,
+  indices: [],
   pointsGagnes: 0,
   isValide: false,
 }

@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from 
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatChipInputEvent} from "@angular/material/chips";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {CreateEtapeService, EtapeForm} from "./create-etape.service";
 import {debounceTime, distinctUntilChanged, finalize, Observable, switchMap, tap} from "rxjs";
@@ -31,7 +31,7 @@ export class CreateComponent implements OnInit {
 
   //Tags list for chips
   listeTags: string[] = [];
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
 
   //Autocomplete arrets de bus
   minSearchLength: number = 2;
@@ -54,7 +54,8 @@ export class CreateComponent implements OnInit {
 
     this.firstFormGroup = this._formBuilder.group({
       titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
-      description: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
+      minidescription: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
+      description: ['', [Validators.required, Validators.maxLength(1024), Validators.minLength(50)]],
       arret: ['', [Validators.required,this.isArretSelected.bind(this)]],
       duree: ['1', [Validators.required, Validators.min(1)]],
       //to do pb sur le pattern, il le considère juste alors qu'il ne le devrait pas
@@ -196,7 +197,6 @@ export class CreateComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<EtapeForm[]>) {
-    console.log("drop", event)
     this.etapeService.move(event.previousIndex, event.currentIndex);
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
   }

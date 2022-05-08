@@ -1,11 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CreateEtapeService, EtapeForm, TypeEtape} from "../create-etape.service";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {CreateIndiceService, IndiceForm} from "../create-indice.service";
 
 @Component({
   selector: 'app-create-etape',
   templateUrl: './create-etape.component.html',
-  styleUrls: ['../create.component.scss']
+  styleUrls: ['../create.component.scss'],
+  providers: [CreateIndiceService]
 })
 export class CreateEtapeComponent implements OnInit {
   @Input('etape') etape!: EtapeForm;
@@ -13,26 +16,34 @@ export class CreateEtapeComponent implements OnInit {
   typeEtapeValidator: FormGroup;
   etapeIndication: FormGroup;
   etapeTache: FormGroup;
+  innerWidth: number=1080;
+  indices: IndiceForm[] = [];
 
-  constructor(private _formBuilder: FormBuilder, private createEtapeService: CreateEtapeService) {
+  constructor(private _formBuilder: FormBuilder, private createEtapeService: CreateEtapeService, private createIndiceService: CreateIndiceService) {
     this.typeEtapeValidator = this._formBuilder.group({
       typeEtape: new FormControl('', Validators.required)
     })
     this.etapeIndication = this._formBuilder.group({
-      indicationTitre: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
-      indication: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(255)]],
+      indicationTitre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+      indication: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]],
     });
     this.etapeTache = this._formBuilder.group({
-      tacheTitre: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
-      question: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(360)]],
-      reponse: ['', [Validators.required,Validators.min(1),Validators.maxLength(50)]],
-      indice: ['', [Validators.minLength(5),Validators.maxLength(1024)]],
-      pointsPerdus: ['0', [Validators.required, Validators.min(0),Validators.max(5)]],
-      pointsGagnes: ['1', [Validators.required, Validators.min(1),Validators.max(10)]],
+      tacheTitre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+      tacheDescription: ['', [ Validators.minLength(10), Validators.maxLength(255)]],
+      question: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(360)]],
+      reponse: ['', [Validators.required, Validators.min(1), Validators.maxLength(50)]],
+      pointsGagnes: ['1', [Validators.required, Validators.min(1), Validators.max(10)]],
     });
   }
 
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.innerWidth = window.innerWidth;
+  }
+
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
     if (this.etape) {
       if(this.etape.typeEtape === TypeEtape.Indication) {
         this.typeEtapeValidator.controls['typeEtape'].setValue("Indication");
@@ -46,21 +57,30 @@ export class CreateEtapeComponent implements OnInit {
       this.etapeTache.controls['tacheTitre'].setValue(this.etape.titre);
       this.etapeTache.controls['question'].setValue(this.etape.question);
       this.etapeTache.controls['reponse'].setValue(this.etape.reponse);
-      this.etapeTache.controls['indice'].setValue(this.etape.indice);
-      this.etapeTache.controls['pointsPerdus'].setValue(this.etape.pointsPerdus);
       this.etapeTache.controls['pointsGagnes'].setValue(this.etape.pointsGagnes);
     }
 
+    //Obs de type d'étape
     this.typeEtapeValidator.valueChanges.subscribe(() => {
       this.updateEtape();
       this.createEtapeService.edit(this.etape.numero, this.etape);
     });
 
+    //Obs de l'indication
     this.etapeIndication.valueChanges.subscribe(() => {
       this.updateEtape();
       this.createEtapeService.edit(this.etape.numero, this.etape);
     });
+
+    //Obs de la tache
     this.etapeTache.valueChanges.subscribe(() => {
+      this.updateEtape();
+      this.createEtapeService.edit(this.etape.numero, this.etape);
+    });
+
+    //Obs de l'indice
+    this.createIndiceService.get().subscribe(indices => {
+      this.indices = indices;
       this.updateEtape();
       this.createEtapeService.edit(this.etape.numero, this.etape);
     });
@@ -81,10 +101,7 @@ export class CreateEtapeComponent implements OnInit {
 
 
   updateEtape() {
-    console.log("indic", this.typeEtapeValidator.controls['typeEtape'].value)
-    console.log("type", TypeEtape.Indication)
     if (this.typeEtapeValidator.controls['typeEtape'].value === "Indication") {
-      console.log("indication" + this.etapeIndication.controls['indicationTitre'].value);
       this.etape = {
         ...this.etape,
         titre: this.etapeIndication.controls['indicationTitre'].value,
@@ -93,17 +110,15 @@ export class CreateEtapeComponent implements OnInit {
         isValide: this.etapeIndication.valid && this.typeEtapeValidator.valid
       }
     } else if (this.typeEtapeValidator.controls['typeEtape'].value === "Tache") {
-      console.log("tache" + this.etapeTache.controls['tacheTitre'].value);
       this.etape = {
         ...this.etape,
         titre: this.etapeTache.controls['tacheTitre'].value,
         question: this.etapeTache.controls['question'].value,
         reponse: this.etapeTache.controls['reponse'].value,
-        indice: this.etapeTache.controls['indice'].value,
-        pointsPerdus: this.etapeTache.controls['pointsPerdus'].value,
+        indices: this.indices,
         pointsGagnes: this.etapeTache.controls['pointsGagnes'].value,
         typeEtape: TypeEtape.Tache,
-        isValide: this.etapeTache.valid && this.typeEtapeValidator.valid
+        isValide: this.checkIndiceValide() && this.etapeTache.valid && this.typeEtapeValidator.valid
       }
     } else {
       console.log("else");
@@ -113,5 +128,40 @@ export class CreateEtapeComponent implements OnInit {
         isValide: false
       }
     }
+  }
+
+  getIndiceObservable() {
+    return this.createIndiceService.get();
+  }
+
+  drop(event: CdkDragDrop<IndiceForm[], any>) {
+    this.createIndiceService.move(event.previousIndex, event.currentIndex);
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  }
+
+  addEtape() {
+    this.createIndiceService.addNew();
+  }
+
+  trackById(number: number, item: IndiceForm) {
+    return item.id;
+  }
+
+  delete(numero: number) {
+    this.createIndiceService.remove(numero);
+  }
+
+  addIndice() {
+    this.createIndiceService.addNew();
+  }
+
+  checkIndiceValide() {
+    return this.indices.reduce((acc, curr) => {
+      if (!acc) {
+        return false;
+      } else {
+        return curr.isValide;
+      }
+    }, true);
   }
 }

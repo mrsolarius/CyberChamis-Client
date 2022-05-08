@@ -37,6 +37,7 @@ import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar
 import { CreateComponent } from './app-views/create/create.component';
 import { CreateEtapeComponent } from './app-views/create/create-etape/create-etape.component';
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import { CreateIndiceComponent } from './app-views/create/create-indice/create-indice.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     GameBarComponent,
     CreateComponent,
     CreateEtapeComponent,
+    CreateIndiceComponent,
   ],
   imports: [
     DragDropModule,

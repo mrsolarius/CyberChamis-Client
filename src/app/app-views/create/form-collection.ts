@@ -5,6 +5,7 @@ let id = 0;
 export interface AbstractForm{
   id: number;
   numero: number;
+  isValide: boolean;
 }
 
 export abstract class FormCollection<T extends AbstractForm> {

@@ -1,3 +1,5 @@
+@import "src/app-var";
+
 .step-container{
   display: flex;
   width: 100%;
@@ -16,11 +18,14 @@
   flex-direction: column;
   flex: 1;
   margin: 12px;
+  width: calc( 100% - 24px);
 }
 
 .stepper-next-container{
   width: fit-content;
 }
+
+
 
 
 
@@ -35,4 +40,12 @@
 .mat-expansion-panel-header-description {
   justify-content: end;
   align-items: center;
+}
+
+
+@media screen and (max-width: $max-width-smartphone) {
+  .form-items{
+    margin: 2px;
+    width: calc( 100% - 4px);
+  }
 }

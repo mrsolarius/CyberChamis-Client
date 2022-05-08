@@ -25,8 +25,10 @@
         <mat-label>Titre de l'indication</mat-label>
         <input matInput formControlName="indicationTitre" placeholder="nom d'indication" required>
         <mat-error *ngIf="checkError('indicationTitre', 'required')">Le titre doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('indicationTitre', 'minlength')">Le titre doit contenir au moins 3 caractères</mat-error>
-        <mat-error *ngIf="checkError('indicationTitre', 'maxlength')">Le titre peut contenir au maximum 32 caractères</mat-error>
+        <mat-error *ngIf="checkError('indicationTitre', 'minlength')">Le titre doit contenir au moins 3 caractères
+        </mat-error>
+        <mat-error *ngIf="checkError('indicationTitre', 'maxlength')">Le titre peut contenir au maximum 32 caractères
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -37,8 +39,11 @@
         <input matInput placeholder="Ex. Dans cette etape on va découvrir tel streetArt" value=""
                formControlName="indication" required>
         <mat-error *ngIf="checkError('indication', 'required')">La description doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('indication', 'minlength')">La description doit contenir au moins 10 caractères</mat-error>
-        <mat-error *ngIf="checkError('indication', 'maxlength')">La description peut contenir au maximum 255 caractères</mat-error>
+        <mat-error *ngIf="checkError('indication', 'minlength')">La description doit contenir au moins 10 caractères
+        </mat-error>
+        <mat-error *ngIf="checkError('indication', 'maxlength')">La description peut contenir au maximum 255
+          caractères
+        </mat-error>
       </mat-form-field>
     </div>
   </form>
@@ -46,14 +51,29 @@
   <!-- Tache -->
 
   <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Tache'" [formGroup]="etapeTache">
+    <!-- Titre de la tache -->
     <div class="form-items">
       <p>Saisir le titre d'une tache </p>
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Titre de la tache</mat-label>
         <input matInput formControlName="tacheTitre" placeholder="nom de la tache" required>
         <mat-error *ngIf="checkError('tacheTitre', 'required')">Le titre doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('tacheTitre', 'minlength')">Le titre doit contenir au moins 3 caractères</mat-error>
-        <mat-error *ngIf="checkError('tacheTitre', 'maxlength')">Le titre peut contenir au maximum 32 caractères</mat-error>
+        <mat-error *ngIf="checkError('tacheTitre', 'minlength')">Le titre doit contenir au moins 3 caractères
+        </mat-error>
+        <mat-error *ngIf="checkError('tacheTitre', 'maxlength')">Le titre peut contenir au maximum 32 caractères
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Description de la tache -->
+    <div class="form-items">
+      <p>Saisir une description/remise en context de votre tache</p>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Description de la tache</mat-label>
+        <input matInput formControlName="tacheDescription" placeholder="nom d'indication">
+        <mat-error *ngIf="checkError('tacheDescription', 'minlength')">Le titre doit contenir au moins 3 caractères
+        </mat-error>
+        <mat-error *ngIf="checkError('tacheDescription', 'maxlength')">Le titre peut contenir au maximum 255 caractères
+        </mat-error>
       </mat-form-field>
     </div>
     <!-- Question -->
@@ -65,8 +85,10 @@
           <input formControlName="question" matInput placeholder="Question" required>
           <mat-icon matSuffix>question_mark</mat-icon>
           <mat-error *ngIf="checkError('question', 'required')">La question doit être renseigné</mat-error>
-          <mat-error *ngIf="checkError('question', 'minlength')">La question doit contenir au moins 10 caractères</mat-error>
-          <mat-error *ngIf="checkError('question', 'maxlength')">La question peut contenir au maximum 360 caractères</mat-error>
+          <mat-error *ngIf="checkError('question', 'minlength')">La question doit contenir au moins 10 caractères
+          </mat-error>
+          <mat-error *ngIf="checkError('question', 'maxlength')">La question peut contenir au maximum 360 caractères
+          </mat-error>
         </mat-form-field>
       </div>
       <!-- Reponse -->
@@ -78,39 +100,48 @@
           <input formControlName="reponse" matInput placeholder="Réponse">
           <mat-icon matSuffix>done</mat-icon>
           <mat-error *ngIf="checkError('reponse', 'required')">La reponse doit être renseigné</mat-error>
-          <mat-error *ngIf="checkError('reponse', 'minlength')">La reponse doit contenir au moins 1 caractères</mat-error>
-          <mat-error *ngIf="checkError('reponse', 'maxlength')">La reponse peut contenir au maximum 50 caractères</mat-error>
+          <mat-error *ngIf="checkError('reponse', 'minlength')">La reponse doit contenir au moins 1 caractères
+          </mat-error>
+          <mat-error *ngIf="checkError('reponse', 'maxlength')">La reponse peut contenir au maximum 50 caractères
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
     <!-- Indice ( pour le moment un seul indice ) -->
-    <div class="split-container">
-      <div class="form-items">
-        <p>Blabla Indice</p>
-        <mat-form-field appearance="outline">
-          <mat-label>Indice</mat-label>
-          <input formControlName="indice" matInput placeholder="Indice">
-          <mat-icon matSuffix>lightbulb</mat-icon>
-          <mat-error *ngIf="checkError('indice', 'minlength')">L'indice doit contenir au moins 5 caractères</mat-error>
-          <mat-error *ngIf="checkError('indice', 'maxlength')">L'indice peut contenir au maximum 1024 caractères</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-items">
-        <p>Nombre de points perdus quand on utilise cet indice</p>
-        <mat-form-field appearance="outline">
-          <mat-label>Points perdus</mat-label>
-          <input matInput formControlName="pointsPerdus"
-                 placeholder="Points perdus "
-                 type="number"
-                 min="0"
-                 max="5"
-                 required>
-          <mat-error *ngIf="checkError('pointsPerdus', 'required')">Le montant de points perdus doit être renseigné</mat-error>
-          <mat-error *ngIf="checkError('pointsPerdus', 'min')">Le montant de points perdus ne doit pas être inférieur à 0</mat-error>
-          <mat-error *ngIf="checkError('pointsPerdus', 'max')">Le montant de points perdus ne doit pas être supérieur à 5</mat-error>
-        </mat-form-field>
-      </div>
+    <div class="form-items stepper-next-container">
+      <button mat-raised-button color="primary" (click)="addIndice()">Ajouter un indice</button>
+    </div>
+    <div class="form-items">
+      <mat-accordion cdkDropList
+                     *ngIf="getIndiceObservable() | async as indices"
+                     [cdkDropListData]="indices"
+                     (cdkDropListDropped)="drop($event)">
+        <mat-expansion-panel
+          cdkDrag
+          *ngFor="let i of indices;let num = index; trackBy: trackById">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon cdkDragHandle color="primary">
+                drag_handle
+              </mat-icon>
+              <span *ngIf="innerWidth>600">Indice {{num + 1}}</span>
+              <span *ngIf="innerWidth<=600">{{num + 1}}</span>
+            </mat-panel-title>
+            <mat-panel-description>
+              <mat-error *ngIf="!i.isValide && innerWidth>=1080" style="margin-right: 10px">Attention, il y a des
+                erreurs dans cette étape
+              </mat-error>
+              <mat-icon color="warn" *ngIf="!i.isValide">error</mat-icon>
+              <button mat-icon-button (click)="delete(i.numero)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            <app-create-indice [indice]="i"></app-create-indice>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
     <!-- Points gagnés grace à cette question -->
 
@@ -124,6 +155,7 @@
                type="number"
                min="1"
                max="10"
+               value="1"
                required>
         <mat-error *ngIf="checkError('pointsGagnes', 'required')">Le montant de points gagnés doit être renseigné</mat-error>
         <mat-error *ngIf="checkError('pointsGagnes', 'min')">Le montant de points gagnés ne doit pas être inférieur à 1</mat-error>

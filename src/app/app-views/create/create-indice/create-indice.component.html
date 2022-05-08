@@ -1,0 +1,30 @@
+<form [formGroup]="indiceGroupe">
+<div class="split-container">
+  <div class="form-items">
+    <p>Blabla Indice</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Indice</mat-label>
+      <input formControlName="indice" matInput placeholder="Indice">
+      <mat-icon matSuffix>lightbulb</mat-icon>
+      <mat-error *ngIf="checkError('indice', 'required')">L'indice doit être renseigné</mat-error>
+      <mat-error *ngIf="checkError('indice', 'minlength')">L'indice doit contenir au moins 5 caractères</mat-error>
+      <mat-error *ngIf="checkError('indice', 'maxlength')">L'indice peut contenir au maximum 1024 caractères</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-items">
+    <p>Nombre de points perdus quand on utilise cet indice</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Points perdus</mat-label>
+      <input matInput formControlName="pointsPerdus"
+             placeholder="Points perdus "
+             type="number"
+             min="0"
+             max="5"
+             required>
+      <mat-error *ngIf="checkError('pointsPerdus', 'required')">Le montant de points perdus doit être renseigné</mat-error>
+      <mat-error *ngIf="checkError('pointsPerdus', 'min')">Le montant de points perdus ne doit pas être inférieur à 0</mat-error>
+      <mat-error *ngIf="checkError('pointsPerdus', 'max')">Le montant de points perdus ne doit pas être supérieur à 5</mat-error>
+    </mat-form-field>
+  </div>
+</div>
+</form>

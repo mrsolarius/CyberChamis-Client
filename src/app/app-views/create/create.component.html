@@ -21,16 +21,29 @@
 
         <!-- Description -->
         <div class="form-items">
-          <p>Décris-nous ton défi ?</p>
+          <p>Décris-nous brievement ton défi ?</p>
           <mat-form-field appearance="outline">
-            <mat-label>Description du défi</mat-label>
-            <textarea matInput placeholder="" formControlName="description" required #description></textarea>
+            <mat-label>Mini description du défi</mat-label>
+            <input matInput placeholder="" formControlName="minidescription" required/>
+            <mat-error *ngIf="checkError('minidescription', 'required')">La description doit être renseignée</mat-error>
+            <mat-error *ngIf="checkError('minidescription', 'maxlength')">La description est trop
+              longue {{firstFormGroup.controls['minidescription'].value.length}}/128
+            </mat-error>
+            <mat-error *ngIf="checkError('minidescription', 'minlength')">La description est trop courte
+              de {{10 - firstFormGroup.controls['minidescription'].value.length}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-items">
+          <p>Tu peut dévlopper un peut plus ici.</p>
+          <mat-form-field appearance="outline">
+            <mat-label>Description complete du défi</mat-label>
+            <textarea matInput placeholder="" formControlName="description" rows="4" required></textarea>
             <mat-error *ngIf="checkError('description', 'required')">La description doit être renseignée</mat-error>
             <mat-error *ngIf="checkError('description', 'maxlength')">La description est trop
-              longue {{firstFormGroup.controls['description'].value.length}}/128
+              longue {{firstFormGroup.controls['description'].value.length}}/1024
             </mat-error>
             <mat-error *ngIf="checkError('description', 'minlength')">La description est trop courte
-              de {{10 - firstFormGroup.controls['description'].value.length}}</mat-error>
+              de {{50 - firstFormGroup.controls['description'].value.length}}</mat-error>
           </mat-form-field>
         </div>
         <div class="split-container">
@@ -111,43 +124,44 @@
     <ng-template matStepLabel>Les étapes du défi</ng-template>
     <div class="step-container">
       <div class="form-items">
-      <p>Dans notre communauté, une étape peut être une indication ou une tache à faire ! Combien d'étapes contient ton
-        défi ?</p>
-      <!-- Creation des étapes -->
-      <button mat-raised-button (click)="addEtape()" color="primary" class="stepper-next-container">Ajouter une étape</button>
+        <p>Dans notre communauté, une étape peut être une indication ou une tache à faire ! Combien d'étapes contient ton défi ?</p>
+        <!-- Creation des étapes -->
+        <button mat-raised-button (click)="addEtape()" color="primary" class="stepper-next-container">Ajouter une étape</button>
       </div>
       <div class="form-items">
-      <mat-accordion cdkDropList
-                     *ngIf="getEtapesObservable() | async as etapes"
-                     [cdkDropListData]="etapes"
-                     (cdkDropListDropped)="drop($event)">
-        <mat-expansion-panel
-          cdkDrag
-          *ngFor="let e of etapes;let num = index; trackBy: trackById">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon cdkDragHandle color="primary">
-                drag_handle
-              </mat-icon>
-              <span *ngIf="innerWidth<600;else titleFull">Etape {{num+1}}</span>
-              <ng-template #titleFull>
-                <span>Etape {{e.numero + 1}} : {{e.titre}}</span>
-              </ng-template>
-            </mat-panel-title>
-            <mat-panel-description>
-              <mat-error *ngIf="!e.isValide && innerWidth>=1080" style="margin-right: 10px">Attention, il y a des erreurs dans cette étape</mat-error>
-              <mat-icon color="warn" *ngIf="!e.isValide">error</mat-icon>
-              <button mat-icon-button (click)="delete(e.numero)" *ngIf="etapes.length!==1">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div>
-            <app-create-etape [etape]="e"></app-create-etape>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-        </div>
+        <mat-accordion cdkDropList
+                       *ngIf="getEtapesObservable() | async as etapes"
+                       [cdkDropListData]="etapes"
+                       (cdkDropListDropped)="drop($event)">
+          <mat-expansion-panel
+            cdkDrag
+            *ngFor="let e of etapes;let num = index; trackBy: trackById">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon cdkDragHandle color="primary">
+                  drag_handle
+                </mat-icon>
+                <span *ngIf="innerWidth<600;else titleFull">Etape {{num + 1}}</span>
+                <ng-template #titleFull>
+                  <span>Etape {{e.numero + 1}} : {{e.titre}}</span>
+                </ng-template>
+              </mat-panel-title>
+              <mat-panel-description>
+                <mat-error *ngIf="!e.isValide && innerWidth>=1080" style="margin-right: 10px">Attention, il y a des
+                  erreurs dans cette étape
+                </mat-error>
+                <mat-icon color="warn" *ngIf="!e.isValide">error</mat-icon>
+                <button mat-icon-button (click)="delete(e.numero)" *ngIf="etapes.length!==1">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+              <app-create-etape [etape]="e"></app-create-etape>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
       <div class="split-container stepper-next-container">
         <button mat-button matStepperPrevious color="primary">Retour</button>
         <button mat-button matStepperNext color="primary">Suivant</button>
