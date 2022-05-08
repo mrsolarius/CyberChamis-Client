@@ -6,6 +6,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { NoteRestControllerService } from './services/note-rest-controller.service';
 import { DefiRestControllerService } from './services/defi-rest-controller.service';
+import { CreationRestControllerService } from './services/creation-rest-controller.service';
 import { CommentaireRestControllerService } from './services/commentaire-rest-controller.service';
 import { ChamiRestControllerService } from './services/chami-rest-controller.service';
 import { GameRestControllerService } from './services/game-rest-controller.service';
@@ -20,6 +21,7 @@ import { GameRestControllerService } from './services/game-rest-controller.servi
   providers: [
     NoteRestControllerService,
     DefiRestControllerService,
+    CreationRestControllerService,
     CommentaireRestControllerService,
     ChamiRestControllerService,
     GameRestControllerService,
@@ -39,7 +41,7 @@ export class ApiModule {
     }
   }
 
-  constructor(
+  constructor( 
     @Optional() @SkipSelf() parentModule: ApiModule,
     @Optional() http: HttpClient
   ) {
