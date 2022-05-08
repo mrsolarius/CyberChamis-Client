@@ -1,5 +1,5 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {CreateEtapeService, EtapeForm, TypeEtape} from "../create-etape.service";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {CreateIndiceService, IndiceForm} from "../create-indice.service";
@@ -13,28 +13,27 @@ import {CreateIndiceService, IndiceForm} from "../create-indice.service";
 export class CreateEtapeComponent implements OnInit {
   @Input('etape') etape!: EtapeForm;
 
-  typeEtapeValidator: FormGroup;
+  etapeCommun: FormGroup;
   etapeIndication: FormGroup;
   etapeTache: FormGroup;
   innerWidth: number=1080;
   indices: IndiceForm[] = [];
 
   constructor(private _formBuilder: FormBuilder, private createEtapeService: CreateEtapeService, private createIndiceService: CreateIndiceService) {
-    this.typeEtapeValidator = this._formBuilder.group({
-      typeEtape: new FormControl('', Validators.required)
+    this.etapeCommun = this._formBuilder.group({
+      typeEtape: new FormControl('', [Validators.required, this.isEmptySelected]),
+      titre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+      description: ['', [Validators.minLength(3), Validators.maxLength(255)]],
     })
     this.etapeIndication = this._formBuilder.group({
-      indicationTitre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-      indicationDescription: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1024)]],
-      indication: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]],
+      indication: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1024)]],
     });
     this.etapeTache = this._formBuilder.group({
-      tacheTitre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-      tacheDescription: ['', [ Validators.minLength(10), Validators.maxLength(255)]],
       question: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(360)]],
       reponse: ['', [Validators.required, Validators.min(1), Validators.maxLength(50)]],
       pointsGagnes: ['1', [Validators.required, Validators.min(1), Validators.max(10)]],
     });
+    this.etapeTache.controls['pointsGagnes'].setValue(1);
   }
 
 
@@ -47,22 +46,22 @@ export class CreateEtapeComponent implements OnInit {
     this.innerWidth = window.innerWidth;
     if (this.etape) {
       if(this.etape.typeEtape === TypeEtape.Indication) {
-        this.typeEtapeValidator.controls['typeEtape'].setValue("Indication");
+        this.etapeCommun.controls['typeEtape'].setValue("Indication");
       }else if (this.etape.typeEtape === TypeEtape.Tache) {
-        this.typeEtapeValidator.controls['typeEtape'].setValue("Tache");
+        this.etapeCommun.controls['typeEtape'].setValue("Tache");
       }else {
-        this.typeEtapeValidator.controls['typeEtape'].setValue("NonDefinie");
+        this.etapeCommun.controls['typeEtape'].setValue("NonDefinie");
       }
-      this.etapeIndication.controls['indicationTitre'].setValue(this.etape.titre);
+      this.etapeCommun.controls['titre'].setValue(this.etape.titre);
+      this.etapeCommun.controls['description'].setValue(this.etape.description);
       this.etapeIndication.controls['indication'].setValue(this.etape.indication);
-      this.etapeTache.controls['tacheTitre'].setValue(this.etape.titre);
       this.etapeTache.controls['question'].setValue(this.etape.question);
       this.etapeTache.controls['reponse'].setValue(this.etape.reponse);
       this.etapeTache.controls['pointsGagnes'].setValue(this.etape.pointsGagnes);
     }
 
     //Obs de type d'étape
-    this.typeEtapeValidator.valueChanges.subscribe(() => {
+    this.etapeCommun.valueChanges.subscribe(() => {
       this.updateEtape();
       this.createEtapeService.edit(this.etape.numero, this.etape);
     });
@@ -88,11 +87,11 @@ export class CreateEtapeComponent implements OnInit {
   }
 
   checkError(controlName: string, errorName: string) {
-    if (this.typeEtapeValidator.controls['typeEtape'].value === "Indication") {
+    if (this.etapeCommun.controls['typeEtape'].value === "Indication") {
       if (this.etapeIndication.controls[controlName]) {
         return this.etapeIndication.controls[controlName].hasError(errorName);
       }
-    } else if (this.typeEtapeValidator.controls['typeEtape'].value === "Tache") {
+    } else if (this.etapeCommun.controls['typeEtape'].value === "Tache") {
       if (this.etapeTache.controls[controlName]) {
         return this.etapeTache.controls[controlName].hasError(errorName);
       }
@@ -100,33 +99,42 @@ export class CreateEtapeComponent implements OnInit {
     return false;
   }
 
+  checkCommonEtape(controlName: string, errorName: string) {
+    return this.etapeCommun.controls[controlName].hasError(errorName);
+  }
+
+  checkEmpty(){
+    return this.etapeCommun.controls['typeEtape'].value === "NonDefinie";
+  }
+
 
   updateEtape() {
-    if (this.typeEtapeValidator.controls['typeEtape'].value === "Indication") {
+    if (this.etapeCommun.controls['typeEtape'].value === "Indication") {
       this.etape = {
         ...this.etape,
-        titre: this.etapeIndication.controls['indicationTitre'].value,
-        description: this.etapeIndication.controls['indication'].value,
+        titre: this.etapeCommun.controls['titre'].value,
+        description:this.etapeCommun.controls['description'].value,
         indication: this.etapeIndication.controls['indication'].value,
         typeEtape: TypeEtape.Indication,
-        isValide: this.etapeIndication.valid && this.typeEtapeValidator.valid
+        isValide: this.etapeIndication.valid && this.etapeCommun.valid
       }
-    } else if (this.typeEtapeValidator.controls['typeEtape'].value === "Tache") {
+    } else if (this.etapeCommun.controls['typeEtape'].value === "Tache") {
       this.etape = {
         ...this.etape,
-        titre: this.etapeTache.controls['tacheTitre'].value,
-        description: this.etapeTache.controls['tacheDescription'].value,
+        titre: this.etapeCommun.controls['titre'].value,
+        description:this.etapeCommun.controls['description'].value,
         question: this.etapeTache.controls['question'].value,
         reponse: this.etapeTache.controls['reponse'].value,
         indices: this.indices,
         pointsGagnes: this.etapeTache.controls['pointsGagnes'].value,
         typeEtape: TypeEtape.Tache,
-        isValide: this.checkIndiceValide() && this.etapeTache.valid && this.typeEtapeValidator.valid
+        isValide: this.checkIndiceValide() && this.etapeTache.valid && this.etapeCommun.valid
       }
     } else {
-      console.log("else");
       this.etape = {
         ...this.etape,
+        titre: this.etapeCommun.controls['titre'].value,
+        description:this.etapeCommun.controls['description'].value,
         typeEtape: TypeEtape.NonDefinie,
         isValide: false
       }
@@ -166,5 +174,13 @@ export class CreateEtapeComponent implements OnInit {
         return curr.isValide;
       }
     }, true);
+  }
+
+  isEmptySelected(control: AbstractControl): ValidationErrors | null{
+    if(control.value === "NonDefinie"){
+      return {'required': true};
+    }else {
+      return null;
+    }
   }
 }

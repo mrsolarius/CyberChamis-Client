@@ -1,45 +1,47 @@
 <!-- Choix entre indication et tache -->
 <div class="step-container">
-  <div class="form-items">
-    <p>S'agit-il d'une indication ou d'une tache ?</p>
-    <mat-form-field appearance="outline">
-      <mat-label>Indication ou Tache</mat-label>
-      <form [formGroup]="typeEtapeValidator">
+  <form [formGroup]="etapeCommun">
+    <!-- Titre de l'étape -->
+    <div class="form-items">
+      <p>Saisir le titre de l'indication</p>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Titre de l'etape</mat-label>
+        <input matInput formControlName="titre" placeholder="nom d'indication" required>
+        <mat-error *ngIf="checkCommonEtape('titre', 'required')">Le titre doit être renseigné</mat-error>
+        <mat-error *ngIf="checkCommonEtape('titre', 'minlength')">Le titre doit contenir au moins 3 caractères
+        </mat-error>
+        <mat-error *ngIf="checkCommonEtape('titre', 'maxlength')">Le titre peut contenir au maximum 32 caractères
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Description de l'étape -->
+    <div class="form-items">
+      <p>Saisir une description/remise en context de votre étape</p>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Description de l'étape</mat-label>
+        <input matInput formControlName="description" placeholder="nom d'indication"/>
+        <mat-error *ngIf="checkCommonEtape('description', 'minlength')">La description doit contenir au moins 3
+          caractères
+        </mat-error>
+        <mat-error *ngIf="checkCommonEtape('description', 'maxlength')">La description peut contenir au maximum 1024 caractères</mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Choix entre indication et tache -->
+    <div class="form-items">
+      <p>S'agit-il d'une indication ou d'une tache ?</p>
+      <mat-form-field appearance="outline" [color]="checkEmpty()?'warn':'primary'">
+        <mat-label>Indication ou Tache</mat-label>
         <mat-select formControlName="typeEtape">
           <mat-option [value]="'Indication'">Indication</mat-option>
           <mat-option [value]="'Tache'">Tache</mat-option>
         </mat-select>
-        <mat-error *ngIf="typeEtapeValidator.controls['typeEtape'].hasError('required')">
-          Veuillez sélectionner un type d'étape
-        </mat-error>
-      </form>
-      <mat-error *ngIf="checkError('typeEtape', 'required')">Le type d'étape doit être renseigné</mat-error>
-    </mat-form-field>
-  </div>
+        <mat-error *ngIf="checkCommonEtape('typeEtape','required')">Veuillez sélectionner un type d'étape</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
 
   <!-- Indication -->
-  <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Indication'" [formGroup]="etapeIndication">
-    <div class="form-items">
-      <p>Saisir le titre de l'indication</p>
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Titre de l'indication</mat-label>
-        <input matInput formControlName="indicationTitre" placeholder="nom d'indication" required>
-        <mat-error *ngIf="checkError('indicationTitre', 'required')">Le titre doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('indicationTitre', 'minlength')">Le titre doit contenir au moins 3 caractères
-        </mat-error>
-        <mat-error *ngIf="checkError('indicationTitre', 'maxlength')">Le titre peut contenir au maximum 32 caractères
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="form-items">
-      <p>Saisir une description/remise en context de votre indication</p>
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Description de la tache</mat-label>
-        <input matInput formControlName="indicationDescription" placeholder="nom d'indication"/>
-        <mat-error *ngIf="checkError('indicationDescription', 'minlength')">La description doit contenir au moins 3 caractères</mat-error>
-        <mat-error *ngIf="checkError('indicationDescription', 'maxlength')">La description peut contenir au maximum 1024 caractères</mat-error>
-      </mat-form-field>
-    </div>
+  <form *ngIf="etapeCommun.controls['typeEtape'].value==='Indication'" [formGroup]="etapeIndication">
     <div class="form-items">
       <p>Saisir votre indication</p>
       <mat-form-field class="example-full-width" appearance="outline">
@@ -56,32 +58,7 @@
 
   <!-- Tache -->
 
-  <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Tache'" [formGroup]="etapeTache">
-    <!-- Titre de la tache -->
-    <div class="form-items">
-      <p>Saisir le titre d'une tache </p>
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Titre de la tache</mat-label>
-        <input matInput formControlName="tacheTitre" placeholder="nom de la tache" required>
-        <mat-error *ngIf="checkError('tacheTitre', 'required')">Le titre doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('tacheTitre', 'minlength')">Le titre doit contenir au moins 3 caractères
-        </mat-error>
-        <mat-error *ngIf="checkError('tacheTitre', 'maxlength')">Le titre peut contenir au maximum 32 caractères
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <!-- Description de la tache -->
-    <div class="form-items">
-      <p>Saisir une description/remise en context de votre tache</p>
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Description de la tache</mat-label>
-        <input matInput formControlName="tacheDescription" placeholder="nom d'indication">
-        <mat-error *ngIf="checkError('tacheDescription', 'minlength')">La description doit contenir au moins 3 caractères
-        </mat-error>
-        <mat-error *ngIf="checkError('tacheDescription', 'maxlength')">La description peut contenir au maximum 255 caractères
-        </mat-error>
-      </mat-form-field>
-    </div>
+  <form *ngIf="etapeCommun.controls['typeEtape'].value==='Tache'" [formGroup]="etapeTache">
     <!-- Question -->
     <div class="split-container">
       <div class="form-items">
