@@ -10,6 +10,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface VisiteImpl extends VisiteDto{
   currentIndices:IndiceDto[];
+  costNextIndice:number;
 }
 
 @Injectable({
@@ -17,7 +18,6 @@ export interface VisiteImpl extends VisiteDto{
 })
 export class PlayServiceService {
   private visite = new BehaviorSubject<VisiteImpl | null>(null);
-  private static idUser : number = 1;
 
   constructor(private gameService : GameRestControllerService, private userService : UserService,private router: Router,private snackBar: MatSnackBar) {
   }
@@ -31,9 +31,15 @@ export class PlayServiceService {
         try {
           i = await lastValueFrom(this.gameService.getResponseIndices({visiteId: v.id!}))
         } catch (e) {}
+          let costIndice = 0;
+          try {
+            costIndice = await lastValueFrom(this.gameService.getIndiceCost({visiteId: v.id!}));
+          }catch (e) {}
+
         this.visite.next({
           ...v,
-          currentIndices: i
+          currentIndices: i,
+          costNextIndice: costIndice
         });
         } catch (e) {
           const v = await lastValueFrom(this.gameService.startGame({defiId, userId:id}))
@@ -41,9 +47,14 @@ export class PlayServiceService {
           try{
             i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:v.id!}))
           }catch (_){}
+          let costIndice = 0;
+          try {
+            costIndice = await lastValueFrom(this.gameService.getIndiceCost({visiteId: v.id!}));
+          }catch (_) {}
           this.visite.next({
             ...v,
             currentIndices:i,
+            costNextIndice:costIndice
           })
         }
       }else{
@@ -60,9 +71,14 @@ export class PlayServiceService {
     try{
       i = await lastValueFrom(this.gameService.getResponseIndices({visiteId: this.getVisiteId()}));
     }catch(_){}
+    let costIndice = 0;
+    try {
+      costIndice = await lastValueFrom(this.gameService.getIndiceCost({visiteId: this.getVisiteId()}));
+    }catch (e) {}
     this.visite.next({
       ...v,
       currentIndices:i,
+      costNextIndice:costIndice
     })
   }
 
@@ -72,18 +88,28 @@ export class PlayServiceService {
     try{
       i = await lastValueFrom(this.gameService.getResponseIndices({visiteId:this.getVisiteId()}))
     }catch (_){}
+    let costIndice = 0;
+    try {
+      costIndice = await lastValueFrom(this.gameService.getIndiceCost({visiteId: this.getVisiteId()}));
+    }catch (e) {}
     this.visite.next({
       ...v,
-      currentIndices:i
+      currentIndices:i,
+      costNextIndice:costIndice
     })
   }
 
   async checkResponse(response:string):Promise<boolean>{
     const value = await lastValueFrom(this.gameService.checkResponse({visiteId:this.getVisiteId(), response}));
     const v = this.visite.value;
+    let costIndice = 0;
+    try {
+      costIndice = await lastValueFrom(this.gameService.getIndiceCost({visiteId: this.getVisiteId()}));
+    }catch (e) {}
     this.visite.next({
       ...v,
       currentIndices:v?.currentIndices?v.currentIndices:[],
+      costNextIndice:costIndice,
       reponseCourante:{
         ...v?.reponseCourante,
         isCorrect:value
@@ -100,6 +126,7 @@ export class PlayServiceService {
       this.visite.next({
         ...nv,
         currentIndices:v?.currentIndices?v.currentIndices:[],
+        costNextIndice:v?.costNextIndice?v?.costNextIndice:0
       });
       return true;
     }catch (e) {
@@ -111,9 +138,14 @@ export class PlayServiceService {
     await lastValueFrom(this.gameService.revealIndice({visiteId:this.getVisiteId()}));
     const v = await lastValueFrom(this.gameService.getVisites({visiteId:this.getVisiteId()}))
     const is = await lastValueFrom(this.gameService.getResponseIndices({visiteId:this.getVisiteId()}))
+    let costIndice = 0;
+    try {
+      costIndice = await lastValueFrom(this.gameService.getIndiceCost({visiteId: this.getVisiteId()}));
+    }catch (e) {}
     this.visite.next({
       ...v,
       currentIndices:is,
+      costNextIndice:costIndice
     })
   }
 
@@ -141,6 +173,7 @@ export class PlayServiceService {
     this.visite.next({
       ...nv,
       currentIndices:v?.currentIndices?v.currentIndices:[],
+      costNextIndice: v?.costNextIndice ? v?.costNextIndice : 0,
     });
   }
 }

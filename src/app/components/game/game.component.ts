@@ -28,7 +28,7 @@ export class GameComponent implements OnInit {
   }
 
   getResponseValue():string{
-    return this.responseDTO?.reponseUtilisateur!;
+    return this.responseDTO?.reponseUtilisateur?this.responseDTO.reponseUtilisateur:"";
   }
 
   getHasResponse() {

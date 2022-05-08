@@ -9,7 +9,7 @@
     </ng-container>
   </mat-list>
   <mat-nav-list *ngIf="getNbIndicesUtilises(obs.reponseCourante)<getNbIndices(obs.etapeCourante)-1">
-    <div mat-subheader>Actions</div>
+    <div mat-subheader>Actions (vous coutera {{obs.costNextIndice}} points)</div>
     <button mat-list-item (click)="revealIndice()">
       <mat-icon>lightbulb</mat-icon>
       Révéler un indice

@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
+import {Component, Input} from '@angular/core';
 import {ArretDto} from "../../api/models/arret-dto";
 
 type Star = "star" | "star_border" | "star_half";

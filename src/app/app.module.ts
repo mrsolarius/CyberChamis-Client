@@ -40,6 +40,9 @@ import { FinishComponent } from './components/finish/finish.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { CreateComponent } from './app-views/create/create.component';
 import { CreateEtapeComponent } from './app-views/create/create-etape/create-etape.component';
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { CreateIndiceComponent } from './app-views/create/create-indice/create-indice.component';
+import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
 import { DefiInfoComponent } from './components/defi-info/defi-info.component';
 import { CommentaireComponent } from './components/commentaire/commentaire.component';
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
@@ -65,6 +68,8 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     GameBarComponent,
     CreateComponent,
     CreateEtapeComponent,
+    CreateIndiceComponent,
+    SlidesDefisComponent,
     IndiceSheetComponent,
     NotFoundComponent,
     FinishComponent,
@@ -75,6 +80,7 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     AddCommentComponent,
   ],
   imports: [
+    DragDropModule,
     LeafletModule,
     ApiModule,
     HttpClientModule,
