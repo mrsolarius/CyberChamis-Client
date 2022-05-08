@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Defi} from "../../api/models/defi";
+import {DefiDto} from "../../api/models/defi-dto";
 
 @Component({
   selector: 'app-defis',
@@ -7,7 +7,7 @@ import {Defi} from "../../api/models/defi";
   styleUrls: ['./defis.component.scss']
 })
 export class DefisComponent implements OnInit {
-  @Input() defis!: Defi[];
+  @Input() defis!: DefiDto[];
 
   constructor() { }
 

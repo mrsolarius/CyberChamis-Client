@@ -9,9 +9,10 @@ import {CreateEtapeService, EtapeForm} from "./create-etape.service";
 import {debounceTime, distinctUntilChanged, finalize, Observable, switchMap, tap} from "rxjs";
 import {MetroboliliteService} from "../../api-metro/metrobolilite.service";
 import {GeoJSON} from "geojson";
-import {FeatureStop} from "../../api-metro/models/stops";
+import {castFeatureStopToArretDto, FeatureStop} from "../../api-metro/models/stops";
 import {filter, map} from "rxjs/operators";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {DefiCreateDto} from "../../api/models/defi-create-dto";
 
 
 @Component({
@@ -138,7 +139,21 @@ export class CreateComponent implements OnInit {
     this.innerWidth = window.innerWidth;
   }
 
-  openSnackBar() {
+  submitForm() {
+    if(this.firstFormGroup.invalid || this.firstFormGroup.pristine || this.secondFormGroup.invalid || this.secondFormGroup.pristine){
+      return;
+    }
+    if(this.selectedStop == null){
+      this.firstFormGroup.controls['arret'].setErrors(null);
+      return;
+    }
+
+    const formDTO : DefiCreateDto = {
+      arret:castFeatureStopToArretDto(this.selectedStop),
+    }
+  }
+
+  openSnackBar(){
     this._snackBar.open("Ton défi est créé !", "", {
       duration: 3000,
       panelClass: ['mat-toolbar', 'green-snackbar', 'snack-up']

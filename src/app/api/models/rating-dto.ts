@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-export interface Note {
-  id?: string;
+export interface RatingDto {
   note?: number;
+  number?: number;
 }

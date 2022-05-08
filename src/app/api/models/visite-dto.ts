@@ -8,6 +8,6 @@ export interface VisiteDto {
   etapeCourante?: EtapeDto;
   id?: number;
   points?: number;
-  reponses?: Array<ReponseDto>;
-  statut?: string;
+  reponseCourante?: ReponseDto;
+  statut?: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
 }

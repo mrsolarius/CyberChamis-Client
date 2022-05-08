@@ -9,7 +9,6 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Defi } from '../models/defi';
 import { DefiDto } from '../models/defi-dto';
 
 @Injectable({
@@ -36,7 +35,7 @@ export class DefiRestControllerService extends BaseService {
    */
   getById$Response(params: {
     id: string;
-  }): Observable<StrictHttpResponse<Defi>> {
+  }): Observable<StrictHttpResponse<DefiDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetByIdPath, 'get');
     if (params) {
@@ -49,7 +48,7 @@ export class DefiRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Defi>;
+        return r as StrictHttpResponse<DefiDto>;
       })
     );
   }
@@ -62,10 +61,10 @@ export class DefiRestControllerService extends BaseService {
    */
   getById(params: {
     id: string;
-  }): Observable<Defi> {
+  }): Observable<DefiDto> {
 
     return this.getById$Response(params).pipe(
-      map((r: StrictHttpResponse<Defi>) => r.body as Defi)
+      map((r: StrictHttpResponse<DefiDto>) => r.body as DefiDto)
     );
   }
 
@@ -250,6 +249,52 @@ export class DefiRestControllerService extends BaseService {
 
     return this.createDefi$Response(params).pipe(
       map((r: StrictHttpResponse<DefiDto>) => r.body as DefiDto)
+    );
+  }
+
+  /**
+   * Path part for operation deleteCommentaireFromDefi
+   */
+  static readonly DeleteCommentaireFromDefiPath = '/api/defis/commentaire/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `deleteCommentaireFromDefi()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteCommentaireFromDefi$Response(params: {
+    id: number;
+  }): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.DeleteCommentaireFromDefiPath, 'delete');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `deleteCommentaireFromDefi$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteCommentaireFromDefi(params: {
+    id: number;
+  }): Observable<void> {
+
+    return this.deleteCommentaireFromDefi$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 

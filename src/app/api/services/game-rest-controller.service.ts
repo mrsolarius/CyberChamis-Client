@@ -9,9 +9,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { EtapeDto } from '../models/etape-dto';
 import { IndiceDto } from '../models/indice-dto';
-import { Visite } from '../models/visite';
 import { VisiteDto } from '../models/visite-dto';
 
 @Injectable({
@@ -133,7 +131,7 @@ export class GameRestControllerService extends BaseService {
    */
   etapePrecedente$Response(params: {
     visiteId: number;
-  }): Observable<StrictHttpResponse<EtapeDto>> {
+  }): Observable<StrictHttpResponse<VisiteDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.EtapePrecedentePath, 'post');
     if (params) {
@@ -146,7 +144,7 @@ export class GameRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<EtapeDto>;
+        return r as StrictHttpResponse<VisiteDto>;
       })
     );
   }
@@ -159,10 +157,10 @@ export class GameRestControllerService extends BaseService {
    */
   etapePrecedente(params: {
     visiteId: number;
-  }): Observable<EtapeDto> {
+  }): Observable<VisiteDto> {
 
     return this.etapePrecedente$Response(params).pipe(
-      map((r: StrictHttpResponse<EtapeDto>) => r.body as EtapeDto)
+      map((r: StrictHttpResponse<VisiteDto>) => r.body as VisiteDto)
     );
   }
 
@@ -179,7 +177,7 @@ export class GameRestControllerService extends BaseService {
    */
   etapeSuivante$Response(params: {
     visiteId: number;
-  }): Observable<StrictHttpResponse<EtapeDto>> {
+  }): Observable<StrictHttpResponse<VisiteDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.EtapeSuivantePath, 'post');
     if (params) {
@@ -192,7 +190,7 @@ export class GameRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<EtapeDto>;
+        return r as StrictHttpResponse<VisiteDto>;
       })
     );
   }
@@ -205,10 +203,10 @@ export class GameRestControllerService extends BaseService {
    */
   etapeSuivante(params: {
     visiteId: number;
-  }): Observable<EtapeDto> {
+  }): Observable<VisiteDto> {
 
     return this.etapeSuivante$Response(params).pipe(
-      map((r: StrictHttpResponse<EtapeDto>) => r.body as EtapeDto)
+      map((r: StrictHttpResponse<VisiteDto>) => r.body as VisiteDto)
     );
   }
 
@@ -226,7 +224,7 @@ export class GameRestControllerService extends BaseService {
   editStatus$Response(params: {
     visiteId: number;
     status: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
-  }): Observable<StrictHttpResponse<Visite>> {
+  }): Observable<StrictHttpResponse<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'>> {
 
     const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.EditStatusPath, 'post');
     if (params) {
@@ -240,7 +238,7 @@ export class GameRestControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Visite>;
+        return r as StrictHttpResponse<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'>;
       })
     );
   }
@@ -254,10 +252,10 @@ export class GameRestControllerService extends BaseService {
   editStatus(params: {
     visiteId: number;
     status: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
-  }): Observable<Visite> {
+  }): Observable<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'> {
 
     return this.editStatus$Response(params).pipe(
-      map((r: StrictHttpResponse<Visite>) => r.body as Visite)
+      map((r: StrictHttpResponse<'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE'>) => r.body as 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE')
     );
   }
 
@@ -400,9 +398,55 @@ export class GameRestControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation getVisites
+   */
+  static readonly GetVisitesPath = '/api/game/get-visite';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getVisites()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVisites$Response(params: {
+    visiteId: number;
+  }): Observable<StrictHttpResponse<VisiteDto>> {
+
+    const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.GetVisitesPath, 'get');
+    if (params) {
+      rb.query('visiteId', params.visiteId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<VisiteDto>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getVisites$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVisites(params: {
+    visiteId: number;
+  }): Observable<VisiteDto> {
+
+    return this.getVisites$Response(params).pipe(
+      map((r: StrictHttpResponse<VisiteDto>) => r.body as VisiteDto)
+    );
+  }
+
+  /**
    * Path part for operation visiteCourante
    */
-  static readonly VisiteCourantePath = '/api/game/get-visite';
+  static readonly VisiteCourantePath = '/api/game/continue-visite';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.

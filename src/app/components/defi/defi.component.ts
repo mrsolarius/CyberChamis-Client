@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
-import {Defi} from "../../api/models/defi";
+import {DefiDto} from "../../api/models/defi-dto";
 
 type Star = "star" | "star_border" | "star_half";
 
@@ -12,7 +12,7 @@ type Star = "star" | "star_border" | "star_half";
   styleUrls: ['./defi.component.scss']
 })
 export class DefiComponent {
-  @Input() defi! : Defi;
+  @Input() defi! : DefiDto;
   constructor() { }
 
   getStar(note: number): Star[] {
