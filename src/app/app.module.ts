@@ -39,7 +39,7 @@ import { CreateEtapeComponent } from './app-views/create/create-etape/create-eta
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CreateIndiceComponent } from './app-views/create/create-indice/create-indice.component';
 import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
-
+import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
@@ -85,6 +85,7 @@ import { SlidesDefisComponent } from './components/slides-defis/slides-defis.com
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     ReactiveFormsModule,
+    IvyCarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
