@@ -1,14 +1,24 @@
 <mat-toolbar color="primary" class="toolbar">
-  <div class="progress-bar-container">
-    <mat-progress-bar color="accent" mode="determinate" value="40" class="progress-flex"></mat-progress-bar>
-    <span>1/8</span>
-  </div>
-  <div class="arrow-container">
-    <button mat-icon-button>
-      <mat-icon>arrow_back_ios_new</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon>arrow_forward_ios_new</mat-icon>
-    </button>
-  </div>
+  <mat-toolbar-row class="toolbar-row">
+    <div>
+      <button mat-icon-button matTooltip="Indice" (click)="openBottomSheet()" [disabled]="nbIndices<1">
+        <mat-icon [matBadge]="getAvailablesIndices()" matBadgeColor="accent" >lightbulb</mat-icon>
+      </button>
+    </div>
+    <div class="progress-bar-container">
+      <mat-progress-bar color="accent" mode="determinate" [value]="toPercent()" class="progress-flex"></mat-progress-bar>
+      <span>{{currentStep}}/{{totalStep}}</span>
+    </div>
+    <div>
+      <button mat-icon-button matTooltip="Étape précédentes" (click)="previousStep.emit()" [disabled]="disablePrevious()">
+        <mat-icon>arrow_back_ios_new</mat-icon>
+      </button>
+      <button *ngIf="!disableNext()" mat-icon-button matTooltip="Étape suivante" (click)="nextStep.emit()">
+        <mat-icon>arrow_forward_ios_new</mat-icon>
+      </button>
+      <button *ngIf="disableNext()" mat-icon-button matTooltip="Étape suivante" (click)="finishGame.emit()">
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>

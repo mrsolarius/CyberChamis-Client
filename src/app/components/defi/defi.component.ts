@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {DefiDto} from "../../api/models/defi-dto";
+import {Component, Input} from '@angular/core';
+import {DefiDto} from "../../api/models/defi-dto";
+import {ArretDto} from "../../api/models/arret-dto";
 
 type Star = "star" | "star_border" | "star_half";
 
@@ -12,7 +15,7 @@ type Star = "star" | "star_border" | "star_half";
   styleUrls: ['./defi.component.scss']
 })
 export class DefiComponent {
-  @Input() defi! : DefiDto;
+  @Input('defi') defi! : DefiDto;
   constructor() { }
 
   getStar(note: number): Star[] {
@@ -26,5 +29,15 @@ export class DefiComponent {
         return "star_border";
       }
     });
+  }
+
+  getNomArret(arret : ArretDto | undefined) {
+    if(arret){
+      if(arret.nomArret)
+        return arret.nomArret;
+      else
+        return undefined;
+    }else
+      return undefined;
   }
 }

@@ -3,9 +3,8 @@ import {NavigationEnd, Router, RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./app-views/home/home.component";
 import {ExploreComponent} from "./app-views/explore/explore.component";
 import {ProfileComponent} from "./app-views/profile/profile.component";
-import {GameComponent} from "./app-views/game/game.component";
 import {AppLayoutComponent} from "./components/layout/app-layout/app-layout.component";
-import {GameLayoutComponent} from "./components/layout/game-layout/game-layout.component";
+import {GameLayoutComponent} from "./app-views/game-layout/game-layout.component";
 import {LeftRightAnimationStateService} from "./left-right-animation-state.service";
 import {CreateComponent} from "./app-views/create/create.component";
 import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
@@ -21,14 +20,10 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent, data: {animation: 'fadeInOut'}},
       {path: 'slidesDefis', component: SlidesDefisComponent, data: {animation: 'fadeInOut'}},
       {path: 'create', component: CreateComponent, data: {animation: 'fadeInOut'}}
-
     ],
   },
-  {path: 'game',
+  {path: 'game/:id',
     component: GameLayoutComponent,
-    children: [
-      {path: 'test', component: GameComponent, data: {animation: 'fadeInOut'}}
-    ],
     data: {animation: 'leftRightAnimation'}
   }
 ];

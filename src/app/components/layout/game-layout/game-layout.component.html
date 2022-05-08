@@ -1,9 +1,0 @@
-<div class="app">
-  <div class="mobile-layout">
-    <app-top-bar [backRoute]="'/home'" [title]="'CyberChamis'"></app-top-bar>
-    <div class="contents" [@fadeAnimation]="mobileOutlet.isActivated ? mobileOutlet.activatedRoute : ''">
-      <router-outlet #mobileOutlet="outlet"></router-outlet>
-    </div>
-    <app-game-bar></app-game-bar>
-  </div>
-</div>

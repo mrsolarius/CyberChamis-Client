@@ -57,6 +57,7 @@
     </div>
   </form>
 
+
   <!-- Tache -->
 
   <form *ngIf="typeEtapeValidator.controls['typeEtape'].value==='Tache'" [formGroup]="etapeTache">
@@ -153,7 +154,6 @@
       </mat-accordion>
     </div>
     <!-- Points gagnés grace à cette question -->
-
     <div class="form-items">
       <p> Nombre de points gagnés quand on répond à cette etape </p>
       <mat-form-field appearance="outline">

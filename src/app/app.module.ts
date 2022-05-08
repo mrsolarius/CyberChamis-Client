@@ -30,16 +30,20 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DefisComponent } from './components/defis/defis.component';
 import { ProfileComponent } from './app-views/profile/profile.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { GameComponent } from './app-views/game/game.component';
+import { GameComponent } from './components/game/game.component';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
-import { GameLayoutComponent } from './components/layout/game-layout/game-layout.component';
+import { GameLayoutComponent } from './app-views/game-layout/game-layout.component';
 import { GameBarComponent } from './components/layout/app-bars/game-bar/game-bar.component';
+import { IndiceSheetComponent } from './components/layout/app-bars/game-bar/game-bar.component';
+import { NotFoundComponent } from './app-views/not-found/not-found.component';
+import { FinishComponent } from './components/finish/finish.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { CreateComponent } from './app-views/create/create.component';
 import { CreateEtapeComponent } from './app-views/create/create-etape/create-etape.component';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CreateIndiceComponent } from './app-views/create/create-indice/create-indice.component';
 import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
+import {IvyCarouselModule} from 'angular-responsive-carousel'
 
 @NgModule({
   declarations: [
@@ -60,8 +64,13 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     GameBarComponent,
     CreateComponent,
     CreateEtapeComponent,
+    creation-defi
     CreateIndiceComponent,
     SlidesDefisComponent,
+    IndiceSheetComponent,
+    NotFoundComponent,
+    FinishComponent,
+    StarRatingComponent,
   ],
   imports: [
     DragDropModule,

@@ -37,3 +37,28 @@ $escape-game-front-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.green-snackbar {
+  background: #09af00;
+  color: white;
+}
+.green-snackbar button {
+  background-color: #09af00;
+  color: white;
+  border: none;
+}
+.red-snackbar {
+  background: #F44336;
+  color: white;
+}
+.red-snackbar button {
+  background-color: #F44336;
+  color: white !important;
+  border: none;
+}
+
+.snack-up{
+  position: relative;
+  margin-bottom: 20% !important;
+}
+

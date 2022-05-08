@@ -1,0 +1,22 @@
+<div class="finish-container">
+  <mat-card class="win-container">
+    <img mat-card-image src="/assets/medal.png" class="medal" alt="medal">
+    <mat-card-title class="our-title">DÉFI TERMINÉ</mat-card-title>
+    <mat-card-content class="flex-win">
+      <div class="points-container">
+        <h2>Score</h2>
+        <mat-progress-bar [value]="toPersent()" color="accent"></mat-progress-bar>
+        <span>{{getPoints()}}/{{getPointsTotal()}}</span>
+      </div>
+      <ng-container *ngIf="userService.getUserId() | async as id">
+        <div class="points-container" *ngIf="id!==-1">
+          <h2>As-tu aimé ?</h2>
+          <div class="star-container">
+            <app-star-rating [rating]="getRating()" (rating)="updateNote($event)"></app-star-rating>
+          </div>
+        </div>
+      </ng-container>
+    </mat-card-content>
+    <a mat-raised-button color="primary" class="big-blue-button" routerLink="/home">Terminer</a>
+  </mat-card>
+</div>
