@@ -3,8 +3,8 @@
 .map-container {
   position: relative;
   margin: 30px;
-  height: 100%;
-  width:  calc( 100% - 60px );
+  height: 100vw;
+  width:  100vw;
 }
 
 .map-frame {
@@ -18,7 +18,7 @@
 
 @media screen and(max-width: $max-width-smartphone){
   .map-container{
-    margin: 0;
+    margin: 0 0 30px;
     width: 100%;
   }
 }
