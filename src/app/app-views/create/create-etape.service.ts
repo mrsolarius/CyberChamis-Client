@@ -17,9 +17,8 @@ export interface EtapeForm extends AbstractForm {
   isValide: boolean;
 }
 
-let id = 0;
 export const defaultEtape: EtapeForm = {
-  id,
+  id:0,
   numero: 0,
   titre: '',
   typeEtape: TypeEtape.NonDefinie,
