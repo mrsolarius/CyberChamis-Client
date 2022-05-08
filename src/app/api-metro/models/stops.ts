@@ -1,3 +1,5 @@
+import {Feature, Point} from "geojson";
+
 export interface Stops {
   type: "stops";
   gtfsId: string;
@@ -8,11 +10,6 @@ export interface Stops {
   clusterGtfsId: string;
 }
 
-export interface featureStop {
-  type: "Feature";
+export interface FeatureStop extends Feature<Point>{
   properties: Stops;
-  geometry: {
-    type: "Point";
-    coordinates: number[];
-  }
 }

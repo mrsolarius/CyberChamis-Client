@@ -9,7 +9,7 @@ import {CreateEtapeService, EtapeForm} from "./create-etape.service";
 import {debounceTime, distinctUntilChanged, finalize, Observable, switchMap, tap} from "rxjs";
 import {MetroboliliteService} from "../../api-metro/metrobolilite.service";
 import {GeoJSON} from "geojson";
-import {featureStop} from "../../api-metro/models/stops";
+import {FeatureStop} from "../../api-metro/models/stops";
 import {filter, map} from "rxjs/operators";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
@@ -35,8 +35,8 @@ export class CreateComponent implements OnInit {
 
   //Autocomplete arrets de bus
   minSearchLength: number = 2;
-  stops: featureStop[] = [];
-  selectedStop: featureStop|null = null;
+  stops: FeatureStop[] = [];
+  selectedStop: FeatureStop|null = null;
   isLoading: boolean = false;
 
   // variable de vue
@@ -122,7 +122,7 @@ export class CreateComponent implements OnInit {
     ).subscribe((points: GeoJSON) => {
       if (points.type === "FeatureCollection") {
         this.stops = points.features
-          .map((o) => (<featureStop>o))
+          .map((o) => (<FeatureStop>o))
           //Supression des arret qui on le même nom et la même ville
           .filter((value, index, self) =>
             index === self.findIndex((t) => (
