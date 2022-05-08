@@ -40,7 +40,9 @@ import { FinishComponent } from './components/finish/finish.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { CreateComponent } from './app-views/create/create.component';
 import { CreateEtapeComponent } from './app-views/create/create-etape/create-etape.component';
-
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { CreateIndiceComponent } from './app-views/create/create-indice/create-indice.component';
+import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
 
 @NgModule({
   declarations: [
@@ -61,12 +63,15 @@ import { CreateEtapeComponent } from './app-views/create/create-etape/create-eta
     GameBarComponent,
     CreateComponent,
     CreateEtapeComponent,
+    CreateIndiceComponent,
+    SlidesDefisComponent,
     IndiceSheetComponent,
     NotFoundComponent,
     FinishComponent,
     StarRatingComponent,
   ],
   imports: [
+    DragDropModule,
     LeafletModule,
     ApiModule,
     HttpClientModule,

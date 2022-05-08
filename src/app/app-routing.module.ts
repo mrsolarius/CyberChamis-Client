@@ -7,6 +7,7 @@ import {AppLayoutComponent} from "./components/layout/app-layout/app-layout.comp
 import {GameLayoutComponent} from "./app-views/game-layout/game-layout.component";
 import {LeftRightAnimationStateService} from "./left-right-animation-state.service";
 import {CreateComponent} from "./app-views/create/create.component";
+import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
       {path: 'home', component: HomeComponent, data: {animation: 'fadeInOut'}},
       {path: 'explore', component: ExploreComponent, data: {animation: 'fadeInOut'}},
       {path: 'profile', component: ProfileComponent, data: {animation: 'fadeInOut'}},
+      {path: 'slidesDefis', component: SlidesDefisComponent, data: {animation: 'fadeInOut'}},
       {path: 'create', component: CreateComponent, data: {animation: 'fadeInOut'}}
     ],
   },
