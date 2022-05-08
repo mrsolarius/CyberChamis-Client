@@ -67,7 +67,7 @@ export class CreateComponent implements OnInit {
       secondCtrl: ['', [Validators.required]],
     });
 
-    this.etapeService.getEtapes().subscribe((etapes: EtapeForm[]) => {
+    this.etapeService.get().subscribe((etapes: EtapeForm[]) => {
       const isValid = etapes.reduce((acc, etape) => {
         if (!acc) {
           return false;
@@ -197,16 +197,16 @@ export class CreateComponent implements OnInit {
 
   drop(event: CdkDragDrop<EtapeForm[]>) {
     console.log("drop", event)
-    this.etapeService.moveEtape(event.previousIndex, event.currentIndex);
+    this.etapeService.move(event.previousIndex, event.currentIndex);
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
   }
 
   getEtapesObservable(): Observable<EtapeForm[]> {
-    return this.etapeService.getEtapes();
+    return this.etapeService.get();
   }
 
   addEtape() {
-    this.etapeService.addNewEtape();
+    this.etapeService.addNew();
   }
 
   trackById(number: number, item: EtapeForm) {
@@ -214,7 +214,7 @@ export class CreateComponent implements OnInit {
   }
 
   delete(numero: number) {
-    this.etapeService.removeEtape(numero);
+    this.etapeService.remove(numero);
   }
 
   onSelected(event: MatAutocompleteSelectedEvent) {

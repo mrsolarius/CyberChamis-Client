@@ -53,16 +53,16 @@ export class CreateEtapeComponent implements OnInit {
 
     this.typeEtapeValidator.valueChanges.subscribe(() => {
       this.updateEtape();
-      this.createEtapeService.editEtape(this.etape.numero, this.etape);
+      this.createEtapeService.edit(this.etape.numero, this.etape);
     });
 
     this.etapeIndication.valueChanges.subscribe(() => {
       this.updateEtape();
-      this.createEtapeService.editEtape(this.etape.numero, this.etape);
+      this.createEtapeService.edit(this.etape.numero, this.etape);
     });
     this.etapeTache.valueChanges.subscribe(() => {
       this.updateEtape();
-      this.createEtapeService.editEtape(this.etape.numero, this.etape);
+      this.createEtapeService.edit(this.etape.numero, this.etape);
     });
   }
 
