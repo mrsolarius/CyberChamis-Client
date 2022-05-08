@@ -98,6 +98,7 @@ export class GameLayoutComponent {
 
   async checkResponse(response: string) {
     const r = await this.gameService.checkResponse(response);
+    await this.gameService.updateVisiteFromSrv();
     this.openSnackBar(r);
   }
 
