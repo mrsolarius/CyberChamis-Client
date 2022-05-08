@@ -398,6 +398,52 @@ export class GameRestControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation getIndiceCost
+   */
+  static readonly GetIndiceCostPath = '/api/game/indice-cost';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getIndiceCost()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getIndiceCost$Response(params: {
+    visiteId: number;
+  }): Observable<StrictHttpResponse<number>> {
+
+    const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.GetIndiceCostPath, 'get');
+    if (params) {
+      rb.query('visiteId', params.visiteId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: parseFloat(String((r as HttpResponse<any>).body)) }) as StrictHttpResponse<number>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getIndiceCost$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getIndiceCost(params: {
+    visiteId: number;
+  }): Observable<number> {
+
+    return this.getIndiceCost$Response(params).pipe(
+      map((r: StrictHttpResponse<number>) => r.body as number)
+    );
+  }
+
+  /**
    * Path part for operation getVisites
    */
   static readonly GetVisitesPath = '/api/game/get-visite';
