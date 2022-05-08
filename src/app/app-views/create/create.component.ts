@@ -15,6 +15,7 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {DefiCreateDto} from "../../api/models/defi-create-dto";
 import {CreationRestControllerService} from "../../api/services/creation-rest-controller.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../user/user.service";
 
 
 @Component({
@@ -40,10 +41,14 @@ export class CreateComponent implements OnInit {
   minSearchLength: number = 2;
   stops: FeatureStop[] = [];
   selectedStop: FeatureStop|null = null;
+  isSet: boolean = false;
   isLoading: boolean = false;
 
   //Etapes
   etapesData: EtapeForm[] = [];
+
+  //id user
+  idUser: number=-1;
 
   // variable de vue
   action: any = "";
@@ -57,7 +62,8 @@ export class CreateComponent implements OnInit {
               private etapeService: CreateEtapeService,
               private metro: MetroboliliteService,
               private creationService: CreationRestControllerService,
-              private router: Router) {
+              private router: Router,
+              private auth: UserService) {
     this.firstFormGroup = this._formBuilder.group({
       titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
       minidescription: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
@@ -108,13 +114,17 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.etapeService.get().subscribe((etapes: EtapeForm[]) => this.etapesData = etapes);
+    this.auth.getUserId().subscribe((id: number) => this.idUser = id);
     this.firstFormGroup.controls['arret'].valueChanges.pipe(
       filter(value => value.length >= this.minSearchLength),
       map(value => value.trim().toLowerCase()),
       distinctUntilChanged(),
       debounceTime(1000),
       tap(()=>{
-        this.selectedStop = null;
+        if (!this.isSet)
+          this.selectedStop = null;
+        else
+          this.isSet = false;
         this.stops = [];
         this.isLoading = true;
       }),
@@ -146,14 +156,20 @@ export class CreateComponent implements OnInit {
   }
 
   submitForm() {
-    if(this.firstFormGroup.invalid || this.firstFormGroup.pristine || this.secondFormGroup.invalid || this.secondFormGroup.pristine){
+    console.log("submitForm");
+    if(this.firstFormGroup.invalid || this.firstFormGroup.pristine || this.secondFormGroup.invalid || this.idUser ===-1){
+      console.log("formulaire invalide")
       return;
     }
+    console.log(this.selectedStop)
     if(this.selectedStop == null){
+      console.log("arret invalide")
       this.firstFormGroup.controls['arret'].setErrors(null);
       return;
     }
-    if (this.etapes.length=== 0) {
+
+    if (this.etapesData.length=== 0) {
+      console.log("pas d'étapes")
       this.secondFormGroup.controls['etapes'].setErrors({'invalid': true});
       return;
     }
@@ -163,11 +179,12 @@ export class CreateComponent implements OnInit {
       duree:this.firstFormGroup.controls['duree'].value,
       tags:this.listeTags,
       titre:this.firstFormGroup.controls['titre'].value,
-      miniDescription:this.firstFormGroup.controls['miniDescription'].value,
+      miniDescription:this.firstFormGroup.controls['minidescription'].value,
       description:this.firstFormGroup.controls['description'].value,
       etapes:this.etapesData.map(castToEtapeCreateDto),
-      auteurId:1,
+      auteurId:this.idUser,
     }
+    console.log(formDTO)
     this.creationService.createDefi1({body:formDTO}).subscribe(
       {
         next: (data) => {
@@ -264,7 +281,10 @@ export class CreateComponent implements OnInit {
     //get theleced id
     const id = event.option.id;
     const selectedStop = this.stops.find((stop) => stop.properties.id === id);
+    console.log(selectedStop);
     this.selectedStop = typeof selectedStop === 'undefined' ? null : selectedStop;
+    console.log(this.selectedStop);
+    this.isSet = true;
     this.firstFormGroup.controls['arret'].setErrors(null)
   }
 
