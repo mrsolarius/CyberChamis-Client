@@ -169,7 +169,6 @@
     </div>
   </mat-step>
   <mat-step>
-    <form (ngSubmit)="submitForm()">
       <ng-template matStepLabel>On arrive à la fin !</ng-template>
       <!--<button mat-stroked-button (click)="openSnackBar(messageFi,action)">Créer mon défi</button>-->
 
@@ -178,7 +177,7 @@
       <div>
         <p class="TextModifierDefi"> Tu as changé d'avis ?</p>
         <p>Tu peux encore le modifier</p>
-        <button mat-icon-button matStepperPrevious color="warn" aria-label="Example icon button with a home icon">
+        <button mat-button matStepperPrevious color="warn">
           Modifier le défi
           <mat-icon>update</mat-icon>
         </button>
@@ -187,14 +186,14 @@
       <br>
 
       <div>
-        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"
-                [disabled]="firstFormGroup.invalid || firstFormGroup.pristine || secondFormGroup.invalid || secondFormGroup.pristine"
-                type="submit">
+        <button mat-button color="primary"
+                (click)="submitForm()"
+                [disabled]="firstFormGroup.invalid || firstFormGroup.pristine || secondFormGroup.invalid || this.idUser ===-1">
           Créer le défi
           <mat-icon>task_alt</mat-icon>
         </button>
+        <mat-error *ngIf="idUser ===-1">Veuillez vous connecter pour créer un défi</mat-error>
       </div>
-    </form>
   </mat-step>
 </mat-stepper>
 
