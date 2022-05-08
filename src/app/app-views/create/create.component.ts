@@ -5,7 +5,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {CreateEtapeService, EtapeForm} from "./create-etape.service";
+import {castToEtapeCreateDto, CreateEtapeService, EtapeForm} from "./create-etape.service";
 import {debounceTime, distinctUntilChanged, finalize, Observable, switchMap, tap} from "rxjs";
 import {MetroboliliteService} from "../../api-metro/metrobolilite.service";
 import {GeoJSON} from "geojson";
@@ -13,6 +13,8 @@ import {castFeatureStopToArretDto, FeatureStop} from "../../api-metro/models/sto
 import {filter, map} from "rxjs/operators";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {DefiCreateDto} from "../../api/models/defi-create-dto";
+import {CreationRestControllerService} from "../../api/services/creation-rest-controller.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -40,6 +42,9 @@ export class CreateComponent implements OnInit {
   selectedStop: FeatureStop|null = null;
   isLoading: boolean = false;
 
+  //Etapes
+  etapesData: EtapeForm[] = [];
+
   // variable de vue
   action: any = "";
   firstFormGroup!: FormGroup;
@@ -50,9 +55,9 @@ export class CreateComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar,
               private etapeService: CreateEtapeService,
-              private metro: MetroboliliteService
-  ) {
-
+              private metro: MetroboliliteService,
+              private creationService: CreationRestControllerService,
+              private router: Router) {
     this.firstFormGroup = this._formBuilder.group({
       titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
       minidescription: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
@@ -102,6 +107,7 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
+    this.etapeService.get().subscribe((etapes: EtapeForm[]) => this.etapesData = etapes);
     this.firstFormGroup.controls['arret'].valueChanges.pipe(
       filter(value => value.length >= this.minSearchLength),
       map(value => value.trim().toLowerCase()),
@@ -147,10 +153,32 @@ export class CreateComponent implements OnInit {
       this.firstFormGroup.controls['arret'].setErrors(null);
       return;
     }
+    if (this.etapes.length=== 0) {
+      this.secondFormGroup.controls['etapes'].setErrors({'invalid': true});
+      return;
+    }
 
     const formDTO : DefiCreateDto = {
       arret:castFeatureStopToArretDto(this.selectedStop),
+      duree:this.firstFormGroup.controls['duree'].value,
+      tags:this.listeTags,
+      titre:this.firstFormGroup.controls['titre'].value,
+      miniDescription:this.firstFormGroup.controls['miniDescription'].value,
+      description:this.firstFormGroup.controls['description'].value,
+      etapes:this.etapesData.map(castToEtapeCreateDto),
+      auteurId:1,
     }
+    this.creationService.createDefi1({body:formDTO}).subscribe(
+      {
+        next: (data) => {
+          this.openSnackBar();
+          this.router.navigate(['/info', data.id]);
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      }
+    )
   }
 
   openSnackBar(){

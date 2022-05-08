@@ -25,6 +25,7 @@ export class CreateEtapeComponent implements OnInit {
     })
     this.etapeIndication = this._formBuilder.group({
       indicationTitre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+      indicationDescription: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(1024)]],
       indication: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]],
     });
     this.etapeTache = this._formBuilder.group({
@@ -105,6 +106,7 @@ export class CreateEtapeComponent implements OnInit {
       this.etape = {
         ...this.etape,
         titre: this.etapeIndication.controls['indicationTitre'].value,
+        description: this.etapeIndication.controls['indication'].value,
         indication: this.etapeIndication.controls['indication'].value,
         typeEtape: TypeEtape.Indication,
         isValide: this.etapeIndication.valid && this.typeEtapeValidator.valid
@@ -113,6 +115,7 @@ export class CreateEtapeComponent implements OnInit {
       this.etape = {
         ...this.etape,
         titre: this.etapeTache.controls['tacheTitre'].value,
+        description: this.etapeTache.controls['tacheDescription'].value,
         question: this.etapeTache.controls['question'].value,
         reponse: this.etapeTache.controls['reponse'].value,
         indices: this.indices,

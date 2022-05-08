@@ -31,11 +31,20 @@
         </mat-error>
       </mat-form-field>
     </div>
-
+    <div class="form-items">
+      <p>Saisir une description/remise en context de votre indication</p>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Description de la tache</mat-label>
+        <textarea matInput formControlName="indicationDescription" placeholder="nom d'indication" cols="3"></textarea>
+        <mat-error *ngIf="checkError('indicationDescription', 'minlength')">La description doit contenir au moins 3 caractères
+        </mat-error>
+        <mat-error *ngIf="checkError('indicationDescription', 'maxlength')">La description peut contenir au maximum 1024 caractères</mat-error>
+      </mat-form-field>
+    </div>
     <div class="form-items">
       <p>Saisir votre indication</p>
       <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Description de l'indication</mat-label>
+        <mat-label>Contenue de l'indication</mat-label>
         <input matInput placeholder="Ex. Dans cette etape on va découvrir tel streetArt" value=""
                formControlName="indication" required>
         <mat-error *ngIf="checkError('indication', 'required')">La description doit être renseigné</mat-error>
@@ -70,9 +79,9 @@
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Description de la tache</mat-label>
         <input matInput formControlName="tacheDescription" placeholder="nom d'indication">
-        <mat-error *ngIf="checkError('tacheDescription', 'minlength')">Le titre doit contenir au moins 3 caractères
+        <mat-error *ngIf="checkError('tacheDescription', 'minlength')">La description doit contenir au moins 3 caractères
         </mat-error>
-        <mat-error *ngIf="checkError('tacheDescription', 'maxlength')">Le titre peut contenir au maximum 255 caractères
+        <mat-error *ngIf="checkError('tacheDescription', 'maxlength')">La description peut contenir au maximum 255 caractères
         </mat-error>
       </mat-form-field>
     </div>
