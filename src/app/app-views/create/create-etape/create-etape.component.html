@@ -3,9 +3,9 @@
   <form [formGroup]="etapeCommun">
     <!-- Titre de l'étape -->
     <div class="form-items">
-      <p>Saisir le titre de l'indication</p>
+      <p>Saisis le titre de l'indication</p>
       <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Titre de l'etape</mat-label>
+        <mat-label>Titre de l'étape</mat-label>
         <input matInput formControlName="titre" placeholder="nom d'indication" required>
         <mat-error *ngIf="checkCommonEtape('titre', 'required')">Le titre doit être renseigné</mat-error>
         <mat-error *ngIf="checkCommonEtape('titre', 'minlength')">Le titre doit contenir au moins 3 caractères
@@ -16,7 +16,7 @@
     </div>
     <!-- Description de l'étape -->
     <div class="form-items">
-      <p>Saisir une description/remise en context de votre étape</p>
+      <p>Saisis une description / contexte de ton étape</p>
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Description de l'étape</mat-label>
         <input matInput formControlName="description" placeholder="nom d'indication"/>
@@ -35,7 +35,7 @@
           <mat-option [value]="'Indication'">Indication</mat-option>
           <mat-option [value]="'Tache'">Tache</mat-option>
         </mat-select>
-        <mat-error *ngIf="checkCommonEtape('typeEtape','required')">Veuillez sélectionner un type d'étape</mat-error>
+        <mat-error *ngIf="checkCommonEtape('typeEtape','required')">Tu dois sélectionner un type d'étape</mat-error>
       </mat-form-field>
     </div>
   </form>
@@ -43,9 +43,9 @@
   <!-- Indication -->
   <form *ngIf="etapeCommun.controls['typeEtape'].value==='Indication'" [formGroup]="etapeIndication">
     <div class="form-items">
-      <p>Saisir votre indication</p>
+      <p>Saisis le contenu de ton indication</p>
       <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Contenue de l'indication</mat-label>
+        <mat-label>Contenu de l'indication</mat-label>
         <textarea matInput placeholder="Ex. Dans cette etape on va découvrir tel streetArt"
                formControlName="indication" required cols="3"></textarea>
         <mat-error *ngIf="checkError('indication', 'required')">L'indication doit être renseigné</mat-error>
@@ -62,12 +62,12 @@
     <!-- Question -->
     <div class="split-container">
       <div class="form-items">
-        <p>Entrez votre question </p>
+        <p>Entrez votre question</p>
         <mat-form-field appearance="outline">
           <mat-label>Question</mat-label>
           <input formControlName="question" matInput placeholder="Question" required>
           <mat-icon matSuffix>question_mark</mat-icon>
-          <mat-error *ngIf="checkError('question', 'required')">La question doit être renseigné</mat-error>
+          <mat-error *ngIf="checkError('question', 'required')">La question doit être renseignée</mat-error>
           <mat-error *ngIf="checkError('question', 'minlength')">La question doit contenir au moins 10 caractères
           </mat-error>
           <mat-error *ngIf="checkError('question', 'maxlength')">La question peut contenir au maximum 360 caractères
@@ -77,15 +77,15 @@
       <!-- Reponse -->
 
       <div class="form-items">
-        <p>Entrez votre réponse</p>
+        <p>Entre la réponse ici</p>
         <mat-form-field appearance="outline">
           <mat-label>Réponse</mat-label>
           <input formControlName="reponse" matInput placeholder="Réponse">
           <mat-icon matSuffix>done</mat-icon>
-          <mat-error *ngIf="checkError('reponse', 'required')">La reponse doit être renseigné</mat-error>
-          <mat-error *ngIf="checkError('reponse', 'minlength')">La reponse doit contenir au moins 1 caractères
+          <mat-error *ngIf="checkError('reponse', 'required')">La réponse doit être renseignée</mat-error>
+          <mat-error *ngIf="checkError('reponse', 'minlength')">La réponse doit contenir au moins 1 caractère
           </mat-error>
-          <mat-error *ngIf="checkError('reponse', 'maxlength')">La reponse peut contenir au maximum 50 caractères
+          <mat-error *ngIf="checkError('reponse', 'maxlength')">La réponse peut contenir au maximum 50 caractères
           </mat-error>
         </mat-form-field>
       </div>
@@ -128,7 +128,7 @@
     </div>
     <!-- Points gagnés grace à cette question -->
     <div class="form-items">
-      <p> Nombre de points gagnés quand on répond à cette etape </p>
+      <p> Nombre de points gagné quand on répond à cette étape </p>
       <mat-form-field appearance="outline">
         <mat-label>Points gagnés</mat-label>
         <input matInput
@@ -139,9 +139,9 @@
                max="10"
                value="1"
                required>
-        <mat-error *ngIf="checkError('pointsGagnes', 'required')">Le montant de points gagnés doit être renseigné</mat-error>
-        <mat-error *ngIf="checkError('pointsGagnes', 'min')">Le montant de points gagnés ne doit pas être inférieur à 1</mat-error>
-        <mat-error *ngIf="checkError('pointsGagnes', 'max')">Le montant de points gagnés ne doit pas être supérieur à 10</mat-error>
+        <mat-error *ngIf="checkError('pointsGagnes', 'required')">Le montant de points gagné doit être renseigné</mat-error>
+        <mat-error *ngIf="checkError('pointsGagnes', 'min')">Le montant de points gagné ne doit pas être inférieur à 1</mat-error>
+        <mat-error *ngIf="checkError('pointsGagnes', 'max')">Le montant de points gagné ne doit pas être supérieur à 10</mat-error>
       </mat-form-field>
     </div>
   </form>
