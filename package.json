@@ -27,7 +27,7 @@
     "@metromobilite/m-features": "^2.3.1",
     "@types/geojson": "^7946.0.8",
     "@types/leaflet": "^1.7.9",
-    "angular-responsive-carousel": "^2.1.2",
+    "image-conversion": "^2.1.1",
     "leaflet": "^1.8.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
-import {BehaviorSubject} from "rxjs";
-import {filter} from "rxjs/operators";
+import {BehaviorSubject, lastValueFrom, Observable, switchMap} from "rxjs";
+import {filter, map} from "rxjs/operators";
+import {FirefilesService} from "../../firefiles.service";
 
 @Component({
   selector: 'app-home',
@@ -11,8 +12,23 @@ import {filter} from "rxjs/operators";
 })
 export class HomeComponent implements OnInit {
   defi:BehaviorSubject<DefiDto[]> = new BehaviorSubject<DefiDto[]>([]);
+  defisObsView:Observable<DefiDto[]>;
 
-  constructor(private defisRest : DefiRestControllerService) {}
+  constructor(private defisRest : DefiRestControllerService,private fileService : FirefilesService) {
+    this.defisObsView = this.defi.pipe(
+      //Le pipe magique à utiliser partous pour récupérer les urls des images
+      map(defis => {
+        return defis.map(async (defi) => {
+          return {
+            ...defi,
+            img: await lastValueFrom(this.fileService.getPhotoUrlObs('defis', defi.img === undefined ? '' : defi.img))
+          }
+        });
+      }),
+      switchMap(async defis => {
+        return await Promise.all(defis);
+      }))
+  }
 
   ngOnInit(): void {
     this.defisRest.getDefis().pipe(filter(this.isNonNull)).subscribe((v)=>{

@@ -16,8 +16,7 @@ import {DefiCreateDto} from "../../api/models/defi-create-dto";
 import {CreationRestControllerService} from "../../api/services/creation-rest-controller.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../user/user.service";
-import {AngularFireStorage} from "@angular/fire/compat/storage";
-import {v4 as uuid} from "uuid";
+import {FirefilesService} from "../../firefiles.service";
 
 
 @Component({
@@ -60,6 +59,7 @@ export class CreateComponent implements OnInit {
   etapes: FormGroup[] = [];
   private databaseKey: string = "defis";
   private file: File | null = null;
+  isUploading: boolean = false;
 
   constructor(private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar,
@@ -68,7 +68,7 @@ export class CreateComponent implements OnInit {
               private creationService: CreationRestControllerService,
               private router: Router,
               private auth: UserService,
-              private storage: AngularFireStorage) {
+              private fireFile: FirefilesService) {
     this.firstFormGroup = this._formBuilder.group({
       titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
       minidescription: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
@@ -184,13 +184,15 @@ export class CreateComponent implements OnInit {
       console.log("pas de fichier")
       return;
     }
+
+    this.isUploading= true;
     try {
-      const img = await this.savePhoto(this.file);
+      const img = await this.fireFile.savePhoto(await this.fireFile.compressImg(this.file),this.databaseKey);
       const sendEtape : Promise<EtapeFormToSend>[] = this.etapesData.map(async (etape)=>{
         let img = "";
         try{
           if (etape.stepImg !== null) {
-            img = await this.savePhoto(etape.stepImg);
+            img = await this.fireFile.savePhoto(await this.fireFile.compressImg(etape.stepImg),this.databaseKey);
           }
         }catch(e){}
         const etapeToSend : EtapeFormToSend = {
@@ -198,7 +200,7 @@ export class CreateComponent implements OnInit {
           stepImg:img
         }
         return etapeToSend;
-      })
+      });
 
       const etapeToSendArray = await Promise.all(sendEtape);
 
@@ -221,14 +223,17 @@ export class CreateComponent implements OnInit {
           next: (data) => {
             this.openSnackBar();
             this.router.navigate(['/info', data.id]);
+            this.isUploading = false;
           },
           error: (err) => {
             console.log(err);
+            this.isUploading = false;
           }
         }
       )
     } catch (e) {
       console.log("erreur lors de la sauvegarde des images")
+      this.isUploading = false;
       return;
     }
   }
@@ -329,16 +334,6 @@ export class CreateComponent implements OnInit {
     } else {
       return null;
     }
-  }
-
-  savePhoto(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const id = uuid();
-      // upload the file to firebase storage with the id as the name
-      this.storage.upload(this.databaseKey + '/' + id, file).then(() => {
-        resolve(id);
-      }).catch(reject);
-    });
   }
 
   onFileChange(file: HTMLInputElement) {

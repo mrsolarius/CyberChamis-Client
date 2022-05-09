@@ -25,7 +25,7 @@ export class CreateEtapeComponent implements OnInit {
       typeEtape: new FormControl('', [Validators.required, this.isEmptySelected]),
       titre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
       description: ['', [Validators.minLength(3), Validators.maxLength(255)]],
-      image: ['', [Validators.pattern(/\.(jpe?g|png|gif|svg)$/i),Validators.required]],
+      image: ['', [Validators.pattern(/\.(jpe?g|png|gif|svg)$/i)]],
     })
     this.etapeIndication = this._formBuilder.group({
       indication: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1024)]],
