@@ -1,0 +1,13 @@
+<section *ngIf="obsUser | async as user" class="profile-container">
+  <div class="profile-img-container">
+    <img src="{{user.profileImg}}" alt="avatar" class="pp" referrerpolicy="no-referrer">
+    <h1>{{user.username}}</h1>
+  </div>
+  <div class="card-container">
+    <mat-card class="card-margin">
+      <mat-card-content>
+        <p>{{user.bio}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
