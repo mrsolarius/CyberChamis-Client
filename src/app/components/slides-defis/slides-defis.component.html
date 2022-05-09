@@ -1,25 +1,53 @@
 <h1>Présentation des différents défis</h1>
-<!--faire en sorte quon voit les deux titres-->
+
 <section class="carousel" aria-label="Gallery">
-  <ol class="carousel__viewport">
+  <ol class="carousel__viewport" >
+    
     <li *ngFor="let defi of defis" 
-        class="carousel__slide">
-        <a href="#{{defi.titre}}"
-           class="carousel__prev">Go to last slide</a>
-        <a href="#{{defi.titre}}"
-           class="carousel__next">Go to next slide</a>
-        {{defi.titre}}
-      
-    </li>
+        class="carousel_">
+        <a class="carousel__prev">Go to last slide</a>
+        <a class="carousel__next">Go to next slide</a>
+        <mat-card>
+          <mat-card-title>
+            {{defi.titre}}
+            ({{defi.arretDTO?.nomArret}})
+            <p class="banane">{{defi.noteMoyenne}}/5</p>
+          </mat-card-title>
+          <mat-card-subtitle >
+              <p>{{defi.duree}} minutes</p>  
+          </mat-card-subtitle>
+          <img mat-card-lg-image class="poireau" src=".\assets\imageSlides.jpg" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <p class="fraise">
+              {{defi.description}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary">JOUER</button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
     
   </ol>
- <!-- <aside class="carousel__navigation">
+  <aside class="carousel__navigation">
     <ol class="carousel__navigation-list">
       <li class="carousel__navigation-item">
-        <a *ngFor="let defi of defis"
+      
+        <a href="#carousel__slide1"
            class="carousel__navigation-button">Go to slide 1</a>
       </li>
+      <li class="carousel__navigation-item">
+        <a href="#carousel__slide2"
+           class="carousel__navigation-button">Go to slide 2</a>
+      </li>
+      <li class="carousel__navigation-item">
+        <a href="#carousel__slide3"
+           class="carousel__navigation-button">Go to slide 3</a>
+      </li>
+      <li class="carousel__navigation-item">
+        <a href="#carousel__slide4"
+           class="carousel__navigation-button">Go to slide 4</a>
+      </li>
     </ol>
-  </aside>-->
+  </aside>
 </section>
-

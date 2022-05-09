@@ -10,6 +10,7 @@ import {CreateComponent} from "./app-views/create/create.component";
 import {DefiInfoComponent} from "./components/defi-info/defi-info.component";
 import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
 
+
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {

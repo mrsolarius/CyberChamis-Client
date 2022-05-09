@@ -48,7 +48,6 @@ import { CommentaireComponent } from './components/commentaire/commentaire.compo
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +77,7 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     CommentaireComponent,
     RatingViewComponent,
     AddCommentComponent,
+    
   ],
   imports: [
     DragDropModule,
@@ -103,6 +103,6 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

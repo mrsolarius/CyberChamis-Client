@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,NgModule } from '@angular/core';
 import { DefiDto } from 'src/app/api/models';
+
 @Component({
   selector: 'app-slides-defis',
   templateUrl: './slides-defis.component.html',
