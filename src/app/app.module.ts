@@ -48,6 +48,7 @@ import { CommentaireComponent } from './components/commentaire/commentaire.compo
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import {LeafletMarkerClusterModule} from "@asymmetrik/ngx-leaflet-markercluster";
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { ProfileInfoComponent } from './components/profile-info/profile-info.com
   imports: [
     DragDropModule,
     LeafletModule,
+    LeafletMarkerClusterModule,
     ApiModule,
     HttpClientModule,
     BrowserModule,

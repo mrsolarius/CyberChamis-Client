@@ -1,6 +1,7 @@
 import {AfterViewInit, Component} from '@angular/core';
 import * as Leaflet from 'leaflet';
 import {GeolocService} from "../geoLoc/geoloc.service";
+import {latLng, marker} from "leaflet";
 
 @Component({
   selector: 'app-map',
@@ -12,6 +13,15 @@ export class AppMapComponent implements AfterViewInit {
   private map !: Leaflet.Map;
   private circle!: Leaflet.Circle;
   private localPlace!: Leaflet.Circle;
+  // Clusturing
+  markerClusterGroup!: Leaflet.MarkerClusterGroup;
+  markerClusterData = [];
+  markers = Leaflet.markerClusterGroup();
+
+
+  ngOnInit () {
+    this.markerClusterGroup = Leaflet.markerClusterGroup({removeOutsideVisibleBounds: true});
+  }
 
   private async initMap(): Promise<void> {
     const postion = await getPosition()
@@ -113,5 +123,7 @@ export const getPosition = (): Promise<GeolocationPosition> => {
       resolve(position);
     })
   })
+
+
 }
 
