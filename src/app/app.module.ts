@@ -47,6 +47,7 @@ import { DefiInfoComponent } from './components/defi-info/defi-info.component';
 import { CommentaireComponent } from './components/commentaire/commentaire.component';
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     CommentaireComponent,
     RatingViewComponent,
     AddCommentComponent,
+    ProfileInfoComponent,
   ],
   imports: [
     DragDropModule,
