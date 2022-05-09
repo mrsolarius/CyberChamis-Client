@@ -48,6 +48,8 @@ import { CommentaireComponent } from './components/commentaire/commentaire.compo
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { CommentUserComponent } from './components/comment-user/comment-user.component';
+import { HistoCommentUserComponent } from './components/histo-comment-user/histo-comment-user.component';
 
 
 @NgModule({
@@ -80,6 +82,8 @@ import { ProfileInfoComponent } from './components/profile-info/profile-info.com
     RatingViewComponent,
     AddCommentComponent,
     ProfileInfoComponent,
+    CommentUserComponent,
+    HistoCommentUserComponent,
   ],
   imports: [
     DragDropModule,
