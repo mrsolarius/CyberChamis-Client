@@ -1,19 +1,21 @@
 <ng-container *ngIf="obsDefi | async as defi">
-  <mat-card>
-    <img mat-card-image src="assets/defi_picture.jpg"
-         alt="{{defi.titre}}">
-    <mat-card-header>
-      <mat-card-title>{{defi.titre}}</mat-card-title>
-    </mat-card-header>
+  <section class="content">
+    <div class="defi-img">
+      <img src="assets/defi_picture.jpg"
+           alt="{{defi.titre}}">
+    </div>
+    <div>
+      <h1>{{defi.titre}}</h1>
+    </div>
     <ng-container *ngIf="checkIfNote(defi)">
       <h4>Notes</h4>
-      <mat-card-content *ngIf="obsRating | async as rating">
+      <div class="defi-rating" *ngIf="obsRating | async as rating">
         <app-rating-view [rating]="rating" [avg]="defi.noteMoyenne!"></app-rating-view>
-      </mat-card-content>
+      </div>
     </ng-container>
-  </mat-card>
+  </section>
   <app-add-comment [defiId]="defi.id!" (commentAdded)="apendNewComment($event)"></app-add-comment>
-  <mat-list *ngIf="obsCom | async as comm">
+  <div *ngIf="obsCom | async as comm">
     <app-commentaire *ngFor="let com of comm" [commentaire]="com"></app-commentaire>
-  </mat-list>
+  </div>
 </ng-container>

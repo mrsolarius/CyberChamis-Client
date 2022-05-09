@@ -47,6 +47,7 @@ import { DefiInfoComponent } from './components/defi-info/defi-info.component';
 import { CommentaireComponent } from './components/commentaire/commentaire.component';
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.component';
 
 
@@ -79,6 +80,7 @@ import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.com
     CommentaireComponent,
     RatingViewComponent,
     AddCommentComponent,
+    ProfileInfoComponent,
     TagTendanceComponent,
   ],
   imports: [
