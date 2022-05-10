@@ -18,3 +18,13 @@
   justify-content: start;
 }
 
+.image-container{
+  display: flex;
+  justify-content: center;
+}
+
+.step-image{
+  height: 300px;
+  width: 90%;
+  object-fit: cover;
+}

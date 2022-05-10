@@ -26,13 +26,13 @@
         <mat-error *ngIf="checkCommonEtape('description', 'maxlength')">La description peut contenir au maximum 1024 caractères</mat-error>
       </mat-form-field>
     </div>
-    <!-- imgage de l'étape -->
+    <!-- image de l'étape -->
     <div class="form-items">
       <p>Ajout une image d'étape</p>
       <mat-label>Image</mat-label>
       <input class="ng-hide" formControlName="image" id="input-file-id" type="file" (change)="onFileChange(file)" #file/>
       <label for="input-file-id" class="md-button md-raised md-primary">Choisir un fichier</label>
-      <mat-error *ngIf="checkCommonEtape('image', 'pattern')">Le fichier envoyer n'est pas une image</mat-error>
+      <mat-error *ngIf="checkCommonEtape('image', 'pattern')">Le fichier envoyé n'est pas une image</mat-error>
     </div>
     <!-- Choix entre indication et tache -->
     <div class="form-items">

@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
       //Le pipe magique à utiliser partous pour récupérer les urls des images
       map(defis => {
         return defis.map(async (defi) => {
+          console.log(defi)
           if(defi.img) {
             return {
               ...defi,

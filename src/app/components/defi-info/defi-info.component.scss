@@ -9,13 +9,33 @@
   }
 }
 
+mat-card-header{
+  display: flex;
+  justify-content: center;
+}
+
+.defi-notes{
+  margin: 0 15px;
+}
+
 .defi-rating{
   width: 100%;
 }
 
-.defi-img{
-  img{
-    width: 90%;
-    height: auto;
-  }
+.button-defi-container{
+  display: flex;
+  justify-content: center;
+}
+
+.defi-description{
+  margin: 20px;
+}
+
+.commentaires-section{
+  margin: 0 10px;
+}
+
+.image-defi-info{
+  height: 280px;
+  object-fit: cover;
 }

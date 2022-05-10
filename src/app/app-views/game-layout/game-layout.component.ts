@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {fadeAnimation} from "../../animations/fadeAnimation";
 import {PlayServiceService} from "../../services/play-service.service";
-import {Observable} from "rxjs";
+import {Observable, switchMap} from "rxjs";
 import {EtapeDto} from "../../api/models/etape-dto";
 import {VisiteDto} from "../../api/models/visite-dto";
 import {DefiDto} from "../../api/models/defi-dto";
@@ -9,6 +9,8 @@ import {ActivatedRoute} from "@angular/router";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {ReponseDto} from "../../api/models/reponse-dto";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {map} from "rxjs/operators";
+import {FirefilesService} from "../../firefiles.service";
 
 @Component({
   selector: 'app-game-layout',
@@ -19,12 +21,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class GameLayoutComponent {
   notFound:boolean = false;
   finishView:boolean = false;
+  private obsVisiteView :Observable<VisiteDto>;
 
 
   constructor(private gameService:PlayServiceService,
               private route: ActivatedRoute,
               private defiRestControllerService : DefiRestControllerService,
-              private snackBar: MatSnackBar
+              private snackBar: MatSnackBar,
+              private fireFile : FirefilesService
   ) {
     this.route.params.subscribe(params => {
       defiRestControllerService.getById({id:params['id']}).subscribe({
@@ -37,10 +41,34 @@ export class GameLayoutComponent {
         },
       });
     });
+
+    this.obsVisiteView = this.gameService.getObsVisite.pipe(
+      map(async (value)=>{
+        if (value.etapeCourante?.banner)
+        return {
+          ...value,
+          etapeCourante:{
+            ...value.etapeCourante,
+            banner: await this.fireFile.getPhotoUrl('defis',value.etapeCourante.banner)
+          }
+        }
+        else
+          return {
+          ...value,
+            etapeCourante:{
+            ...value.etapeCourante,
+              banner: ''
+            }
+          }
+      }),
+      switchMap(async (value)=>{
+        return await value
+      })
+    )
   }
 
   get getObsVisite() : Observable<VisiteDto>{
-    return this.gameService.getObsVisite;
+    return this.obsVisiteView;
   }
 
   getTotalStep(defi: DefiDto | undefined) {

@@ -203,7 +203,9 @@
         </button>
         <mat-error *ngIf="idUser ===-1">Veuillez vous connecter pour créer un défi</mat-error>
       </div>
-    <mat-progress-bar *ngif="isUploading" mode="indeterminate"></mat-progress-bar>
+    <div *ngif="isUploading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
   </mat-step>
 </mat-stepper>
 
