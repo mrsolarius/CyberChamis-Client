@@ -1,0 +1,16 @@
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.elem{
+  cursor: pointer;
+  flex-flow: row wrap;
+  padding: 10px 20px 10px 8px;
+  border-left: solid;
+  margin: .5%;
+  border-radius: 2px;
+  background-color: #e5e5e5;
+  border-color: #2ca3a3;
+}

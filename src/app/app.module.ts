@@ -51,6 +51,10 @@ import { ProfileInfoComponent } from './components/profile-info/profile-info.com
 import { CommentUserComponent } from './components/comment-user/comment-user.component';
 import { HistoCommentUserComponent } from './components/histo-comment-user/histo-comment-user.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.component';
+import { SingleLayoutComponent } from './components/layout/single-layout/single-layout.component';
+import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.component';
+
 
 @NgModule({
   declarations: [
@@ -82,8 +86,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     RatingViewComponent,
     AddCommentComponent,
     ProfileInfoComponent,
-    CommentUserComponent,
-    HistoCommentUserComponent,
   ],
   imports: [
     DragDropModule,
@@ -107,12 +109,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,9 @@ import {DefiRestControllerService} from "../../api/services/defi-rest-controller
 import {BehaviorSubject, lastValueFrom, Observable, switchMap} from "rxjs";
 import {filter, map} from "rxjs/operators";
 import {FirefilesService} from "../../firefiles.service";
+import {BehaviorSubject, Observable} from "rxjs";
+import {filter} from "rxjs/operators";
+import {TagCount} from "../../api/models/tag-count";
 
 @Component({
   selector: 'app-home',
@@ -13,6 +16,8 @@ import {FirefilesService} from "../../firefiles.service";
 export class HomeComponent implements OnInit {
   defi:BehaviorSubject<DefiDto[]> = new BehaviorSubject<DefiDto[]>([]);
   defisObsView:Observable<DefiDto[]>;
+  tagsObs : Observable<TagCount[]>;
+  tagsTab? : TagCount[];
 
   constructor(private defisRest : DefiRestControllerService,private fileService : FirefilesService) {
     this.defisObsView = this.defi.pipe(
@@ -35,6 +40,8 @@ export class HomeComponent implements OnInit {
       switchMap(async defis => {
         return await Promise.all(defis);
       }))
+    this.tagsObs = defisRest.getTagCount();
+    this.tagsObs.subscribe((v)=>{this.tagsTab = v;});
   }
 
   ngOnInit(): void {
