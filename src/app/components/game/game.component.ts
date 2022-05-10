@@ -8,6 +8,7 @@ import {ReponseDto} from "../../api/models/reponse-dto";
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
+  panelOpenState = false;
   @Input('step') step! : EtapeDto;
   @Input('responseDTO') responseDTO: ReponseDto | undefined = {};
   @Output('response') response = new EventEmitter<string>();

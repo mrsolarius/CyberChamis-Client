@@ -216,7 +216,7 @@ export class CreateComponent implements OnInit {
         img:img
       }
 
-      console.log(formDTO)
+      console.log('forms',formDTO)
 
       this.creationService.createDefi1({body: formDTO}).subscribe(
         {
