@@ -1,20 +1,19 @@
 <div class="game-container">
-  <div *ngIf="step.banner" class="image-container">
-    <img class="step-image" [src]="step.banner" [alt]="step.titre"/>
-  </div>
-  <div *ngIf="step.video" class="video-container">
-    <video class="step-video">
-      <source [src]="step.video" type="video/mp4" />
-    </video>
-  </div>
   <div *ngIf="step.type==='TacheDTO'" class="game-container">
+    <div *ngIf="step.video" class="video-container">
+      <video class="step-video">
+        <source [src]="step.video" type="video/mp4" />
+      </video>
+    </div>
     <mat-card *ngIf="step.description">
+      <img *ngIf="step.banner" class="step-image" mat-card-image [src]="step.banner" [alt]="step.titre"/>
       <mat-card-content>
         <p>{{step.description}}</p>
       </mat-card-content>
     </mat-card>
 
     <mat-card>
+      <img *ngIf="step.banner" class="step-image" mat-card-image [src]="step.banner" [alt]="step.titre"/>
       <mat-card-title>Question</mat-card-title>
       <mat-card-subtitle>{{step.question}}</mat-card-subtitle>
       <mat-card-content>
@@ -35,16 +34,12 @@
     </mat-card>
   </div>
 
-  <div *ngIf="step.type==='IndicationDTO'">
-    <mat-card *ngIf="step.description">
-      <mat-card-content>
-        <p>{{step.description}}</p>
-      </mat-card-content>
-    </mat-card>
-
+  <div *ngIf="step.type==='IndicationDTO'" class="game-container">
     <mat-card>
+      <img *ngIf="step.banner" class="step-image" mat-card-image [src]="step.banner" [alt]="step.titre"/>
       <mat-card-content>
         <p>{{step.text}}</p>
+        <p *ngIf="step.description">{{step.description}}</p>
       </mat-card-content>
     </mat-card>
   </div>
