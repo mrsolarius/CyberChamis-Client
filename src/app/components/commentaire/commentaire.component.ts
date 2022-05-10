@@ -1,7 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CommentaireDto} from "../../api/models/commentaire-dto";
-import {ChamiRestControllerService, CommentaireRestControllerService} from "../../api/services";
-import {ChamiDto} from "../../api/models";
+import {
+  ChamiRestControllerService,
+  CommentaireRestControllerService,
+  DefiRestControllerService
+} from "../../api/services";
+import {ChamiDto, DefiDto} from "../../api/models";
 import {BehaviorSubject, firstValueFrom, lastValueFrom} from "rxjs";
 
 @Component({
@@ -20,7 +24,6 @@ export class CommentaireComponent implements OnInit {
   async loadUser(){
     const id = this.commentaire.idUtilisateur!;
     const chami = await lastValueFrom(this.chamiRestController.getById1({id}));
-    console.log(chami)
     if (chami)
       this.obsChami.next(chami);
   }

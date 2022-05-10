@@ -5,9 +5,12 @@
   </div>
   <div class="card-container">
     <mat-card class="card-margin">
-      <mat-card-content>
+      <mat-card-content class="user-bio-container">
         <p>{{user.bio}}</p>
       </mat-card-content>
     </mat-card>
+  </div>
+  <div *ngIf="obsDefis | async as defis">
+    <app-histo-comment-user *ngFor="let defi of defis" [defi]="defi" [user]="user"></app-histo-comment-user>
   </div>
 </section>
