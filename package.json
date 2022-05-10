@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@angular/service-worker": "~13.2.0",
     "@asymmetrik/ngx-leaflet": "^13.0.2",
     "@metromobilite/m-features": "^2.3.1",
     "@types/geojson": "^7946.0.8",

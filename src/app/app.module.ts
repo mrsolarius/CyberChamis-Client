@@ -50,7 +50,7 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { CommentUserComponent } from './components/comment-user/comment-user.component';
 import { HistoCommentUserComponent } from './components/histo-comment-user/histo-comment-user.component';
-
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -107,6 +107,12 @@ import { HistoCommentUserComponent } from './components/histo-comment-user/histo
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
