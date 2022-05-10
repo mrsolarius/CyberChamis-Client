@@ -138,11 +138,8 @@ export class AppMapComponent implements AfterViewInit {
         const mList = []
         for(let d of v){
           const arretDto :ArretDto = d.arretDTO!;
-          mList.push(Leaflet.marker([arretDto.longitude!,arretDto.latitude!],{icon:greenIcon}).bindPopup(d.titre!));
+          mList.push(Leaflet.marker([arretDto.latitude!,arretDto.longitude!],{icon:greenIcon}).bindPopup(d.titre!));
         }
-        console.log('list',mList)
-        console.log('map',this.map)
-
         markerClusterGroup.addLayers(mList);
         this.map.addLayer(markerClusterGroup);
       });

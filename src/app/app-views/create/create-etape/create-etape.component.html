@@ -33,6 +33,8 @@
       <mat-label>Image</mat-label>
       <input class="ng-hide" formControlName="image" id="input-file-id" type="file" (change)="onFileChange(file)" #file/>
       <label for="input-file-id" class="md-button md-raised md-primary">Choisir un fichier</label>
+
+
       <mat-error *ngIf="checkCommonEtape('image', 'pattern')">Le fichier envoyé n'est pas une image</mat-error>
     </div>
 
