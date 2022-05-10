@@ -1,41 +1,47 @@
-<div *ngIf="step.type==='TacheDTO'" class="game-container">
-  <mat-card *ngIf="step.description">
-    <mat-card-content>
-      <p>{{step.description}}</p>
-    </mat-card-content>
-  </mat-card>
+<div class="game-container">
+  <div *ngIf="step.type==='TacheDTO'" class="game-container">
+    <div *ngIf="step.video" class="video-container">
+      <video class="step-video">
+        <source [src]="step.video" type="video/mp4" />
+      </video>
+    </div>
+    <mat-card *ngIf="step.description">
+      <img *ngIf="step.banner" class="step-image" mat-card-image [src]="step.banner" [alt]="step.titre"/>
+      <mat-card-content>
+        <p>{{step.description}}</p>
+      </mat-card-content>
+    </mat-card>
 
-  <mat-card>
-    <mat-card-title>Question</mat-card-title>
-    <mat-card-subtitle>{{step.question}}</mat-card-subtitle>
-    <mat-card-content>
-      <form class="form-container" (submit)="checkButton(input.value);input.value=getResponseValue()">
-        <mat-form-field appearance="fill">
-          <mat-label>Réponse</mat-label>
-          <input matInput placeholder="Reponse" required
-                 [value]="getResponseValue()"
-                 [disabled]="getHasResponse()"
-                 #input>
-        </mat-form-field>
-        <button mat-stroked-button
-                type="submit"
-                color="primary"
-                [disabled]="getHasResponse()">Vérifier</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+    <mat-card>
+      <img *ngIf="step.banner" class="step-image" mat-card-image [src]="step.banner" [alt]="step.titre"/>
+      <mat-card-title>Question</mat-card-title>
+      <mat-card-subtitle>{{step.question}}</mat-card-subtitle>
+      <mat-card-content>
+        <form class="form-container" (submit)="checkButton(input.value);input.value=getResponseValue()">
+          <mat-form-field appearance="fill">
+            <mat-label>Réponse</mat-label>
+            <input matInput placeholder="Reponse" required
+                   [value]="getResponseValue()"
+                   [disabled]="getHasResponse()"
+                   #input>
+          </mat-form-field>
+          <button mat-stroked-button
+                  type="submit"
+                  color="primary"
+                  [disabled]="getHasResponse()">Vérifier</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="step.type==='IndicationDTO'" class="game-container">
+    <mat-card>
+      <img *ngIf="step.banner" class="step-image" mat-card-image [src]="step.banner" [alt]="step.titre"/>
+      <mat-card-content>
+        <p>{{step.text}}</p>
+        <p *ngIf="step.description">{{step.description}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
-<div *ngIf="step.type==='IndicationDTO'" class="game-container">
-  <mat-card *ngIf="step.description">
-    <mat-card-content>
-      <p>{{step.description}}</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card>
-    <mat-card-content>
-      <p>{{step.text}}</p>
-    </mat-card-content>
-  </mat-card>
-</div>

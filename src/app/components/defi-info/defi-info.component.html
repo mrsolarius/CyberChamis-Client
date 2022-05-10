@@ -1,18 +1,32 @@
 <div *ngIf="viewObsDefi | async as defi">
   <section>
-    <img mat-card-image [src]="defi.img" [alt]="defi.titre">
+    <img mat-card-image [src]="defi.img" [alt]="defi.titre" class="image-defi-info">
     <mat-card-header>
       <mat-card-title>{{defi.titre}}</mat-card-title>
     </mat-card-header>
+    <ng-container>
+      <div class="button-defi-container">
+        <button mat-flat-button color="primary" routerLink="/game/{{defi.id}}" >Jouer</button>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div class="defi-description">
+        <p>{{defi.description}}</p>
+      </div>
+    </ng-container>
     <ng-container *ngIf="checkIfNote(defi)">
-      <h4>Notes</h4>
-      <div class="defi-rating" *ngIf="obsRating | async as rating">
-        <app-rating-view [rating]="rating" [avg]="defi.noteMoyenne!"></app-rating-view>
+      <div class="defi-notes">
+        <h4>Notes</h4>
+        <div class="defi-rating" *ngIf="obsRating | async as rating">
+          <app-rating-view [rating]="rating" [avg]="defi.noteMoyenne!"></app-rating-view>
+        </div>
       </div>
     </ng-container>
   </section>
-  <app-add-comment [defiId]="defi.id!" (commentAdded)="apendNewComment($event)"></app-add-comment>
-  <div *ngIf="obsCom | async as comm">
-    <app-commentaire *ngFor="let com of comm" [commentaire]="com"></app-commentaire>
-  </div>
+  <section class="commentaires-section">
+    <app-add-comment [defiId]="defi.id!" (commentAdded)="apendNewComment($event)"></app-add-comment>
+    <div *ngIf="obsCom | async as comm">
+      <app-commentaire *ngFor="let com of comm" [commentaire]="com"></app-commentaire>
+    </div>
+  </section>
 </div>

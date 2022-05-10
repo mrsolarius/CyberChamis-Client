@@ -1,0 +1,10 @@
+<div class="app">
+  <div class="mobile-layout" *ngIf="innerWidth<600">
+    <router-outlet #mobileOutlet="outlet"></router-outlet>
+  </div>
+  <div class="default-layout" *ngIf="innerWidth>=600">
+    <div class="app-right">
+      <router-outlet #desktopOutlet="outlet"></router-outlet>
+    </div>
+  </div>
+</div>

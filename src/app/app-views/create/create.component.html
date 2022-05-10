@@ -86,8 +86,8 @@
 
         <!-- Bannière du défi -->
         <div class="form-items">
-          <p>Choisis une bannière pour ton défi</p>
-          <mat-label>Bannière</mat-label>
+          <p>Tu peux même choisir une bannière pour ton défi ! </p>
+
           <input class="ng-hide"
                  formControlName="banniere"
                  id="input-file-id"
@@ -96,11 +96,12 @@
                  (change)="onFileChange(fileInput)"
                  #fileInput
           />
-          <label for="input-file-id" class="md-button md-raised md-primary">Choisir un fichier</label>
           <mat-error *ngIf="checkError('banniere', 'required')">La bannière doit être renseignée</mat-error>
           <mat-error *ngIf="checkError('banniere', 'pattern')">Le fichier envoyer n'est pas une image</mat-error>
         </div>
 
+        <br>
+        <br>
 
         <!-- Tags -->
 
@@ -111,7 +112,9 @@
             <mat-chip-list #chipList aria-label="Mot Clés">
               <mat-chip *ngFor="let item of listeTags" selectable removable (removed)="remove(item)">
                 {{item}}
-                <mat-icon matChipRemove>supprimer</mat-icon>
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
               </mat-chip>
             </mat-chip-list>
             <input pattern="[a-zA-Z ]*"
@@ -203,7 +206,9 @@
         </button>
         <mat-error *ngIf="idUser ===-1">Veuillez vous connecter pour créer un défi</mat-error>
       </div>
-    <mat-progress-bar *ngif="isUploading" mode="indeterminate"></mat-progress-bar>
+    <div *ngif="isUploading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
   </mat-step>
 </mat-stepper>
 

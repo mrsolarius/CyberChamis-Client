@@ -1,4 +1,4 @@
-<ng-container *ngIf="getObsVisite | async as obs">
+<ng-container class="indices-container" *ngIf="getObsVisite | async as obs">
   <mat-list>
     <ng-container *ngIf="obs.currentIndices.length>0">
       <div mat-subheader>Indice découvert</div>
@@ -11,7 +11,7 @@
   <mat-nav-list class="reveal-indice-container" *ngIf="getNbIndicesUtilises(obs.reponseCourante)<getNbIndices(obs.etapeCourante)-1">
     <mat-button-toggle class="action-indice" (click)="revealIndice()">
         <mat-icon>lightbulb</mat-icon>
-        Révéler un indice (vous coutera {{obs.costNextIndice}} points)
+        Révéler un nouvel indice (vous coutera {{obs.costNextIndice}} points)
     </mat-button-toggle>
   </mat-nav-list>
 </ng-container>

@@ -52,6 +52,10 @@ import {LeafletMarkerClusterModule} from "@asymmetrik/ngx-leaflet-markercluster"
 import { CommentUserComponent } from './components/comment-user/comment-user.component';
 import { HistoCommentUserComponent } from './components/histo-comment-user/histo-comment-user.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.component';
+import { SingleLayoutComponent } from './components/layout/single-layout/single-layout.component';
+import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.component';
+
 
 @NgModule({
   declarations: [
@@ -83,8 +87,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     RatingViewComponent,
     AddCommentComponent,
     ProfileInfoComponent,
-    CommentUserComponent,
+    TagTendanceComponent,
     HistoCommentUserComponent,
+    SingleLayoutComponent,
+    CommentUserComponent,
+    DefisByTagComponent,
   ],
   imports: [
     DragDropModule,
@@ -117,6 +124,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

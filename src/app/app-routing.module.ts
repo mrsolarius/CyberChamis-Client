@@ -9,6 +9,9 @@ import {LeftRightAnimationStateService} from "./left-right-animation-state.servi
 import {CreateComponent} from "./app-views/create/create.component";
 import {DefiInfoComponent} from "./components/defi-info/defi-info.component";
 import {ProfileInfoComponent} from "./components/profile-info/profile-info.component";
+import {SingleLayoutComponent} from "./components/layout/single-layout/single-layout.component";
+import {DefisByTagComponent} from "./app-views/defis-by-tag/defis-by-tag.component";
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -27,6 +30,13 @@ const routes: Routes = [
   {path: 'game/:id',
     component: GameLayoutComponent,
     data: {animation: 'leftRightAnimation'}
+  },
+  {
+    path:'s',
+    component:SingleLayoutComponent,
+    children:[
+      {path:'tag/:id',component: DefisByTagComponent}
+    ]
   }
 ];
 
