@@ -7,6 +7,7 @@ import {DefiDto} from "../../api/models/defi-dto";
   styleUrls: ['./explore.component.scss']
 })
 export class ExploreComponent implements OnInit {
+
   defis: DefiDto[] = [{
     titre: 'Titre du défi',
     description: 'Description du défi lalala',

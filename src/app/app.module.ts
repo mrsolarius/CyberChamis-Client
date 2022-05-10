@@ -48,6 +48,7 @@ import { CommentaireComponent } from './components/commentaire/commentaire.compo
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import {LeafletMarkerClusterModule} from "@asymmetrik/ngx-leaflet-markercluster";
 import { CommentUserComponent } from './components/comment-user/comment-user.component';
 import { HistoCommentUserComponent } from './components/histo-comment-user/histo-comment-user.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -95,6 +96,7 @@ import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.compo
   imports: [
     DragDropModule,
     LeafletModule,
+    LeafletMarkerClusterModule,
     ApiModule,
     HttpClientModule,
     BrowserModule,
