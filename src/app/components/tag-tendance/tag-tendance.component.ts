@@ -1,9 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TagCount} from "../../api/models/tag-count";
 
-
-
-
 @Component({
   selector: 'app-tag-tendance',
   templateUrl: './tag-tendance.component.html',
@@ -49,7 +46,7 @@ export class TagTendanceComponent implements OnInit {
 
   getTagsPopulaires(max: number){
     let tagsPop: TagCount[];
-    tagsPop = this.tags!.filter(tag => tag.count! > max*2/3);
+    tagsPop = this.tags!.filter(tag => tag.count! >= max*2/3);
     return tagsPop;
   }
 
