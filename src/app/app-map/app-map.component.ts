@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import * as Leaflet from 'leaflet';
 import {GeolocService} from "../geoLoc/geoloc.service";
-import {BehaviorSubject, debounceTime, firstValueFrom, lastValueFrom} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {DefiDto} from "../api/models/defi-dto";
 import {DefiRestControllerService} from "../api/services/defi-rest-controller.service";
-import {distinctUntilChanged, filter} from "rxjs/operators";
+import {filter} from "rxjs/operators";
 import {ArretDto} from "../api/models/arret-dto";
 
 @Component({
@@ -19,8 +19,6 @@ export class AppMapComponent implements AfterViewInit {
   private map !: Leaflet.Map;
   private circle!: Leaflet.Circle;
   private localPlace!: Leaflet.Circle;
-
-  private isInit=false;
 
   // Clusturing
   markerClusterGroup!: Leaflet.MarkerClusterGroup;
