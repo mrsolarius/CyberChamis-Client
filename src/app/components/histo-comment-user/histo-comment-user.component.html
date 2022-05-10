@@ -1,0 +1,14 @@
+<mat-expansion-panel class="histo-com-container" (opened)="panelOpenState = true"
+                     (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{getNomDefi()}}
+    </mat-panel-title>
+    <mat-panel-description>
+
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div *ngIf="obsComs | async as coms">
+    <app-comment-user *ngFor="let com of coms" [commentaire]="com"></app-comment-user>
+  </div>
+</mat-expansion-panel>

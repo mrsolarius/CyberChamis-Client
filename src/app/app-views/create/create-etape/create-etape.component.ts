@@ -18,12 +18,14 @@ export class CreateEtapeComponent implements OnInit {
   etapeTache: FormGroup;
   innerWidth: number=1080;
   indices: IndiceForm[] = [];
+  private file: File|null=null;
 
   constructor(private _formBuilder: FormBuilder, private createEtapeService: CreateEtapeService, private createIndiceService: CreateIndiceService) {
     this.etapeCommun = this._formBuilder.group({
       typeEtape: new FormControl('', [Validators.required, this.isEmptySelected]),
       titre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
       description: ['', [Validators.minLength(3), Validators.maxLength(255)]],
+      image: ['', [Validators.pattern(/\.(jpe?g|png|gif|svg)$/i)]],
     })
     this.etapeIndication = this._formBuilder.group({
       indication: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1024)]],
@@ -58,6 +60,7 @@ export class CreateEtapeComponent implements OnInit {
       this.etapeTache.controls['question'].setValue(this.etape.question);
       this.etapeTache.controls['reponse'].setValue(this.etape.reponse);
       this.etapeTache.controls['pointsGagnes'].setValue(this.etape.pointsGagnes);
+      this.file = this.etape.stepImg;
     }
 
     //Obs de type d'étape
@@ -116,7 +119,8 @@ export class CreateEtapeComponent implements OnInit {
         description:this.etapeCommun.controls['description'].value,
         indication: this.etapeIndication.controls['indication'].value,
         typeEtape: TypeEtape.Indication,
-        isValide: this.etapeIndication.valid && this.etapeCommun.valid
+        isValide: this.etapeIndication.valid && this.etapeCommun.valid,
+        stepImg: this.file
       }
     } else if (this.etapeCommun.controls['typeEtape'].value === "Tache") {
       this.etape = {
@@ -128,7 +132,8 @@ export class CreateEtapeComponent implements OnInit {
         indices: this.indices,
         pointsGagnes: this.etapeTache.controls['pointsGagnes'].value,
         typeEtape: TypeEtape.Tache,
-        isValide: this.checkIndiceValide() && this.etapeTache.valid && this.etapeCommun.valid
+        isValide: this.checkIndiceValide() && this.etapeTache.valid && this.etapeCommun.valid,
+        stepImg: this.file
       }
     } else {
       this.etape = {
@@ -136,7 +141,8 @@ export class CreateEtapeComponent implements OnInit {
         titre: this.etapeCommun.controls['titre'].value,
         description:this.etapeCommun.controls['description'].value,
         typeEtape: TypeEtape.NonDefinie,
-        isValide: false
+        isValide: false,
+        stepImg: this.file
       }
     }
   }
@@ -181,6 +187,14 @@ export class CreateEtapeComponent implements OnInit {
       return {'required': true};
     }else {
       return null;
+    }
+  }
+
+  onFileChange(file: HTMLInputElement) {
+    if (file != null) {
+      if (file.files!.length > 0) {
+        this.file = file.files![0];
+      }
     }
   }
 }

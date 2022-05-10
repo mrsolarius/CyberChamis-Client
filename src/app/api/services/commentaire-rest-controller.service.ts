@@ -69,6 +69,55 @@ export class CommentaireRestControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation getCommentairesByDefiAndChami
+   */
+  static readonly GetCommentairesByDefiAndChamiPath = '/api/commentaires/{idDefi}/{idChami}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getCommentairesByDefiAndChami()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getCommentairesByDefiAndChami$Response(params: {
+    idDefi: string;
+    idChami: number;
+  }): Observable<StrictHttpResponse<Array<CommentaireDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CommentaireRestControllerService.GetCommentairesByDefiAndChamiPath, 'get');
+    if (params) {
+      rb.path('idDefi', params.idDefi, {});
+      rb.path('idChami', params.idChami, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<CommentaireDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getCommentairesByDefiAndChami$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getCommentairesByDefiAndChami(params: {
+    idDefi: string;
+    idChami: number;
+  }): Observable<Array<CommentaireDto>> {
+
+    return this.getCommentairesByDefiAndChami$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<CommentaireDto>>) => r.body as Array<CommentaireDto>)
+    );
+  }
+
+  /**
    * Path part for operation getCommentaires
    */
   static readonly GetCommentairesPath = '/api/commentaires/{defiId}';

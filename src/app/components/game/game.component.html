@@ -1,6 +1,5 @@
 <div *ngIf="step.type==='TacheDTO'" class="game-container">
   <mat-card *ngIf="step.description">
-    <mat-card-title>Description</mat-card-title>
     <mat-card-content>
       <p>{{step.description}}</p>
     </mat-card-content>
@@ -29,14 +28,12 @@
 
 <div *ngIf="step.type==='IndicationDTO'" class="game-container">
   <mat-card *ngIf="step.description">
-    <mat-card-title>Description</mat-card-title>
     <mat-card-content>
       <p>{{step.description}}</p>
     </mat-card-content>
   </mat-card>
 
   <mat-card>
-    <mat-card-title>Indication</mat-card-title>
     <mat-card-content>
       <p>{{step.text}}</p>
     </mat-card-content>

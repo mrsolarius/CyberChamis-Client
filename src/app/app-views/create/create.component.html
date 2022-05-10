@@ -84,6 +84,24 @@
           </div>
         </div>
 
+        <!-- Bannière du défi -->
+        <div class="form-items">
+          <p>Choisis une bannière pour ton défi</p>
+          <mat-label>Bannière</mat-label>
+          <input class="ng-hide"
+                 formControlName="banniere"
+                 id="input-file-id"
+                 type="file"
+                 accept="image/png, image/jpeg, image/jpg"
+                 (change)="onFileChange(fileInput)"
+                 #fileInput
+          />
+          <label for="input-file-id" class="md-button md-raised md-primary">Choisir un fichier</label>
+          <mat-error *ngIf="checkError('banniere', 'required')">La bannière doit être renseignée</mat-error>
+          <mat-error *ngIf="checkError('banniere', 'pattern')">Le fichier envoyer n'est pas une image</mat-error>
+        </div>
+
+
         <!-- Tags -->
 
         <div class="form-items">
@@ -185,6 +203,7 @@
         </button>
         <mat-error *ngIf="idUser ===-1">Veuillez vous connecter pour créer un défi</mat-error>
       </div>
+    <mat-progress-bar *ngif="isUploading" mode="indeterminate"></mat-progress-bar>
   </mat-step>
 </mat-stepper>
 

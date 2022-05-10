@@ -8,11 +8,10 @@
       </mat-list-item>
     </ng-container>
   </mat-list>
-  <mat-nav-list *ngIf="getNbIndicesUtilises(obs.reponseCourante)<getNbIndices(obs.etapeCourante)-1">
-    <div mat-subheader>Actions (vous coutera {{obs.costNextIndice}} points)</div>
-    <button mat-list-item (click)="revealIndice()">
-      <mat-icon>lightbulb</mat-icon>
-      Révéler un indice
-    </button>
+  <mat-nav-list class="reveal-indice-container" *ngIf="getNbIndicesUtilises(obs.reponseCourante)<getNbIndices(obs.etapeCourante)-1">
+    <mat-button-toggle class="action-indice" (click)="revealIndice()">
+        <mat-icon>lightbulb</mat-icon>
+        Révéler un indice (vous coutera {{obs.costNextIndice}} points)
+    </mat-button-toggle>
   </mat-nav-list>
 </ng-container>

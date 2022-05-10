@@ -1,12 +1,9 @@
-<ng-container *ngIf="obsDefi | async as defi">
-  <section class="content">
-    <div class="defi-img">
-      <img src="assets/defi_picture.jpg"
-           alt="{{defi.titre}}">
-    </div>
-    <div>
-      <h1>{{defi.titre}}</h1>
-    </div>
+<div *ngIf="viewObsDefi | async as defi">
+  <section>
+    <img mat-card-image [src]="defi.img" [alt]="defi.titre">
+    <mat-card-header>
+      <mat-card-title>{{defi.titre}}</mat-card-title>
+    </mat-card-header>
     <ng-container *ngIf="checkIfNote(defi)">
       <h4>Notes</h4>
       <div class="defi-rating" *ngIf="obsRating | async as rating">
@@ -18,4 +15,4 @@
   <div *ngIf="obsCom | async as comm">
     <app-commentaire *ngFor="let com of comm" [commentaire]="com"></app-commentaire>
   </div>
-</ng-container>
+</div>

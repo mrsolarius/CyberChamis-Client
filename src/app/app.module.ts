@@ -49,7 +49,9 @@ import { RatingViewComponent } from './components/rating-view/rating-view.compon
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import {LeafletMarkerClusterModule} from "@asymmetrik/ngx-leaflet-markercluster";
-
+import { CommentUserComponent } from './components/comment-user/comment-user.component';
+import { HistoCommentUserComponent } from './components/histo-comment-user/histo-comment-user.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import {LeafletMarkerClusterModule} from "@asymmetrik/ngx-leaflet-markercluster"
     RatingViewComponent,
     AddCommentComponent,
     ProfileInfoComponent,
+    CommentUserComponent,
+    HistoCommentUserComponent,
   ],
   imports: [
     DragDropModule,
@@ -105,6 +109,12 @@ import {LeafletMarkerClusterModule} from "@asymmetrik/ngx-leaflet-markercluster"
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
