@@ -1,4 +1,4 @@
-<div *ngIf="obs | async as defis">
+<div *ngIf="defisObsView | async as defis">
+  <app-slides-defis [defis]="defis"></app-slides-defis>
   <app-defis [defis]="defis"></app-defis>
 </div>
-<app-slides-defis [defis]="patate"></app-slides-defis>

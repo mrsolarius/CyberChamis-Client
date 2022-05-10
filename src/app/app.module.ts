@@ -47,6 +47,10 @@ import { DefiInfoComponent } from './components/defi-info/defi-info.component';
 import { CommentaireComponent } from './components/commentaire/commentaire.component';
 import { RatingViewComponent } from './components/rating-view/rating-view.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { CommentUserComponent } from './components/comment-user/comment-user.component';
+import { HistoCommentUserComponent } from './components/histo-comment-user/histo-comment-user.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -77,7 +81,9 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     CommentaireComponent,
     RatingViewComponent,
     AddCommentComponent,
-    
+    ProfileInfoComponent,
+    CommentUserComponent,
+    HistoCommentUserComponent,
   ],
   imports: [
     DragDropModule,
@@ -101,6 +107,12 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

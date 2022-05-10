@@ -8,7 +8,7 @@ import {GameLayoutComponent} from "./app-views/game-layout/game-layout.component
 import {LeftRightAnimationStateService} from "./left-right-animation-state.service";
 import {CreateComponent} from "./app-views/create/create.component";
 import {DefiInfoComponent} from "./components/defi-info/defi-info.component";
-import { SlidesDefisComponent } from './components/slides-defis/slides-defis.component';
+import {ProfileInfoComponent} from "./components/profile-info/profile-info.component";
 
 
 const routes: Routes = [
@@ -22,7 +22,7 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent, data: {animation: 'fadeInOut'}},
       {path: 'create', component: CreateComponent, data: {animation: 'fadeInOut'}},
       {path: 'info/:id', component: DefiInfoComponent, data: {animation: 'fadeInOut'}},
-      {path: 'create', component: CreateComponent, data: {animation: 'fadeInOut'}}
+      {path: 'profile-info/:id', component: ProfileInfoComponent, data: {animation: 'fadeinOut'}}
     ],
   },
   {path: 'game/:id',

@@ -16,6 +16,19 @@ export interface EtapeForm extends AbstractForm {
   reponse: string;
   indices: IndiceForm[];
   pointsGagnes: number;
+  stepImg: File|null;
+}
+
+export interface EtapeFormToSend extends AbstractForm {
+  titre: string;
+  description: string;
+  typeEtape: TypeEtape;
+  indication: string;
+  question: string;
+  reponse: string;
+  indices: IndiceForm[];
+  pointsGagnes: number;
+  stepImg: string;
 }
 
 export const defaultEtape: EtapeForm = {
@@ -30,9 +43,10 @@ export const defaultEtape: EtapeForm = {
   indices: [],
   pointsGagnes: 0,
   isValide: false,
+  stepImg: null,
 }
 
-export function castToEtapeCreateDto(etape: EtapeForm): EtapeCreateDto {
+export function castToEtapeCreateDto(etape: EtapeFormToSend): EtapeCreateDto {
   return {
     //idEtape: etape.id,
     numero: etape.numero,
@@ -44,6 +58,7 @@ export function castToEtapeCreateDto(etape: EtapeForm): EtapeCreateDto {
     point: etape.pointsGagnes,
     text: etape.indication,
     type: etape.typeEtape === TypeEtape.Indication ? 'IndicationDTO' : etape.typeEtape === TypeEtape.Tache ? 'TacheDTO' : undefined,
+    banner: etape.stepImg,
   };
 }
 

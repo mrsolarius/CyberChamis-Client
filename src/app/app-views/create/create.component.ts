@@ -5,7 +5,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {castToEtapeCreateDto, CreateEtapeService, EtapeForm} from "./create-etape.service";
+import {castToEtapeCreateDto, CreateEtapeService, EtapeForm, EtapeFormToSend} from "./create-etape.service";
 import {debounceTime, distinctUntilChanged, finalize, Observable, switchMap, tap} from "rxjs";
 import {MetroboliliteService} from "../../api-metro/metrobolilite.service";
 import {GeoJSON} from "geojson";
@@ -16,6 +16,7 @@ import {DefiCreateDto} from "../../api/models/defi-create-dto";
 import {CreationRestControllerService} from "../../api/services/creation-rest-controller.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../user/user.service";
+import {FirefilesService} from "../../firefiles.service";
 
 
 @Component({
@@ -40,7 +41,7 @@ export class CreateComponent implements OnInit {
   //Autocomplete arrets de bus
   minSearchLength: number = 2;
   stops: FeatureStop[] = [];
-  selectedStop: FeatureStop|null = null;
+  selectedStop: FeatureStop | null = null;
   isSet: boolean = false;
   isLoading: boolean = false;
 
@@ -48,7 +49,7 @@ export class CreateComponent implements OnInit {
   etapesData: EtapeForm[] = [];
 
   //id user
-  idUser: number=-1;
+  idUser: number = -1;
 
   // variable de vue
   action: any = "";
@@ -56,6 +57,9 @@ export class CreateComponent implements OnInit {
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
   etapes: FormGroup[] = [];
+  private databaseKey: string = "defis";
+  private file: File | null = null;
+  isUploading: boolean = false;
 
   constructor(private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar,
@@ -63,15 +67,17 @@ export class CreateComponent implements OnInit {
               private metro: MetroboliliteService,
               private creationService: CreationRestControllerService,
               private router: Router,
-              private auth: UserService) {
+              private auth: UserService,
+              private fireFile: FirefilesService) {
     this.firstFormGroup = this._formBuilder.group({
       titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
       minidescription: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
       description: ['', [Validators.required, Validators.maxLength(1024), Validators.minLength(50)]],
-      arret: ['', [Validators.required,this.isArretSelected.bind(this)]],
+      arret: ['', [Validators.required, this.isArretSelected.bind(this)]],
       duree: ['1', [Validators.required, Validators.min(1)]],
       //to do pb sur le pattern, il le considère juste alors qu'il ne le devrait pas
       listeTags: ['', [Validators.pattern(/[a-zA-Z ]*/g)]],
+      banniere: ['', [Validators.required, Validators.pattern(/\.(jpe?g|png|gif|svg)$/i)]],
     });
     this.secondFormGroup = this._formBuilder.group({
       etapes: new FormControl(null),
@@ -120,7 +126,7 @@ export class CreateComponent implements OnInit {
       map(value => value.trim().toLowerCase()),
       distinctUntilChanged(),
       debounceTime(1000),
-      tap(()=>{
+      tap(() => {
         if (!this.isSet)
           this.selectedStop = null;
         else
@@ -155,50 +161,84 @@ export class CreateComponent implements OnInit {
     this.innerWidth = window.innerWidth;
   }
 
-  submitForm() {
+  async submitForm() {
     console.log("submitForm");
-    if(this.firstFormGroup.invalid || this.firstFormGroup.pristine || this.secondFormGroup.invalid || this.idUser ===-1){
+    if (this.firstFormGroup.invalid || this.firstFormGroup.pristine || this.secondFormGroup.invalid || this.idUser === -1) {
       console.log("formulaire invalide")
       return;
     }
     console.log(this.selectedStop)
-    if(this.selectedStop == null){
+    if (this.selectedStop == null) {
       console.log("arret invalide")
       this.firstFormGroup.controls['arret'].setErrors(null);
       return;
     }
 
-    if (this.etapesData.length=== 0) {
+    if (this.etapesData.length === 0) {
       console.log("pas d'étapes")
       this.secondFormGroup.controls['etapes'].setErrors({'invalid': true});
       return;
     }
 
-    const formDTO : DefiCreateDto = {
-      arret:castFeatureStopToArretDto(this.selectedStop),
-      duree:this.firstFormGroup.controls['duree'].value,
-      tags:this.listeTags,
-      titre:this.firstFormGroup.controls['titre'].value,
-      miniDescription:this.firstFormGroup.controls['minidescription'].value,
-      description:this.firstFormGroup.controls['description'].value,
-      etapes:this.etapesData.map(castToEtapeCreateDto),
-      auteurId:this.idUser,
+    if (this.file === null) {
+      console.log("pas de fichier")
+      return;
     }
-    console.log(formDTO)
-    this.creationService.createDefi1({body:formDTO}).subscribe(
-      {
-        next: (data) => {
-          this.openSnackBar();
-          this.router.navigate(['/info', data.id]);
-        },
-        error: (err) => {
-          console.log(err);
+
+    this.isUploading= true;
+    try {
+      const img = await this.fireFile.savePhoto(await this.fireFile.compressImg(this.file),this.databaseKey);
+      const sendEtape : Promise<EtapeFormToSend>[] = this.etapesData.map(async (etape)=>{
+        let img = "";
+        try{
+          if (etape.stepImg !== null) {
+            img = await this.fireFile.savePhoto(await this.fireFile.compressImg(etape.stepImg),this.databaseKey);
+          }
+        }catch(e){}
+        const etapeToSend : EtapeFormToSend = {
+          ...etape,
+          stepImg:img
         }
+        return etapeToSend;
+      });
+
+      const etapeToSendArray = await Promise.all(sendEtape);
+
+      const formDTO: DefiCreateDto = {
+        arret: castFeatureStopToArretDto(this.selectedStop),
+        duree: this.firstFormGroup.controls['duree'].value,
+        tags: this.listeTags,
+        titre: this.firstFormGroup.controls['titre'].value,
+        miniDescription: this.firstFormGroup.controls['minidescription'].value,
+        description: this.firstFormGroup.controls['description'].value,
+        etapes: etapeToSendArray.map(castToEtapeCreateDto),
+        auteurId: this.idUser,
+        img:img
       }
-    )
+
+      console.log(formDTO)
+
+      this.creationService.createDefi1({body: formDTO}).subscribe(
+        {
+          next: (data) => {
+            this.openSnackBar();
+            this.router.navigate(['/info', data.id]);
+            this.isUploading = false;
+          },
+          error: (err) => {
+            console.log(err);
+            this.isUploading = false;
+          }
+        }
+      )
+    } catch (e) {
+      console.log("erreur lors de la sauvegarde des images")
+      this.isUploading = false;
+      return;
+    }
   }
 
-  openSnackBar(){
+  openSnackBar() {
     this._snackBar.open("Ton défi est créé !", "", {
       duration: 3000,
       panelClass: ['mat-toolbar', 'green-snackbar', 'snack-up']
@@ -291,8 +331,16 @@ export class CreateComponent implements OnInit {
   isArretSelected(): ValidationErrors | null {
     if (this.selectedStop === null) {
       return {'notfound': true};
-    }else {
+    } else {
       return null;
+    }
+  }
+
+  onFileChange(file: HTMLInputElement) {
+    if (file != null) {
+      if (file.files!.length > 0) {
+        this.file = file.files![0];
+      }
     }
   }
 }

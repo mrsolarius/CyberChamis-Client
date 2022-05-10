@@ -1,6 +1,6 @@
 <mat-card routerLink="/info/{{defi.id}}">
-  <img mat-card-image src="assets/defi_picture.jpg"
-       alt="{{defi.titre}}">
+  <img mat-card-image [src]="defi.img"
+       [alt]="defi.titre">
   <mat-card-header>
     <mat-card-title>{{defi.titre}}</mat-card-title>
     <mat-card-subtitle>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, filter } from 'rxjs';
 import {DefiDto} from "../../api/models/defi-dto";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
+import {BehaviorSubject,  filter, map,lastValueFrom, Observable, switchMap} from "rxjs";
+import {FirefilesService} from "../../firefiles.service";
 
 @Component({
 
@@ -12,37 +13,29 @@ import {DefiRestControllerService} from "../../api/services/defi-rest-controller
 })
 export class HomeComponent implements OnInit {
   defi:BehaviorSubject<DefiDto[]> = new BehaviorSubject<DefiDto[]>([]);
-  patate:DefiDto[] = [
-    {
-      titre:"A la recherche du graphe mouton",
-      miniDescription:"Primitus vidisse ante nummatum si tumentemque Romam decennium tumentemque enixius aliquem mentiri introieris aliquem bene dece.",
-      duree:"5",
-      noteMoyenne:1,
-      arretDTO:{
-        nomArret: "Chavant"
-      
-    }},
-  {
-    titre:"Le Bonnet du BDE",
-    description:"Adhibitis praestituto responsum truci et quae aliis iudex magister quidve cuius nec permissi adhibitis adsistebant subinde aulaeum reginae cursim aliis die stimulis funestis ad cuius interrogationibus quid adhibitis stimulis Caesarem.",
-    duree:"4",
-    noteMoyenne:4,
-    arretDTO:{
-      nomArret: "Ecole hospitalière"
-  }},
-  
-  
-  {
-    titre:"Ou est l'homme au pull bleu?",
-    description:"Etiam odisse adhiberemus fuit inimicitiarum praecipiendum ut minus fuissemus ut valet ferendum in minus tempus fuissemus in etiam amicitiam fuit eum amare amare amare fuit cogitandum eum etiam in amare.",
-    duree:"9",
-    noteMoyenne:2,
-    arretDTO:{
-      nomArret: "Condillac"
-    }
+  defisObsView:Observable<DefiDto[]>;
 
-  }];
-  constructor(private defisRest : DefiRestControllerService) {}
+  constructor(private defisRest : DefiRestControllerService,private fileService : FirefilesService) {
+    this.defisObsView = this.defi.pipe(
+      //Le pipe magique à utiliser partous pour récupérer les urls des images
+      map(defis => {
+        return defis.map(async (defi) => {
+          if(defi.img) {
+            return {
+              ...defi,
+              img: await lastValueFrom(this.fileService.getPhotoUrlObs('defis', defi.img))
+            }
+          }
+          return {
+            ...defi,
+            img: '/assets/defi_picture.jpg'
+          }
+        });
+      }),
+      switchMap(async defis => {
+        return await Promise.all(defis);
+      }))
+  }
 
   ngOnInit(): void {
     this.defisRest.getDefis().pipe(filter(this.isNonNull)).subscribe((v)=>{

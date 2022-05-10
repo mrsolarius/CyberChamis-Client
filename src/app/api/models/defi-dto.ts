@@ -13,6 +13,8 @@ export interface DefiDto {
   duree?: string;
   etapes?: Array<EtapeDto>;
   id?: string;
+  img?: string;
+  miniDescription?: string;
   noteMoyenne?: number;
   pointTotaux?: number;
   tags?: Array<TagDto>;
