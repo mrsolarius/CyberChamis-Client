@@ -36,26 +36,7 @@ export class AppMapComponent implements AfterViewInit {
   }
 
   ngOnInit () {
-    this.defisRest.getDefis().pipe(filter(this.isNonNull)).subscribe((v)=>{
-      this.defi.next(v);
-      const greenIcon = Leaflet.icon({
-        iconUrl: 'assets/placeholder.png',
-        iconSize:     [30, 55], // size of the icon
-        //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        popupAnchor:  [-3, -60] // point from which the popup should open relative to the iconAnchor
-      });
-      const markerClusterGroup = Leaflet.markerClusterGroup({ chunkedLoading: true})
-      const mList = []
-      for(let d of v){
-        const arretDto :ArretDto = d.arretDTO!;
-        mList.push(Leaflet.marker([arretDto.longitude!,arretDto.latitude!],{icon:greenIcon}).bindPopup(d.titre!));
-      }
-      console.log('list',mList)
-      console.log('map',this.map)
 
-      markerClusterGroup.addLayers(mList);
-      this.map.addLayer(markerClusterGroup);
-    });
   }
 
   isNonNull<T>(value: T): value is NonNullable<T> {
@@ -144,7 +125,28 @@ export class AppMapComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.initMap();
+    this.initMap().then(()=>{
+      this.defisRest.getDefis().pipe(filter(this.isNonNull)).subscribe((v)=>{
+        this.defi.next(v);
+        const greenIcon = Leaflet.icon({
+          iconUrl: 'assets/placeholder.png',
+          iconSize:     [30, 55], // size of the icon
+          //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+          popupAnchor:  [-3, -60] // point from which the popup should open relative to the iconAnchor
+        });
+        const markerClusterGroup = Leaflet.markerClusterGroup({ chunkedLoading: true})
+        const mList = []
+        for(let d of v){
+          const arretDto :ArretDto = d.arretDTO!;
+          mList.push(Leaflet.marker([arretDto.longitude!,arretDto.latitude!],{icon:greenIcon}).bindPopup(d.titre!));
+        }
+        console.log('list',mList)
+        console.log('map',this.map)
+
+        markerClusterGroup.addLayers(mList);
+        this.map.addLayer(markerClusterGroup);
+      });
+    });
   }
 }
 
