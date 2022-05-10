@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {filter} from "rxjs/operators";
 import {TagCount} from "../../api/models/tag-count";
 import {Tag} from "@angular/compiler/src/i18n/serializers/xml_helper";
@@ -26,9 +26,14 @@ export class HomeComponent implements OnInit {
       tag: "tag3",
       nbdefis: 16,
     }
-  ];
+  ];*/
+  tagsObs : Observable<TagCount[]>;
+  tagsTab? : TagCount[];
 
-  constructor(private defisRest : DefiRestControllerService) {}
+  constructor(private defisRest : DefiRestControllerService) {
+    this.tagsObs = defisRest.getTagCount();
+    this.tagsObs.subscribe((v)=>{this.tagsTab = v;});
+  }
 
   ngOnInit(): void {
     this.defisRest.getDefis().pipe(filter(this.isNonNull)).subscribe((v)=>{
