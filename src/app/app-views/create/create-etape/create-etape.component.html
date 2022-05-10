@@ -26,6 +26,7 @@
         <mat-error *ngIf="checkCommonEtape('description', 'maxlength')">La description peut contenir au maximum 1024 caractères</mat-error>
       </mat-form-field>
     </div>
+
     <!-- image de l'étape -->
     <div class="form-items">
       <p>Ajout une image d'étape</p>
@@ -34,6 +35,8 @@
       <label for="input-file-id" class="md-button md-raised md-primary">Choisir un fichier</label>
       <mat-error *ngIf="checkCommonEtape('image', 'pattern')">Le fichier envoyé n'est pas une image</mat-error>
     </div>
+
+
     <!-- Choix entre indication et tache -->
     <div class="form-items">
       <p>S'agit-il d'une indication ou d'une tache ?</p>
