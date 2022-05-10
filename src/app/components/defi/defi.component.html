@@ -4,8 +4,10 @@
   <mat-card-header>
     <mat-card-title>{{defi.titre}}</mat-card-title>
     <mat-card-subtitle>
-      <mat-icon class="material-symbols-outlined">directions_walk</mat-icon>
-      <span>A 2km de vous</span>
+      <ng-container *ngIf="geoloc | async as geoloc">
+        <mat-icon class="material-symbols-outlined">directions_walk</mat-icon>
+        <span>A {{getDistance(geoloc)}}km de vous</span>
+      </ng-container>
     </mat-card-subtitle>
     <mat-card-subtitle>
       <mat-icon class="material-symbols-outlined">hail</mat-icon>

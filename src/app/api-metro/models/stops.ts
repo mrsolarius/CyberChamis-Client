@@ -19,8 +19,8 @@ export function castFeatureStopToArretDto(input:FeatureStop):ArretDto{
   return {
     codeArret:input.properties.id,
     nomArret:input.properties.name,
-    latitude:input.geometry.coordinates[0],
-    longitude:input.geometry.coordinates[1],
+    latitude:input.geometry.coordinates[1],
+    longitude:input.geometry.coordinates[0],
     ville:input.properties.city
   }
 }
