@@ -14,6 +14,7 @@ export interface DefiDto {
   etapes?: Array<EtapeDto>;
   id?: string;
   img?: string;
+  miniDescription?: string;
   noteMoyenne?: number;
   pointTotaux?: number;
   tags?: Array<TagDto>;
