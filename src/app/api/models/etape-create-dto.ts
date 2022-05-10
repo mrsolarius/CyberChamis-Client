@@ -2,6 +2,7 @@
 /* eslint-disable */
 import { IndiceDto } from './indice-dto';
 export interface EtapeCreateDto {
+  banner?: string;
   descriptionEtape?: string;
   idEtape?: number;
   image?: string;

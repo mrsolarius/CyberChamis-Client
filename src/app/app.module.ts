@@ -49,6 +49,8 @@ import { RatingViewComponent } from './components/rating-view/rating-view.compon
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.component';
+import { SingleLayoutComponent } from './components/layout/single-layout/single-layout.component';
+import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.component';
 
 
 @NgModule({
@@ -82,6 +84,8 @@ import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.com
     AddCommentComponent,
     ProfileInfoComponent,
     TagTendanceComponent,
+    SingleLayoutComponent,
+    DefisByTagComponent,
   ],
   imports: [
     DragDropModule,

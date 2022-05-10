@@ -1,0 +1,7 @@
+<app-top-bar
+  [profile]="true"
+  [backRoute]="'/home'"
+  [title]="tag"></app-top-bar>
+<div *ngIf="defisObs | async as obs" class="contents">
+    <app-defis [defis]="obs"></app-defis>
+</div>

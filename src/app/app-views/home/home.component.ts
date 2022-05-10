@@ -3,7 +3,8 @@ import {DefiDto} from "../../api/models/defi-dto";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {BehaviorSubject} from "rxjs";
 import {filter} from "rxjs/operators";
-import {trendTagDto} from "../../components/tag-tendance/tag-tendance.component";
+import {TagCount} from "../../api/models/tag-count";
+import {Tag} from "@angular/compiler/src/i18n/serializers/xml_helper";
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ import {trendTagDto} from "../../components/tag-tendance/tag-tendance.component"
 })
 export class HomeComponent implements OnInit {
   defi:BehaviorSubject<DefiDto[]> = new BehaviorSubject<DefiDto[]>([]);
-  tags: trendTagDto[] =[
+    /*[
     {
       tag: "tag1",
       nbdefis: 10,
