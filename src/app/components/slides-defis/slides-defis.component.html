@@ -9,7 +9,7 @@
         <h3>Arret : {{defi.arretDTO?.nomArret}}</h3>
         <h3 class="banane">score : {{defi.noteMoyenne}}/5</h3>
         <p>Durée : {{defi.duree}} minutes</p>
-        <img mat-card-lg-image class="poireau"src=".\assets\imageSlides.jpg" alt="Photo of a Shiba Inu">
+        <img mat-card-lg-image class="poireau" [src]="defi.img" alt="Photo of a Shiba Inu">
         <mat-card-content>
           <p class="fraise">
             {{defi.miniDescription}}
