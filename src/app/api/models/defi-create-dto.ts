@@ -9,6 +9,7 @@ export interface DefiCreateDto {
   duree?: string;
   etapes?: Array<EtapeCreateDto>;
   id?: string;
+  img?: string;
   miniDescription?: string;
   tags?: Array<string>;
   titre?: string;
