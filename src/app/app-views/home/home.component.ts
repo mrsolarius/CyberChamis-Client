@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   patate:DefiDto[] = [
     {
       titre:"A la recherche du graphe mouton",
-      description:"Primitus vidisse ante nummatum si tumentemque Romam decennium tumentemque enixius aliquem mentiri introieris aliquem bene decennium et mentiri tamquam haec exoptatus suscipieris non haec primitus et sic primitus coactusque ideo.",
+      miniDescription:"Primitus vidisse ante nummatum si tumentemque Romam decennium tumentemque enixius aliquem mentiri introieris aliquem bene dece.",
       duree:"5",
       noteMoyenne:1,
       arretDTO:{
