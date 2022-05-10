@@ -19,9 +19,15 @@ export class HomeComponent implements OnInit {
       //Le pipe magique à utiliser partous pour récupérer les urls des images
       map(defis => {
         return defis.map(async (defi) => {
+          if(defi.img) {
+            return {
+              ...defi,
+              img: await lastValueFrom(this.fileService.getPhotoUrlObs('defis', defi.img))
+            }
+          }
           return {
             ...defi,
-            img: await lastValueFrom(this.fileService.getPhotoUrlObs('defis', defi.img === undefined ? '' : defi.img))
+            img: '/assets/defi_picture.jpg'
           }
         });
       }),

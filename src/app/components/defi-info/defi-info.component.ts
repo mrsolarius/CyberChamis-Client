@@ -30,9 +30,15 @@ export class DefiInfoComponent implements OnInit {
               private fileService : FirefilesService) {
     this.viewObsDefi = this.obsDefi.pipe(
       map(async defi => {
+        if(defi.img) {
+          return {
+            ...defi,
+            img: await lastValueFrom(this.fileService.getPhotoUrlObs('defis', defi.img))
+          }
+        }
         return {
           ...defi,
-          img: await lastValueFrom(this.fileService.getPhotoUrlObs('defis',defi.img===undefined?'':defi.img))
+          img: '/assets/defi_picture.jpg'
         }
       }),
       switchMap(async defi => {
