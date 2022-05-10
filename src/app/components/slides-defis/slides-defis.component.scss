@@ -1,7 +1,16 @@
 .kiwi{
-  text-align: center;
-  text-decoration: underline;
+  font-size: large;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: Bradley Hand, cursive;
 }
+.small-icon{
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
 .banane{
   text-align: right;
 }
@@ -10,10 +19,10 @@
   bottom: 5%;
 }
 .poireau{
-  text-align:center;
-  height: 100%;
-  width: 100%;
+  height: 120px;
+  object-fit: cover;
   display:flex;
+  width: 100%;
  }
 .mangue{
     display: block;
@@ -26,6 +35,7 @@
 .fraise{
   text-align: justify;
 }
+
 mat-card-actions{
   text-align: center;
 }
@@ -36,21 +46,16 @@ mat-card-actions{
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+  width: 100%;
 }
 .card {
-  /*float: left;*/
-  max-width: 33.333%;
+  max-width: 300px;
+  width: 100%;
   padding: .75rem;
   margin-bottom: 2rem;
-  border: 0;
-  flex-basis: 33.333%;
+  flex-basis: 80vw;
   flex-grow: 0;
   flex-shrink: 0;
-}
-
-.card > img {
-  margin-bottom: .75rem;
-  width: 100%;
 }
 
 .card-text {
