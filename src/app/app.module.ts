@@ -122,6 +122,6 @@ import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.compo
     }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

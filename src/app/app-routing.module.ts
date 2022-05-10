@@ -12,6 +12,7 @@ import {ProfileInfoComponent} from "./components/profile-info/profile-info.compo
 import {SingleLayoutComponent} from "./components/layout/single-layout/single-layout.component";
 import {DefisByTagComponent} from "./app-views/defis-by-tag/defis-by-tag.component";
 
+
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {

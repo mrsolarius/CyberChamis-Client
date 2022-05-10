@@ -1,4 +1,5 @@
 <div *ngIf="defisObsView | async as defis">
+  <app-slides-defis [defis]="defis"></app-slides-defis>
   <app-defis [defis]="defis"></app-defis>
   <app-tag-tendance [tags]="tagsTab" ></app-tag-tendance>
 </div>
