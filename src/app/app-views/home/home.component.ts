@@ -4,8 +4,6 @@ import {DefiRestControllerService} from "../../api/services/defi-rest-controller
 import {BehaviorSubject, lastValueFrom, Observable, switchMap} from "rxjs";
 import {filter, map} from "rxjs/operators";
 import {FirefilesService} from "../../firefiles.service";
-import {BehaviorSubject, Observable} from "rxjs";
-import {filter} from "rxjs/operators";
 import {TagCount} from "../../api/models/tag-count";
 
 @Component({

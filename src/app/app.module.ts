@@ -86,6 +86,11 @@ import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.compo
     RatingViewComponent,
     AddCommentComponent,
     ProfileInfoComponent,
+    TagTendanceComponent,
+    HistoCommentUserComponent,
+    SingleLayoutComponent,
+    CommentUserComponent,
+    DefisByTagComponent,
   ],
   imports: [
     DragDropModule,
@@ -109,6 +114,12 @@ import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.compo
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
