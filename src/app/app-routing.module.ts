@@ -21,7 +21,8 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent, data: {animation: 'fadeInOut'}},
       {path: 'create', component: CreateComponent, data: {animation: 'fadeInOut'}},
       {path: 'info/:id', component: DefiInfoComponent, data: {animation: 'fadeInOut'}},
-      {path: 'profile-info/:id', component: ProfileInfoComponent, data: {animation: 'fadeinOut'}}
+      {path: 'profile-info/:id', component: ProfileInfoComponent, data: {animation: 'fadeinOut'}},
+      {path: 'edit/:id', component:CreateComponent, data: {animation: 'fadeInOut'}},
     ],
   },
   {path: 'game/:id',

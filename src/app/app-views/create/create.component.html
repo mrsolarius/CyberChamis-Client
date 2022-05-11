@@ -1,4 +1,5 @@
 <!-- <mat-icon>room</mat-icon> pour icon arret-->
+<ng-container *ngIf="!notFound;else notFoundTemplate">
 <mat-stepper [orientation]="innerWidth<600?'vertical':'horizontal'" linear="false">
   <mat-step [stepControl]="firstFormGroup" errorMessage="Informations du défi non remplies en totalité">
     <form [formGroup]="firstFormGroup" novalidate>
@@ -203,7 +204,12 @@
         </button>
         <mat-error *ngIf="idUser ===-1">Veuillez vous connecter pour créer un défi</mat-error>
       </div>
-    <mat-progress-bar *ngif="isUploading" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="isUploading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
   </mat-step>
 </mat-stepper>
-
+</ng-container>
+<ng-template #notFoundTemplate>
+  <app-not-found [error]="error" [title]="message"></app-not-found>
+</ng-template>

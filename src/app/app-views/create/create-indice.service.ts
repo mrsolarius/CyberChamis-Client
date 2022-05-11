@@ -16,6 +16,16 @@ export function castToIndiceDto(form: IndiceForm): IndiceDto {
   }
 }
 
+export function castToIndiceForm(dto: IndiceDto): IndiceForm {
+  return {
+    id: dto.id!,
+    indice: dto.indice!,
+    pointsPerdus: dto.pointsPerdus!,
+    numero: dto.numIndice!,
+    isValide:true,
+  }
+}
+
 export const defaultIndice: IndiceForm = {
   id:0,
   numero:0,

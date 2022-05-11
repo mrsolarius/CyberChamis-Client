@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AbstractForm, FormCollection} from "./form-collection";
-import {castToIndiceDto, IndiceForm} from "./create-indice.service";
+import {castToIndiceDto, castToIndiceForm, IndiceForm} from "./create-indice.service";
 import {EtapeCreateDto} from "../../api/models/etape-create-dto";
 
 export enum TypeEtape {
@@ -60,6 +60,23 @@ export function castToEtapeCreateDto(etape: EtapeFormToSend): EtapeCreateDto {
     type: etape.typeEtape === TypeEtape.Indication ? 'IndicationDTO' : etape.typeEtape === TypeEtape.Tache ? 'TacheDTO' : undefined,
     banner: etape.stepImg,
   };
+}
+
+export function castToEtapeForm(etape: EtapeCreateDto): EtapeForm {
+  return {
+    id: etape.idEtape!,
+    numero: etape.numero!,
+    titre: etape.titreEtape!,
+    description: etape.descriptionEtape!,
+    typeEtape: etape.type === 'IndicationDTO' ? TypeEtape.Indication : etape.type === 'TacheDTO' ? TypeEtape.Tache : TypeEtape.NonDefinie,
+    indication: etape.text!,
+    question: etape.question!,
+    reponse: etape.secret!,
+    indices: etape.indices!.map(castToIndiceForm),
+    pointsGagnes: etape.point!,
+    isValide: true,
+    stepImg:null,
+  }
 }
 
 @Injectable({

@@ -6,17 +6,28 @@ import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {castToEtapeCreateDto, CreateEtapeService, EtapeForm, EtapeFormToSend} from "./create-etape.service";
-import {debounceTime, distinctUntilChanged, finalize, Observable, switchMap, tap} from "rxjs";
+import {
+  bufferTime,
+  debounceTime,
+  distinctUntilChanged,
+  finalize,
+  lastValueFrom,
+  Observable,
+  switchMap,
+  tap
+} from "rxjs";
 import {MetroboliliteService} from "../../api-metro/metrobolilite.service";
 import {GeoJSON} from "geojson";
 import {castFeatureStopToArretDto, FeatureStop} from "../../api-metro/models/stops";
-import {filter, map} from "rxjs/operators";
+import {filter, last, map} from "rxjs/operators";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {DefiCreateDto} from "../../api/models/defi-create-dto";
 import {CreationRestControllerService} from "../../api/services/creation-rest-controller.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../user/user.service";
 import {FirefilesService} from "../../firefiles.service";
+import {ActivePerfRecorder} from "@angular/compiler-cli/src/ngtsc/perf";
+import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 
 
 @Component({
@@ -61,6 +72,12 @@ export class CreateComponent implements OnInit {
   private file: File | null = null;
   isUploading: boolean = false;
 
+  notFound: boolean = true;
+  error: string = '404';
+  message: string = 'Page introuvable';
+
+
+
   constructor(private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar,
               private etapeService: CreateEtapeService,
@@ -68,7 +85,10 @@ export class CreateComponent implements OnInit {
               private creationService: CreationRestControllerService,
               private router: Router,
               private auth: UserService,
-              private fireFile: FirefilesService) {
+              private fireFile: FirefilesService,
+              private route: ActivatedRoute,
+              private defiService: DefiRestControllerService) {
+
     this.firstFormGroup = this._formBuilder.group({
       titre: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
       minidescription: ['', [Validators.required, Validators.maxLength(128), Validators.minLength(10)]],
@@ -118,6 +138,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkLoginAndEdit();
     this.innerWidth = window.innerWidth;
     this.etapeService.get().subscribe((etapes: EtapeForm[]) => this.etapesData = etapes);
     this.auth.getUserId().subscribe((id: number) => this.idUser = id);
@@ -156,6 +177,52 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  checkLoginAndEdit(){
+    if (this.route.toString().includes('edit')) {
+      this.error = '';
+      this.message = 'Chargement...';
+      lastValueFrom(this.auth.getUserId()).then((id: number) => {
+        console.log('last value from auth: ' + id);
+      });
+      this.auth.getUserId().subscribe(id => {
+        console.log('last id', id);
+        console.log(this.route.toString())
+        if(id!==-1){
+          this.route.params.subscribe(async (params) => {
+          console.log(params['id'])
+          if (params['id'] !== undefined) {
+            try {
+              const defi = await lastValueFrom(this.creationService.getFullDefi({id: params['id']}));
+              if (defi.auteurId === id) {
+                this.fill(defi);
+                this.notFound = false;
+              } else {
+                this.message = 'Vous n\'avez pas le droit de modifier ce défi'
+                this.error = '400';
+                this.notFound = true;
+              }
+            } catch (e) {
+              this.notFound = true;
+              this.message = 'Défi introuvable';
+              this.error = '404';
+            }
+          }
+        });
+        }else{
+          setTimeout(()=>{
+            if(this.notFound) {
+              this.message = 'Vous n\'avez pas le droit de modifier ce défi'
+              this.error = '400';
+              this.notFound = true;
+            }
+          },10000)
+        }
+      })
+    }else {
+      this.notFound = false;
+    }
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.innerWidth = window.innerWidth;
@@ -185,19 +252,20 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    this.isUploading= true;
+    this.isUploading = true;
     try {
-      const img = await this.fireFile.savePhoto(await this.fireFile.compressImg(this.file),this.databaseKey);
-      const sendEtape : Promise<EtapeFormToSend>[] = this.etapesData.map(async (etape)=>{
+      const img = await this.fireFile.savePhoto(await this.fireFile.compressImg(this.file), this.databaseKey);
+      const sendEtape: Promise<EtapeFormToSend>[] = this.etapesData.map(async (etape) => {
         let img = "";
-        try{
+        try {
           if (etape.stepImg !== null) {
-            img = await this.fireFile.savePhoto(await this.fireFile.compressImg(etape.stepImg),this.databaseKey);
+            img = await this.fireFile.savePhoto(await this.fireFile.compressImg(etape.stepImg), this.databaseKey);
           }
-        }catch(e){}
-        const etapeToSend : EtapeFormToSend = {
+        } catch (e) {
+        }
+        const etapeToSend: EtapeFormToSend = {
           ...etape,
-          stepImg:img
+          stepImg: img
         }
         return etapeToSend;
       });
@@ -213,7 +281,7 @@ export class CreateComponent implements OnInit {
         description: this.firstFormGroup.controls['description'].value,
         etapes: etapeToSendArray.map(castToEtapeCreateDto),
         auteurId: this.idUser,
-        img:img
+        img: img
       }
 
       console.log(formDTO)
@@ -267,6 +335,33 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  fill(fill: DefiCreateDto){
+    this.firstFormGroup.controls['titre'].setValue(fill.titre);
+    this.firstFormGroup.controls['minidescription'].setValue(fill.miniDescription);
+    this.firstFormGroup.controls['description'].setValue(fill.description);
+    this.firstFormGroup.controls['duree'].setValue(fill.duree);
+    this.firstFormGroup.controls['listeTags'].setValue(fill.tags);
+    this.firstFormGroup.controls['banniere'].setValue(fill.img);
+    this.firstFormGroup.controls['arret'].setValue(fill.arret!.nomArret!);
+    this.selectedStop = {
+      type:'Feature',
+      properties:{
+        id: fill.arret!.codeArret!,
+        name: fill.arret!.nomArret!,
+        city: fill.arret!.ville!,
+        code: fill.arret!.codeArret!,
+        type:"stops",
+        clusterGtfsId:'',
+        gtfsId:'',
+      },
+      geometry:{
+        type:'Point',
+        coordinates: [fill.arret!.longitude!, fill.arret!.latitude!]
+      }
+    };
+    this.listeTags = fill.tags===undefined?[]:fill.tags;
+    fill.etapes;
+  }
 
   remove(mot: string): void {
     const index = this.listeTags.indexOf(mot);
