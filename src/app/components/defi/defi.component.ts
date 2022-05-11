@@ -3,10 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ArretDto} from "../../api/models/arret-dto";
 import {GeolocService} from "../../geoLoc/geoloc.service";
 import {Observable} from "rxjs";
-
 type Star = "star" | "star_border" | "star_half";
-
-
 
 @Component({
   selector: 'app-defi',

@@ -56,6 +56,7 @@ import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.com
 import { SingleLayoutComponent } from './components/layout/single-layout/single-layout.component';
 import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.component';
 import { DefitrouveComponent } from './app-map/defitrouve/defitrouve.component';
+import { ActiveAuthorComponent } from './components/active-author/active-author.component';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import { DefitrouveComponent } from './app-map/defitrouve/defitrouve.component';
     CommentUserComponent,
     DefisByTagComponent,
     DefitrouveComponent,
+    ActiveAuthorComponent,
   ],
   imports: [
     DragDropModule,
