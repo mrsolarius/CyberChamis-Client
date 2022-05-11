@@ -10,9 +10,19 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <h2>Historique des commentaires</h2>
-  <mat-divider></mat-divider>
-  <div *ngIf="obsDefis | async as defis">
-    <app-histo-comment-user *ngFor="let defi of defis" [defi]="defi" [user]="user"></app-histo-comment-user>
-  </div>
+
+  <mat-tab-group>
+    <mat-tab label="Défis terminés">
+
+    </mat-tab>
+    <mat-tab label="Défis créés">
+
+    </mat-tab>
+    <mat-tab label="Commentaires et notes">
+      <div *ngIf="obsDefis | async as defis">
+        <app-histo-comment-user *ngFor="let defi of defis" [defi]="defi" [user]="user"></app-histo-comment-user>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
 </section>

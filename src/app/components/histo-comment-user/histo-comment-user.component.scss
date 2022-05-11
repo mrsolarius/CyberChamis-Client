@@ -1,3 +1,20 @@
 .histo-com-container{
   margin: 20px 0;
 }
+
+.com-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.note-icon{
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.note-defi{
+  display: flex;
+  align-content: center;
+}

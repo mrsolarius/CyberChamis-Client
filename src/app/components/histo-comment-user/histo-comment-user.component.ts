@@ -4,6 +4,8 @@ import {BehaviorSubject, lastValueFrom} from "rxjs";
 import {CommentaireDto} from "../../api/models/commentaire-dto";
 import {ChamiDto} from "../../api/models/chami-dto";
 import {CommentaireRestControllerService} from "../../api/services/commentaire-rest-controller.service";
+import {NoteRestControllerService} from "../../api/services/note-rest-controller.service";
+import {NoteDto} from "../../api/models/note-dto";
 
 @Component({
   selector: 'app-histo-comment-user',
@@ -16,8 +18,10 @@ export class HistoCommentUserComponent implements OnInit {
   @Input() defi !: DefiDto;
   @Input() user !: ChamiDto;
   obsComs = new BehaviorSubject<CommentaireDto[]>([]);
+  obsNote = new BehaviorSubject<NoteDto>({});
 
-  constructor(private comService:CommentaireRestControllerService) { }
+  constructor(private comService:CommentaireRestControllerService,
+              private noteService:NoteRestControllerService) { }
 
   async loadComs(){
     const idDefi = this.defi.id!;
@@ -29,6 +33,7 @@ export class HistoCommentUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadComs();
+    this.loadNote();
   }
 
   getNomDefi() {
@@ -36,5 +41,13 @@ export class HistoCommentUserComponent implements OnInit {
       return this.defi.titre;
     }
     return "Defi sans titre"
+  }
+
+  async loadNote(){
+    const defiId = this.defi.id!;
+    const utilistateurId = this.user.id!;
+    const note = await lastValueFrom(this.noteService.getNote({defiId, utilistateurId}));
+    if(note)
+      this.obsNote.next(note);
   }
 }
