@@ -4,6 +4,7 @@ import {DefiRestControllerService} from "../../api/services/defi-rest-controller
 import {BehaviorSubject,  filter, map,lastValueFrom, Observable, switchMap} from "rxjs";
 import {FirefilesService} from "../../firefiles.service";
 import {TagCount} from "../../api/models/tag-count";
+import {ChamisCount} from "../../api/models/chamis-count";
 
 @Component({
 
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit {
   defisObsView:Observable<DefiDto[]>;
   tagsObs : Observable<TagCount[]>;
   tagsTab? : TagCount[];
+  defisNbChamis = new BehaviorSubject<ChamisCount[]>([]);
 
   constructor(private defisRest : DefiRestControllerService,private fileService : FirefilesService) {
     this.defisObsView = this.defi.pipe(
@@ -41,12 +43,14 @@ export class HomeComponent implements OnInit {
       }))
     this.tagsObs = defisRest.getTagCount();
     this.tagsObs.subscribe((v)=>{this.tagsTab = v;});
+    //this.defisNbChamis.subscribe((v)=>{console.log('v,v',v);});
   }
 
   ngOnInit(): void {
     this.defisRest.getDefis().pipe(filter(this.isNonNull)).subscribe((v)=>{
       this.defi.next(v);
     });
+    this.defisRest.getDefiNbChamis().subscribe((v)=>{this.defisNbChamis.next(v);});
   }
 
 

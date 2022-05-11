@@ -9,6 +9,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { ChamisCount } from '../models/chamis-count';
 import { DefiDto } from '../models/defi-dto';
 import { TagCount } from '../models/tag-count';
 
@@ -385,6 +386,49 @@ export class DefiRestControllerService extends BaseService {
 
     return this.getByChami$Response(params).pipe(
       map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
+    );
+  }
+
+  /**
+   * Path part for operation getDefiNbChamis
+   */
+  static readonly GetDefiNbChamisPath = '/api/defis/defi/nbChamis';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefiNbChamis()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefiNbChamis$Response(params?: {
+  }): Observable<StrictHttpResponse<Array<ChamisCount>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefiNbChamisPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<ChamisCount>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefiNbChamis$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefiNbChamis(params?: {
+  }): Observable<Array<ChamisCount>> {
+
+    return this.getDefiNbChamis$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<ChamisCount>>) => r.body as Array<ChamisCount>)
     );
   }
 
