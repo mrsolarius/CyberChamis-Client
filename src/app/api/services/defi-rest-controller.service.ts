@@ -389,6 +389,55 @@ export class DefiRestControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation getDefisByUserStatut
+   */
+  static readonly GetDefisByUserStatutPath = '/api/defis/defi/{id}/{statut}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefisByUserStatut()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisByUserStatut$Response(params: {
+    id: number;
+    statut: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
+  }): Observable<StrictHttpResponse<Array<DefiDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisByUserStatutPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.path('statut', params.statut, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<DefiDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefisByUserStatut$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisByUserStatut(params: {
+    id: number;
+    statut: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
+  }): Observable<Array<DefiDto>> {
+
+    return this.getDefisByUserStatut$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
+    );
+  }
+
+  /**
    * Path part for operation deleteCommentaireFromDefi
    */
   static readonly DeleteCommentaireFromDefiPath = '/api/defis/commentaire/{id}';

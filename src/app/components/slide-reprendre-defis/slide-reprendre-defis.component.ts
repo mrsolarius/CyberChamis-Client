@@ -1,6 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
-import {GeolocService} from "../../geoLoc/geoloc.service";
+import {GeolocService,getDistance} from "../../geoLoc/geoloc.service";
+import {BehaviorSubject, lastValueFrom} from "rxjs";
+import {ChamiDto} from "../../api/models/chami-dto";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
+import {UserService} from "../../user/user.service";
+import {VisiteDto} from "../../api/models/visite-dto";
+import {GameRestControllerService} from "../../api/services/game-rest-controller.service";
 
 @Component({
   selector: 'app-slide-reprendre-defis',
@@ -8,8 +15,10 @@ import {GeolocService} from "../../geoLoc/geoloc.service";
   styleUrls: ['./slide-reprendre-defis.component.scss']
 })
 export class SlideReprendreDefisComponent implements OnInit {
-  @Input() defis!: DefiDto[];
-  constructor(private geolocService: GeolocService) { }
+  @Input() visites!:VisiteDto[];
+  @Output() abandonJeux = new EventEmitter<void>();
+  constructor(private geolocService: GeolocService, private gameService : GameRestControllerService) {
+  }
 
   ngOnInit(): void {
   }
@@ -25,5 +34,13 @@ export class SlideReprendreDefisComponent implements OnInit {
   checkIfNote(noteMoyenne: number) {
     return noteMoyenne > 0 || !isNaN(noteMoyenne);
   }
+  trackById(index: number, e:any): number {
+    return e.index;
+  }
+  async abandon(idVisite:number) {
+    await lastValueFrom(this.gameService.editStatus({visiteId: idVisite, status: "ABONDON"}));
+    this.abandonJeux.emit();
+  }
+
 
 }
