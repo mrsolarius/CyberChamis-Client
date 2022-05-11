@@ -41,10 +41,16 @@ export class ExploreComponent implements OnInit {
       }
     }];
 
+  defiFound : DefiDto|null = null;
   constructor() {
   }
 
   ngOnInit(): void {
+  }
+
+  functionHandle(defi : DefiDto){
+    console.log(defi);
+    this.defiFound=defi;
   }
 
 }

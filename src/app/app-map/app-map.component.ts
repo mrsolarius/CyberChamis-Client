@@ -6,6 +6,7 @@ import {DefiDto} from "../api/models/defi-dto";
 import {DefiRestControllerService} from "../api/services/defi-rest-controller.service";
 import {filter} from "rxjs/operators";
 import {ArretDto} from "../api/models/arret-dto";
+import {update} from "@angular/fire/database";
 
 
 @Component({
@@ -28,6 +29,7 @@ export class AppMapComponent implements AfterViewInit {
   markerClusterGroup!: Leaflet.MarkerClusterGroup;
   markerClusterData = [];
   markers:Leaflet.MarkerClusterGroup;
+  reduceSize = false;
 
   marker!:any;
 
@@ -137,7 +139,16 @@ export class AppMapComponent implements AfterViewInit {
         const mList = []
         for(let d of v){
           const arretDto :ArretDto = d.arretDTO!;
-          mList.push(Leaflet.marker([arretDto.latitude!,arretDto.longitude!],{icon:greenIcon}).bindPopup(d.titre!));
+          mList.push(
+            Leaflet.marker([arretDto.latitude!,arretDto.longitude!],{icon:greenIcon})
+              .on("click", event => {
+                this.defiSelected.emit(d)
+                this.reduceSize=true;
+              })
+              .on("popupclose",event=>{
+                this.reduceSize=false;
+              })
+              .bindPopup(d.titre!));
 
         }
         markerClusterGroup.addLayers(mList);
@@ -163,6 +174,7 @@ export const getPosition = (): Promise<GeolocationPosition> => {
       resolve(position);
     })
   })
+
 
 
 

@@ -1,5 +1,7 @@
-<app-map ></app-map>
+<app-map (defiSelected)="functionHandle($event)"></app-map>
 <div class="downicon-container">
   <mat-icon color="primary">keyboard_arrow_down</mat-icon>
 </div>
-<!-- ngIf clicked affiche le composant -->
+<div *ngIf="defiFound!==null">
+  <app-defitrouve [defi]="defiFound!"></app-defitrouve>
+</div>
