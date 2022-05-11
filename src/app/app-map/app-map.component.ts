@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Output} from '@angular/core';
 import * as Leaflet from 'leaflet';
 import {GeolocService} from "../geoLoc/geoloc.service";
 import {BehaviorSubject} from "rxjs";
@@ -6,6 +6,7 @@ import {DefiDto} from "../api/models/defi-dto";
 import {DefiRestControllerService} from "../api/services/defi-rest-controller.service";
 import {filter} from "rxjs/operators";
 import {ArretDto} from "../api/models/arret-dto";
+
 
 @Component({
   selector: 'app-map',
@@ -15,6 +16,9 @@ import {ArretDto} from "../api/models/arret-dto";
 export class AppMapComponent implements AfterViewInit {
 
   defi:BehaviorSubject<DefiDto[]> = new BehaviorSubject<DefiDto[]>([]);
+ @Output() defiSelected = new EventEmitter<DefiDto>();
+
+
   title = 'AngularOSM';
   private map !: Leaflet.Map;
   private circle!: Leaflet.Circle;
@@ -36,7 +40,6 @@ export class AppMapComponent implements AfterViewInit {
   ngOnInit () {
 
   }
-
   isNonNull<T>(value: T): value is NonNullable<T> {
     return value != null && typeof value !== "undefined";
   }
@@ -92,8 +95,6 @@ export class AppMapComponent implements AfterViewInit {
       })
     })
 
-
-
     update();
     this.map.on('zoomend', update);
   }
@@ -137,9 +138,11 @@ export class AppMapComponent implements AfterViewInit {
         for(let d of v){
           const arretDto :ArretDto = d.arretDTO!;
           mList.push(Leaflet.marker([arretDto.latitude!,arretDto.longitude!],{icon:greenIcon}).bindPopup(d.titre!));
+
         }
         markerClusterGroup.addLayers(mList);
         this.map.addLayer(markerClusterGroup);
+
       });
     });
   }

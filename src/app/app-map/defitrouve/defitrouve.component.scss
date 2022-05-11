@@ -1,0 +1,17 @@
+.button-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: auto;
+}
+
+.star-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.defi-img{
+  height: 300px;
+  object-fit: cover;
+}

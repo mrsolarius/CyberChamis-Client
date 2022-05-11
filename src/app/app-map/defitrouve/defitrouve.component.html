@@ -1,0 +1,21 @@
+
+<mat-card routerLink="/info/{{defi.id}}">
+  <img mat-card-image [src]="defi.img"
+       [alt]="defi.titre" class="defi-img">
+  <mat-card-header>
+    <mat-card-title>{{defi.titre}}</mat-card-title>
+    <mat-card-subtitle>
+      <ng-container *ngIf="geoloc | async as geoloc">
+        <mat-icon class="material-symbols-outlined">directions_walk</mat-icon>
+        <span>A {{getDistance(geoloc)}}km de vous</span>
+      </ng-container>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      <mat-icon class="material-symbols-outlined">hail</mat-icon>
+      <span *ngIf="getNomArret(defi.arretDTO)!=undefined">{{getNomArret(defi.arretDTO)}}</span>
+    </mat-card-subtitle>
+    <div class="button-container">
+      <button mat-flat-button color="primary" routerLink="/game/{{defi.id}}" >Jouer</button>
+    </div>
+  </mat-card-header>
+</mat-card>

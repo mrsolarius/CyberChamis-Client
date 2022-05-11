@@ -55,6 +55,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.component';
 import { SingleLayoutComponent } from './components/layout/single-layout/single-layout.component';
 import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.component';
+import { DefitrouveComponent } from './app-map/defitrouve/defitrouve.component';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.compo
     SingleLayoutComponent,
     CommentUserComponent,
     DefisByTagComponent,
+    DefitrouveComponent,
   ],
   imports: [
     DragDropModule,
