@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { DefiDto } from '../models/defi-dto';
+import { TagCount } from '../models/tag-count';
 
 @Injectable({
   providedIn: 'root',
@@ -249,6 +250,95 @@ export class DefiRestControllerService extends BaseService {
 
     return this.createDefi$Response(params).pipe(
       map((r: StrictHttpResponse<DefiDto>) => r.body as DefiDto)
+    );
+  }
+
+  /**
+   * Path part for operation getTagCount
+   */
+  static readonly GetTagCountPath = '/api/defis/tags/count';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getTagCount()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTagCount$Response(params?: {
+  }): Observable<StrictHttpResponse<Array<TagCount>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetTagCountPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<TagCount>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getTagCount$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTagCount(params?: {
+  }): Observable<Array<TagCount>> {
+
+    return this.getTagCount$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<TagCount>>) => r.body as Array<TagCount>)
+    );
+  }
+
+  /**
+   * Path part for operation getDefisBy
+   */
+  static readonly GetDefisByPath = '/api/defis/tag/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefisBy()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisBy$Response(params: {
+    id: string;
+  }): Observable<StrictHttpResponse<Array<DefiDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisByPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<DefiDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefisBy$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisBy(params: {
+    id: string;
+  }): Observable<Array<DefiDto>> {
+
+    return this.getDefisBy$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
     );
   }
 
