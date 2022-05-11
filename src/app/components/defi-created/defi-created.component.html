@@ -1,0 +1,12 @@
+<div class="defi-created">
+  <h4 class="content-defi-created">{{defiCreated.titre}}</h4>
+  <button class="content-defi-created" mat-icon-button aria-label="Informations" routerLink="/info/{{defiCreated.id}}">
+    <mat-icon>info</mat-icon>
+  </button>
+  <div *ngIf="getUserCo() | async as userCo">
+    <button class="content-defi-created" *ngIf="getAuteurId() == userCo" mat-icon-button aria-label="Supprimer" (click)="deleteDefi()" >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+<mat-divider></mat-divider>

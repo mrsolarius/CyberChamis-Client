@@ -13,10 +13,14 @@
 
   <mat-tab-group>
     <mat-tab label="Défis terminés">
-
+      <div class="container-visites" *ngIf="obsVisitesFinished | async as visites">
+        <app-visite-profile *ngFor="let visite of visites" [visite]="visite"></app-visite-profile>
+      </div>
     </mat-tab>
     <mat-tab label="Défis créés">
-
+      <div *ngIf="obsDefisCreated | async as defisCreated">
+        <app-defi-created *ngFor="let defiCreated of defisCreated" [defiCreated]="defiCreated"></app-defi-created>
+      </div>
     </mat-tab>
     <mat-tab label="Commentaires et notes">
       <div *ngIf="obsDefis | async as defis">

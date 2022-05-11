@@ -55,6 +55,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TagTendanceComponent } from './components/tag-tendance/tag-tendance.component';
 import { SingleLayoutComponent } from './components/layout/single-layout/single-layout.component';
 import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.component';
+import { DefiCreatedComponent } from './components/defi-created/defi-created.component';
+import { VisiteProfileComponent } from './components/visite-profile/visite-profile.component';
 
 
 @NgModule({
@@ -92,6 +94,8 @@ import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.compo
     SingleLayoutComponent,
     CommentUserComponent,
     DefisByTagComponent,
+    DefiCreatedComponent,
+    VisiteProfileComponent,
   ],
   imports: [
     DragDropModule,
