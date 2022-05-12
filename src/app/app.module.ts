@@ -61,6 +61,7 @@ import { DefitrouveComponent } from './app-map/defitrouve/defitrouve.component';
 import { SlideReprendreDefisComponent } from './components/slide-reprendre-defis/slide-reprendre-defis.component';
 import { TopRatedComponent } from './components/top-rated/top-rated.component';
 import { MostPlayedComponent } from './components/most-played/most-played.component';
+import { ActiveAuthorComponent } from './components/active-author/active-author.component';
 
 
 @NgModule({
@@ -98,12 +99,7 @@ import { MostPlayedComponent } from './components/most-played/most-played.compon
     SingleLayoutComponent,
     CommentUserComponent,
     DefisByTagComponent,
-    TopRatedComponent,
-    MostPlayedComponent,
-    DefiCreatedComponent,
-    VisiteProfileComponent,
     DefitrouveComponent,
-    SlideReprendreDefisComponent,
   ],
   imports: [
     DragDropModule,
