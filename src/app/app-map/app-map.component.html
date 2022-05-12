@@ -10,6 +10,9 @@
     <div id="map"></div>
   </div>
   <div class="downicon-container">
-    <mat-icon color="primary">keyboard_arrow_down</mat-icon>
+    <button mat-icon-button (click)="reduceSize=!reduceSize">
+      <mat-icon color="primary" *ngIf="!reduceSize">keyboard_arrow_down</mat-icon>
+      <mat-icon color="primary" *ngIf="reduceSize">keyboard_arrow_up</mat-icon>
+    </button>
   </div>
 </div>
