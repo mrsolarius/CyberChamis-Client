@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
 import {UserService} from "../../user/user.service";
-import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {lastValueFrom} from "rxjs";
+import {CreationRestControllerService} from "../../api/services/creation-rest-controller.service";
 
 @Component({
   selector: 'app-defi-created',
@@ -12,17 +12,20 @@ import {lastValueFrom} from "rxjs";
 export class DefiCreatedComponent implements OnInit {
 
   @Input() defiCreated !: DefiDto;
+  @Output() defiDeletesChange = new EventEmitter<void>();
 
   constructor(private userService:UserService,
-              private defiService:DefiRestControllerService) { }
+              private creationService:CreationRestControllerService) { }
 
   getUserCo(){
     return this.userService.getUserId();
   }
 
   async deleteDefi(){
-    if(this.defiCreated.id)
-      await lastValueFrom(this.defiService.deleteDefi({id:this.defiCreated.id}));
+    if(this.defiCreated.id) {
+      await lastValueFrom(this.creationService.deleteDefi({id: this.defiCreated.id}));
+      this.defiDeletesChange.emit();
+    }
   }
 
   ngOnInit(): void {

@@ -19,7 +19,7 @@
     </mat-tab>
     <mat-tab label="Défis créés">
       <div *ngIf="obsDefisCreated | async as defisCreated">
-        <app-defi-created *ngFor="let defiCreated of defisCreated" [defiCreated]="defiCreated"></app-defi-created>
+        <app-defi-created *ngFor="let defiCreated of defisCreated" [defiCreated]="defiCreated" (defiDeletesChange)="updateDefiCree()"></app-defi-created>
       </div>
     </mat-tab>
     <mat-tab label="Commentaires et notes">

@@ -50,4 +50,12 @@ export class ProfileInfoComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser();
   }
+
+
+  async updateDefiCree() {
+    const param = await firstValueFrom(this.route.params)
+    const id = param['id'];
+    const created = await lastValueFrom(this.defiService.getDefisCreatedByChami({id}));
+    this.obsDefisCreated.next(created);
+  }
 }
