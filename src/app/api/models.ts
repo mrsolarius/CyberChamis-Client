@@ -13,4 +13,5 @@ export { VisiteDto } from './models/visite-dto';
 export { RatingDto } from './models/rating-dto';
 export { RatingDefiDto } from './models/rating-defi-dto';
 export { TagCount } from './models/tag-count';
+export { DefiCount } from './models/defi-count';
 export { ChamisCount } from './models/chamis-count';
