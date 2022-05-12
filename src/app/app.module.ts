@@ -58,6 +58,7 @@ import { DefisByTagComponent } from './app-views/defis-by-tag/defis-by-tag.compo
 import { DefiCreatedComponent } from './components/defi-created/defi-created.component';
 import { VisiteProfileComponent } from './components/visite-profile/visite-profile.component';
 import { DefitrouveComponent } from './app-map/defitrouve/defitrouve.component';
+import { SlideReprendreDefisComponent } from './components/slide-reprendre-defis/slide-reprendre-defis.component';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { DefitrouveComponent } from './app-map/defitrouve/defitrouve.component';
     DefiCreatedComponent,
     VisiteProfileComponent,
     DefitrouveComponent,
+    SlideReprendreDefisComponent,
   ],
   imports: [
     DragDropModule,

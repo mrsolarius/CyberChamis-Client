@@ -1,0 +1,33 @@
+<h1 class="kiwi">Viens jouer !</h1>
+<div class="container">
+  <div class="row">
+    <div class="card" *ngFor="let defi of defis; let i = index; trackBy:trackById">
+      <mat-card>
+        <img mat-card-lg-image class="poireau"  mat-card-image [src]="defi.img" [alt]="defi.titre">
+        <mat-card-title class="kiwi">
+          {{defi.titre}}
+        </mat-card-title>
+        <mat-card-subtitle class="subtitle-container">
+          <ng-container *ngIf="checkIfNote(defi.noteMoyenne!)">
+            <mat-icon class="material-symbols-outlined small-icon" color="primary">star</mat-icon>
+            <span>{{defi.noteMoyenne}} • </span>
+          </ng-container>
+          <ng-container *ngIf="getLocObs() | async as geoloc">
+            <mat-icon *ngIf="!checkIfNote(defi.noteMoyenne!)" class="material-symbols-outlined small-icon">directions_walk</mat-icon>
+            <span>{{getDistance(geoloc.coords.latitude,geoloc.coords.longitude,defi.arretDTO!.latitude!,defi.arretDTO!.longitude!)}}km de vous</span>
+          </ng-container>
+        </mat-card-subtitle>
+        <mat-card-content>
+          <p class="fraise">
+            {{defi.miniDescription}}
+          </p>
+        </mat-card-content>
+        <!-- à discuter
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="'/game/'+defi.id">JOUER</button>
+        </mat-card-actions>
+        -->
+      </mat-card>
+    </div>
+  </div>
+</div>
