@@ -114,4 +114,50 @@ export class CreationRestControllerService extends BaseService {
     );
   }
 
+  /**
+   * Path part for operation getFullDefi
+   */
+  static readonly GetFullDefiPath = '/api/defibuilder/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getFullDefi()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getFullDefi$Response(params: {
+    id: string;
+  }): Observable<StrictHttpResponse<DefiCreateDto>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CreationRestControllerService.GetFullDefiPath, 'get');
+    if (params) {
+      rb.query('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<DefiCreateDto>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getFullDefi$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getFullDefi(params: {
+    id: string;
+  }): Observable<DefiCreateDto> {
+
+    return this.getFullDefi$Response(params).pipe(
+      map((r: StrictHttpResponse<DefiCreateDto>) => r.body as DefiCreateDto)
+    );
+  }
+
 }

@@ -9,6 +9,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { ChamisCount } from '../models/chamis-count';
 import { DefiDto } from '../models/defi-dto';
 import { TagCount } from '../models/tag-count';
 
@@ -430,6 +431,144 @@ export class DefiRestControllerService extends BaseService {
   }): Observable<Array<DefiDto>> {
 
     return this.getByChami$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
+    );
+  }
+
+  /**
+   * Path part for operation getDefisByUserStatut
+   */
+  static readonly GetDefisByUserStatutPath = '/api/defis/defi/{id}/{statut}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefisByUserStatut()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisByUserStatut$Response(params: {
+    id: number;
+    statut: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
+  }): Observable<StrictHttpResponse<Array<DefiDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisByUserStatutPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.path('statut', params.statut, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<DefiDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefisByUserStatut$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisByUserStatut(params: {
+    id: number;
+    statut: 'ENCOURS' | 'ABONDON' | 'FINISHED' | 'PAUSE';
+  }): Observable<Array<DefiDto>> {
+
+    return this.getDefisByUserStatut$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
+    );
+  }
+
+  /**
+   * Path part for operation getDefiNbChamis
+   */
+  static readonly GetDefiNbChamisPath = '/api/defis/defi/nbChamis';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefiNbChamis()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefiNbChamis$Response(params?: {
+  }): Observable<StrictHttpResponse<Array<ChamisCount>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefiNbChamisPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<ChamisCount>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefiNbChamis$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefiNbChamis(params?: {
+  }): Observable<Array<ChamisCount>> {
+
+    return this.getDefiNbChamis$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<ChamisCount>>) => r.body as Array<ChamisCount>)
+    );
+  }
+
+  /**
+   * Path part for operation getDefisCreatedByChami
+   */
+  static readonly GetDefisCreatedByChamiPath = '/api/defis/created/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefisCreatedByChami()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisCreatedByChami$Response(params: {
+    id: number;
+  }): Observable<StrictHttpResponse<Array<DefiDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisCreatedByChamiPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<DefiDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefisCreatedByChami$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisCreatedByChami(params: {
+    id: number;
+  }): Observable<Array<DefiDto>> {
+
+    return this.getDefisCreatedByChami$Response(params).pipe(
       map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
     );
   }

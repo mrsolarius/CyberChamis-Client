@@ -1,11 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DefiDto} from "../../api/models/defi-dto";
 import {GeolocService,getDistance} from "../../geoLoc/geoloc.service";
-import {BehaviorSubject, lastValueFrom} from "rxjs";
-import {ChamiDto} from "../../api/models/chami-dto";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
-import {UserService} from "../../user/user.service";
+import {lastValueFrom} from "rxjs";
 import {VisiteDto} from "../../api/models/visite-dto";
 import {GameRestControllerService} from "../../api/services/game-rest-controller.service";
 
