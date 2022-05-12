@@ -39,6 +39,9 @@ export class MostPlayedComponent implements OnInit {
         }
         return false;
       });
+      /*for (let i = 0; i < bestDefisNbChamis.length; i++) {
+        mostPlayedDefis[i] = defis.find(defi => defi.id === bestDefisNbChamis[i].idDefi)!;
+      }*/
     }
     return mostPlayedDefis;
   }
