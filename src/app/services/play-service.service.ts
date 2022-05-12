@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {GameRestControllerService} from "../api/services/game-rest-controller.service";
+import {GameRestControllerService} from "../apis/api-local/services/game-rest-controller.service";
 import {BehaviorSubject, firstValueFrom, lastValueFrom, Observable} from "rxjs";
-import {VisiteDto} from "../api/models/visite-dto";
-import {IndiceDto} from "../api/models/indice-dto";
+import {VisiteDto} from "../apis/api-local/models/visite-dto";
+import {IndiceDto} from "../apis/api-local/models/indice-dto";
 import {filter} from "rxjs/operators";
-import {UserService} from "../user/user.service";
+import {UserService} from "./user.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 

@@ -1,0 +1,92 @@
+@import "../../../../app-var";
+
+.nav-bar {
+  position: relative;
+  bottom: 0;
+  display: flex;
+  padding: 0.2em;
+  background-color: white;
+  box-shadow: 2px 2px 4px 5px #ccc;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 0;
+
+  .nav-sub-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 400px;
+
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+
+      .nav-button-text{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        span{
+          padding: 0.2em;
+          &:last-child{
+            padding-left: 10px;
+          }
+        }
+      }
+
+      span {
+        display: flex;
+      }
+    }
+  }
+}
+
+button:hover,
+.active-link {
+  color: blueviolet;
+}
+
+@media screen and (max-width: $max-width-tablet) {
+  .nav-bar{
+    justify-content: space-around;
+    .nav-sub-container{
+      button{
+        padding: 1em;
+        align-items: center;
+        span{
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $max-width-smartphone){
+  .nav-bar{
+    z-index: unset;
+    height: unset;
+    justify-content: space-around;
+    .nav-sub-container{
+      flex-direction: row;
+      button{
+        padding: 1em;
+        align-items: center;
+        .nav-button-text{
+          flex-direction: column;
+          align-items: center;
+          span:last-child{
+            padding-left: 0;
+          }
+        }
+        span{
+          display: block;
+        }
+      }
+    }
+  }
+
+}

@@ -1,8 +1,0 @@
-<div *ngIf="obsChami | async as user" class="comment-container">
-  <img src="{{user.profileImg}}" class="profile-img" routerLink="/profile-info/{{user.id}}">
-  <div class="comment-content">
-    <h3 routerLink="/profile-info/{{user.id}}">{{user.username}}</h3>
-    <p>{{commentaire.text}}</p>
-  </div>
-</div>
-<mat-divider></mat-divider>

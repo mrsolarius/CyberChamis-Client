@@ -1,0 +1,33 @@
+<section *ngIf="getAuthObs() | async as user" class="profil-page-container">
+  <div class="profil-img-container">
+    <img src="{{user.photoURL}}" alt="avatar" class="pp" referrerpolicy="no-referrer">
+    <h1>{{angForm.controls['username'].value}}</h1>
+    <a *ngIf="id!=-1" [routerLink]="'/profile-info/'+id" mat-button>Voir mon profile public</a>
+  </div>
+  <div class="card-container">
+    <mat-card class="card-margin">
+      <mat-card-header>
+        <mat-card-title>Votre Profil</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="form-container" [formGroup]="angForm" novalidate (ngSubmit)="updateProfile()">
+          <mat-form-field>
+            <input matInput placeholder="Username" name="Username"  [required]="true" formControlName="username" >
+            <mat-error *ngIf="checkError('username', 'required')">Username is required</mat-error>
+            <mat-error *ngIf="checkError('username', 'maxlength')">Username is too long</mat-error>
+            <mat-error *ngIf="checkError('username', 'minlength')">Username is too short</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="age" type="number" min="13" max="122" name="Age" formControlName="age">
+            <mat-error *ngIf="checkError('age', 'mini')">Age is too young</mat-error>
+          </mat-form-field>
+          <mat-form-field class="text-area">
+            <textarea matInput placeholder="description" rows="4" name="Bio" formControlName="bio"></textarea>
+            <mat-error *ngIf="checkError('bio', 'maxlength')">Bio is too long</mat-error>
+          </mat-form-field>
+          <button mat-raised-button [disabled]="angForm.invalid || angForm.pristine" color="primary" type="submit">Mettre à jour</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

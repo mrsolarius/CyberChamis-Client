@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
 import {NavigationEnd, Router, RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from "./app-views/home/home.component";
-import {ExploreComponent} from "./app-views/explore/explore.component";
-import {ProfileComponent} from "./app-views/profile/profile.component";
-import {AppLayoutComponent} from "./components/layout/app-layout/app-layout.component";
-import {GameLayoutComponent} from "./app-views/game-layout/game-layout.component";
-import {LeftRightAnimationStateService} from "./left-right-animation-state.service";
-import {CreateComponent} from "./app-views/create/create.component";
-import {DefiInfoComponent} from "./components/defi-info/defi-info.component";
-import {ProfileInfoComponent} from "./components/profile-info/profile-info.component";
-import {SingleLayoutComponent} from "./components/layout/single-layout/single-layout.component";
-import {DefisByTagComponent} from "./app-views/defis-by-tag/defis-by-tag.component";
+import {HomeComponent} from "./views/home/home.component";
+import {ExploreComponent} from "./views/explore/explore.component";
+import {ProfileComponent} from "./views/profile/profile.component";
+import {AppLayoutComponent} from "./layout/app-layout/app-layout.component";
+import {GameLayoutComponent} from "./views/game-layout/game-layout.component";
+import {LeftRightAnimationStateService} from "./services/left-right-animation-state.service";
+import {CreateComponent} from "./views/create/create.component";
+import {DefiInfoComponent} from "./components/defi-page/defi-info/defi-info.component";
+import {ProfileInfoComponent} from "./components/profile/profile-info/profile-info.component";
+import {SingleLayoutComponent} from "./layout/single-layout/single-layout.component";
+import {DefisByTagComponent} from "./views/defis-by-tag/defis-by-tag.component";
 
 
 const routes: Routes = [

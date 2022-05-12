@@ -1,0 +1,17 @@
+<ng-container *ngIf="chamisDtoObs | async as users">
+  <div *ngFor="let user of users, let i=index"
+       class="authors-container" mat-ripple routerLink="/profile-info/{{user.chamis.id}}">
+    <div class="author-container">
+      <div class="img-container">
+        <img src="{{user.chamis.profileImg}}"
+             [alt]="user.chamis.username"
+             class="profile-img"
+             routerLink="/profile-info/{{user.chamis.id}}">
+      </div>
+      <div class="comment-content">
+        <h3>{{user.chamis.username}}</h3>
+        <span><mat-icon [color]="'primary'">bolt</mat-icon>{{user.count}} défis !</span>
+      </div>
+    </div>
+  </div>
+</ng-container>
