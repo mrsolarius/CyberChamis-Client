@@ -343,6 +343,52 @@ export class DefiRestControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation getDefisFinishedByChami
+   */
+  static readonly GetDefisFinishedByChamiPath = '/api/defis/finished/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefisFinishedByChami()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisFinishedByChami$Response(params: {
+    id: number;
+  }): Observable<StrictHttpResponse<Array<DefiDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisFinishedByChamiPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<DefiDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefisFinishedByChami$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisFinishedByChami(params: {
+    id: number;
+  }): Observable<Array<DefiDto>> {
+
+    return this.getDefisFinishedByChami$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
+    );
+  }
+
+  /**
    * Path part for operation getByChami
    */
   static readonly GetByChamiPath = '/api/defis/defi/{id}';
@@ -384,6 +430,52 @@ export class DefiRestControllerService extends BaseService {
   }): Observable<Array<DefiDto>> {
 
     return this.getByChami$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
+    );
+  }
+
+  /**
+   * Path part for operation getDefisCreatedByChami
+   */
+  static readonly GetDefisCreatedByChamiPath = '/api/defis/created/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getDefisCreatedByChami()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisCreatedByChami$Response(params: {
+    id: number;
+  }): Observable<StrictHttpResponse<Array<DefiDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DefiRestControllerService.GetDefisCreatedByChamiPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<DefiDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getDefisCreatedByChami$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getDefisCreatedByChami(params: {
+    id: number;
+  }): Observable<Array<DefiDto>> {
+
+    return this.getDefisCreatedByChami$Response(params).pipe(
       map((r: StrictHttpResponse<Array<DefiDto>>) => r.body as Array<DefiDto>)
     );
   }

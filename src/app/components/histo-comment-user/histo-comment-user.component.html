@@ -4,11 +4,15 @@
     <mat-panel-title>
       {{getNomDefi()}}
     </mat-panel-title>
-    <mat-panel-description>
-
-    </mat-panel-description>
   </mat-expansion-panel-header>
-  <div *ngIf="obsComs | async as coms">
-    <app-comment-user *ngFor="let com of coms" [commentaire]="com"></app-comment-user>
-  </div>
+  <ng-container class="com-content">
+    <div class="note-defi" *ngIf="obsNote | async as note">
+      <mat-icon color="primary" class="note-icon">star</mat-icon>
+      <span>{{note.valeur}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="obsComs | async as coms">
+      <app-comment-user *ngFor="let com of coms" [commentaire]="com"></app-comment-user>
+    </div>
+  </ng-container>
 </mat-expansion-panel>

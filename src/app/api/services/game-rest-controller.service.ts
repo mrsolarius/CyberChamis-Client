@@ -444,6 +444,52 @@ export class GameRestControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation getVisitesFinishedByChami
+   */
+  static readonly GetVisitesFinishedByChamiPath = '/api/game/get-visites-by-defi-chami/{idGoogle}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getVisitesFinishedByChami()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVisitesFinishedByChami$Response(params: {
+    idGoogle: string;
+  }): Observable<StrictHttpResponse<Array<VisiteDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, GameRestControllerService.GetVisitesFinishedByChamiPath, 'get');
+    if (params) {
+      rb.path('idGoogle', params.idGoogle, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<VisiteDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getVisitesFinishedByChami$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVisitesFinishedByChami(params: {
+    idGoogle: string;
+  }): Observable<Array<VisiteDto>> {
+
+    return this.getVisitesFinishedByChami$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<VisiteDto>>) => r.body as Array<VisiteDto>)
+    );
+  }
+
+  /**
    * Path part for operation getVisites
    */
   static readonly GetVisitesPath = '/api/game/get-visite';

@@ -37,11 +37,17 @@ export class TagTendanceComponent implements OnInit {
   }
 
   getMaxApparition(){
-    let tagMax;
-    tagMax=this.tags!.reduce((acc, val) => {
-      return acc.count! < val.count! ? val : acc }
-    );
-    return tagMax.count;
+    if(this.tags){
+      if(this.tags.length>0){
+        let tagMax;
+        tagMax=this.tags!.reduce((acc, val) => {
+          return acc.count! < val.count! ? val : acc }
+        );
+        return tagMax.count;
+      }
+      return 0;
+    }
+    return 0;
   }
 
   getTagsPopulaires(max: number){
