@@ -1,7 +1,8 @@
 {
-  "name": "escape-game-front",
-  "short_name": "escape-game-front",
-  "theme_color": "#1976d2",
+  "name": "Cyber Chamis",
+  "short_name": "Cy.Chamis",
+  "description" : "Venez decouvrir l'aglomération Grenoblois avec de super défis crée par nos Chamis !!!",
+  "theme_color": "#512da8",
   "background_color": "#fafafa",
   "display": "standalone",
   "prefer_related_applications": true,
