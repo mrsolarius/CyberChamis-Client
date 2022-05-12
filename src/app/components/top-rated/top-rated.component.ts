@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {ChamisCount} from "../../api/models/chamis-count";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-top-rated',
@@ -10,44 +11,81 @@ import {ChamisCount} from "../../api/models/chamis-count";
 })
 export class TopRatedComponent implements OnInit {
   @Input() defis!: DefiDto[];
-  @Input() defisNbChamis!: ChamisCount[];
+  defisNbChamisObs = new BehaviorSubject<ChamisCount[]>([]);
+  defisNbChamis!: ChamisCount[];
 
-  constructor() {
+  constructor(private defisRest : DefiRestControllerService) {
   }
 
   ngOnInit(): void {
+    this.defisRest.getDefiNbChamis().subscribe((v)=>{this.defisNbChamisObs.next(v);});
+    this.defisNbChamisObs.subscribe((v)=>{this.defisNbChamis = v;});
   }
 
-  getBestDefis(defis:DefiDto[]) : DefiDto[] {
-    let bestDefis: DefiDto[] = [];
+  getBestDefis() : DefiDto[] {
+    let bestDefisPlayed: DefiDto[] = [];
     if (this.defisNbChamis != undefined) {
-      this.defisNbChamis.sort(this.compare);
-      const bestDefisNbChamis = this.defisNbChamis.slice(0, 5);
-      /*
-      on a : la liste des defis pas triés
-      on veut : une sous-liste des defis triés par nombre de chamis
-       */
-      defis.filter(defi => {
-        for (let i = 0; i < bestDefisNbChamis.length; i++) {
-          if (defi.id === bestDefisNbChamis[i].idDefi) {
-            bestDefis[i] = defi;
-            return true;
-          }
+      let bestDefis: DefiDto[];
+      this.defis.sort(this.compareNotes);
+      //slice defi de 5
+      bestDefis = this.defis.slice(0, 5);
+      // tableau de tableau, chaque element contient les defis de la meme note
+      let defisByNote: DefiDto[][] = [];
+      let currentNote = bestDefis[0].noteMoyenne;
+      let currentDefis: DefiDto[] = [];
+      for (let i = 0; i < bestDefis.length; i++) {
+        if (bestDefis[i].noteMoyenne == currentNote) {
+          currentDefis.push(bestDefis[i]);
+        } else {
+          defisByNote.push(currentDefis);
+          currentNote = bestDefis[i].noteMoyenne;
+          currentDefis = [];
+          currentDefis.push(bestDefis[i]);
         }
-        return false;
-      });
+      }
+      defisByNote.push(currentDefis);
+      // pour chaque element de defisByNote, on sort les defis les plus chamis
+      for (let i = 0; i < defisByNote.length; i++) {
+        defisByNote[i].sort((a,b)=>{
+          let aNbChamis = this.defisNbChamis.find((v) => {
+            return v.idDefi == a.id;
+          });
+          let bNbChamis = this.defisNbChamis.find((v) => {
+            return v.idDefi == b.id;
+          });
+          if (aNbChamis == undefined) {
+            return 1;
+          }
+          if (bNbChamis == undefined) {
+            return -1;
+          }
+          return bNbChamis.count! - aNbChamis.count!;
+        });
+      }
+      defisByNote.map((v)=>{v.map(value => bestDefisPlayed.push(value));});
+      while(this.isDefiUnrated(bestDefisPlayed)){
+        bestDefisPlayed.pop();
+      }
     }
-    return bestDefis;
+    return bestDefisPlayed;
   }
 
-  compare(a : ChamisCount, b : ChamisCount) {
-    if (a.count! < b.count!) {
+  compareNotes(a: DefiDto, b: DefiDto) {
+    if (a.noteMoyenne! < b.noteMoyenne! || isNaN(a.noteMoyenne!)) {
       return 1;
-    } else if (a.count! > b.count!) {
-      return -1;
-    } else {
-      return 0;
     }
+    if (a.noteMoyenne! > b.noteMoyenne!) {
+      return -1;
+    }
+    return 0;
+  }
+
+  isDefiRated(defis: DefiDto[]) : boolean {
+    return defis.find((defi) => {return defi.noteMoyenne != undefined && !isNaN(defi.noteMoyenne)}) != undefined;
+  }
+
+  isDefiUnrated(defis: DefiDto[]) : boolean {
+    return defis.find((defi) => {return defi.noteMoyenne == undefined || isNaN(defi.noteMoyenne)}) != undefined;
   }
 
 }

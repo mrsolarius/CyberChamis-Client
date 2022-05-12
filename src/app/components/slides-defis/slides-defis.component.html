@@ -1,7 +1,6 @@
-<h1 class="kiwi">Viens jouer !</h1>
 <div class="container">
   <div class="row">
-    <div class="card" *ngFor="let defi of defis; let i = index; trackBy:trackById">
+    <div class="card" *ngFor="let defi of defis; let i = index;">
       <mat-card>
         <img mat-card-lg-image class="poireau"  mat-card-image [src]="defi.img" [alt]="defi.titre">
         <mat-card-title class="kiwi">

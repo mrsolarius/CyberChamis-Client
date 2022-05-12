@@ -1,8 +1,6 @@
 <div *ngIf="defisObsView | async as defis">
   <app-slides-defis [defis]="defis"></app-slides-defis>
-  <div *ngIf="defisNbChamis.asObservable() | async as nbChamis">
-    <app-top-rated [defis]="defis" [defisNbChamis]="nbChamis"></app-top-rated>
-  </div>
+  <app-top-rated [defis]="defis"></app-top-rated>
   <app-most-played [defis]="defis"></app-most-played>
   <app-defis [defis]="defis"></app-defis>
   <app-tag-tendance [tags]="tagsTab" ></app-tag-tendance>

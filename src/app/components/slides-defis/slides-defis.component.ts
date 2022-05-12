@@ -14,9 +14,6 @@ export class SlidesDefisComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  trackById(index: number, e:any): number {
-    return e.index;
-  }
 
   getDistance(latitude: number, longitude: number, latitude2: number, longitude2: number) {
     return getDistance(latitude, longitude, latitude2, longitude2);
