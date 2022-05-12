@@ -160,4 +160,50 @@ export class CreationRestControllerService extends BaseService {
     );
   }
 
+  /**
+   * Path part for operation deleteDefi
+   */
+  static readonly DeleteDefiPath = '/api/defibuilder/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `deleteDefi()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteDefi$Response(params: {
+    id: string;
+  }): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CreationRestControllerService.DeleteDefiPath, 'delete');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `deleteDefi$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteDefi(params: {
+    id: string;
+  }): Observable<void> {
+
+    return this.deleteDefi$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
 }

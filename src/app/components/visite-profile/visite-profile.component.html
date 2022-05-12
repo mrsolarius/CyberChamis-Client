@@ -1,6 +1,15 @@
-<div>
-  <span class="visite-defi-nom">{{getTitreDefi()}} </span>
-  <span class="visite-points">{{visite.points}} </span>
-  <span class="fin-visite">{{getFin()}}</span>
+<div class="🎚">
+  <div class="🗽">
+    <span class="visite-defi-nom">{{getTitreDefi()}}</span>
+    <span>&nbsp;·&nbsp;</span>
+    <div class="spacer">
+      <mat-icon>workspace_premium</mat-icon>
+      <span class="visite-points">{{visite.points}}/{{visite.defi!.pointTotaux!}}</span>
+    </div>
+    <div class="fin-visite">
+      <mat-icon>event_available</mat-icon>
+      <span>{{getFin()}}</span>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
 </div>
-<mat-divider></mat-divider>

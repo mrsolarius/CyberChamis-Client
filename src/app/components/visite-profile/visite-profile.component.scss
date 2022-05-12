@@ -1,1 +1,41 @@
+.🎚{
+  width: 100%;
+}
 
+.🗽{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  padding: 20px 0;
+}
+
+.spacer{
+  display: flex;
+  flex-grow: 1;
+  mat-icon{
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    margin: 0 3px 0 4px;
+  }
+}
+
+.visite-points{
+  margin: 0;
+}
+
+.visite-defi-nom{
+  font-weight: 500;
+}
+
+.fin-visite{
+  display: flex;
+  align-items: center;
+  font-weight: 200;
+  mat-icon{
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    margin: 0 4px 1px 0;
+  }
+}

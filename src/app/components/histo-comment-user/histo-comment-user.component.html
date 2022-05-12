@@ -7,8 +7,10 @@
   </mat-expansion-panel-header>
   <ng-container class="com-content">
     <div class="note-defi" *ngIf="obsNote | async as note">
-      <mat-icon color="primary" class="note-icon">star</mat-icon>
-      <span>{{note.valeur}}</span>
+      <div *ngIf="note.valeur!>0" class="note-container">
+        <mat-icon color="primary" class="note-icon">star</mat-icon>
+        <span>{{note.valeur}}</span>
+      </div>
     </div>
     <mat-divider></mat-divider>
     <div *ngIf="obsComs | async as coms">
