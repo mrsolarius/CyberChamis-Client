@@ -1,37 +1,34 @@
 <div>
-    <h1 class="kiwi"  >Ce qu'il faudrai reprendre :</h1>
-    <div class="container">
-      <div class="row">
-        <div class="card" *ngFor="let visite of visites; let i = index; trackBy:trackById">
-          <mat-card>
-            <img mat-card-lg-image class="poireau" mat-card-image [src]="visite.defi!.img" [alt]="visite.defi!.titre">
-            <mat-card-title class="kiwi">
-              {{visite.defi!.titre!}}
-            </mat-card-title>
-            <mat-card-subtitle class="subtitle-container">
-              <ng-container *ngIf="checkIfNote(visite.defi!.noteMoyenne!)">
-                <mat-icon class="material-symbols-outlined small-icon" color="primary">star</mat-icon>
-                <span>{{visite.defi!.noteMoyenne}} • </span>
-              </ng-container>
-              <ng-container *ngIf="getLocObs() | async as geoloc">
-                <mat-icon *ngIf="!checkIfNote(visite.defi!.noteMoyenne!)" class="material-symbols-outlined small-icon">directions_walk</mat-icon>
-                <span>{{getDistance(geoloc.coords.latitude,geoloc.coords.longitude,visite.defi!.arretDTO!.latitude!,visite.defi!.arretDTO!.longitude!)}}km de vous</span>
-              </ng-container>
-              <div>
-                <span>{{visite.etapeCourante!.numero}}/{{visite.defi!.etapes!.length}}</span>
-              </div>
-            </mat-card-subtitle>
-            <mat-card-content>
-              <p class="fraise">
-                {{visite.defi!.miniDescription}}
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="warn" (click)="abandon(visite.id!)">Abandon</button>
-              <a mat-raised-button class="avocat" [routerLink]="'/game/'+visite.id!">Reprendre</a>
-            </mat-card-actions>
-          </mat-card>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="card" *ngFor="let visite of visites; let i = index; trackBy:trackById">
+        <mat-card>
+          <img class="poireau" mat-card-image [src]="visite.defi!.img" [alt]="visite.defi!.titre">
+          <mat-card-title class="kiwi">
+            {{visite.defi!.titre!}}
+          </mat-card-title>
+          <mat-card-subtitle class="subtitle-container">
+            <ng-container *ngIf="checkIfNote(visite.defi!.noteMoyenne!)">
+              <mat-icon class="material-symbols-outlined small-icon" color="primary">star</mat-icon>
+              <span>{{visite.defi!.noteMoyenne}} • </span>
+            </ng-container>
+            <ng-container *ngIf="getLocObs() | async as geoloc">
+              <mat-icon *ngIf="!checkIfNote(visite.defi!.noteMoyenne!)" class="material-symbols-outlined small-icon">
+                directions_walk
+              </mat-icon>
+              <span>{{getDistance(geoloc.coords.latitude, geoloc.coords.longitude, visite.defi!.arretDTO!.latitude!, visite.defi!.arretDTO!.longitude!)}}
+                km de vous</span>
+            </ng-container>
+            <div>
+              <span>Etape {{visite.etapeCourante!.numero! + 1}}/{{visite.defi!.etapes!.length}}</span>
+            </div>
+          </mat-card-subtitle>
+          <mat-card-actions>
+            <button mat-raised-button color="warn" (click)="abandon(visite.id!)">Abandon</button>
+            <a mat-raised-button class="avocat" [routerLink]="'/game/'+visite.defi!.id!">Reprendre</a>
+          </mat-card-actions>
+        </mat-card>
       </div>
     </div>
   </div>
+</div>
