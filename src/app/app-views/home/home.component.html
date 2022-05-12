@@ -1,4 +1,7 @@
 <div *ngIf="defisObsView | async as defis">
+  <div *ngIf="getvisiteObsView() | async as visites">
+    <app-slide-reprendre-defis *ngIf="visites.length>0" [visites]="visites" (abandonJeux)="update()"></app-slide-reprendre-defis>
+  </div>
   <app-slides-defis [defis]="defis"></app-slides-defis>
   <app-defis [defis]="defis"></app-defis>
   <app-tag-tendance [tags]="tagsTab" ></app-tag-tendance>

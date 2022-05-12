@@ -3,8 +3,8 @@
   <div class="row">
     <div class="card" *ngFor="let defi of defis; let i = index; trackBy:trackById">
       <mat-card>
-        <img mat-card-lg-image class="poireau"  mat-card-image [src]="defi.img" [alt]="defi.titre">
-        <mat-card-title class="kiwi">
+        <img mat-card-lg-image  [routerLink]="'/game/'+defi!.id!"  class="poireau pitaya"  mat-card-image [src]="defi.img" [alt]="defi.titre">
+        <mat-card-title class="kiwi pitaya" [routerLink]="'/game/'+defi!.id!" >
           {{defi.titre}}
         </mat-card-title>
         <mat-card-subtitle class="subtitle-container">
