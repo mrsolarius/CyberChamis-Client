@@ -1,9 +1,11 @@
 
-<div *ngFor="let user of getMostActiveAuthors(), let i=index" class="comment-container">
-  <img src="{{user.profileImg}}" class="profile-img" routerLink="/profile-info/{{user.id}}">
+<ng-container *ngIf="chamisDtoObs | async as users">
+<div *ngFor="let user of users, let i=index" class="comment-container">
+  <img src="{{user.chamis.profileImg}}" [alt]="user.chamis.username" class="profile-img" routerLink="/profile-info/{{user.chamis.id}}">
   <div class="comment-content">
-    <h3 routerLink="/profile-info/{{user.id}}">{{user.username}}</h3>
-    <h3 >{{user.bio}}</h3>
-    <h3>Nombre de défis créés: {{defiCount[i].count}}</h3>
+    <h3 routerLink="/profile-info/{{user.chamis.id}}">{{user.chamis.username}}</h3>
+    <h3 >{{user.chamis.bio}}</h3>
+    <h3>Nombre de défis créés: {{user.count}}</h3>
   </div>
 </div>
+</ng-container>

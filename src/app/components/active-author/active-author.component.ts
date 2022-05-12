@@ -2,8 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
 import {ChamiDto} from "../../api/models/chami-dto";
 import {DefiCount} from "../../api/models/defi-count";
-import {BehaviorSubject} from "rxjs";
+import {lastValueFrom, map, Observable, switchMap} from "rxjs";
 import {ChamiRestControllerService} from "../../api/services/chami-rest-controller.service";
+
+export interface Author{
+  chamis:ChamiDto,
+  count:number
+}
 
 @Component({
   selector: 'app-active-author',
@@ -12,19 +17,29 @@ import {ChamiRestControllerService} from "../../api/services/chami-rest-controll
 })
 export class ActiveAuthorComponent implements OnInit {
 
-  ChamisObs = new BehaviorSubject<DefiCount[]>([]);
+  chamisDtoObs = new Observable<Author[]>();
   defiCount!: DefiCount[];
 
   constructor(private defisRest: DefiRestControllerService, private chamiRest: ChamiRestControllerService) {
   }
 
   ngOnInit(): void {
-    this.defisRest.getNbDefiByAuteur().subscribe((v) => {
-      this.ChamisObs.next(v);
-    });
-    this.ChamisObs.subscribe((v) => {
-      this.defiCount = v;
-    });
+    this.chamisDtoObs = this.defisRest.getNbDefiByAuteur().pipe(
+      map((defis)=>{
+        return defis.sort(this.compare).slice(0,4);
+      }),
+      map((defisTrier)=>{
+        return defisTrier.map(async (defis)=>{
+          return {
+            chamis: await lastValueFrom(this.chamiRest.getById1({id: defis.auteurId!})),
+            count:defis.count!
+          }
+        })
+      }),
+      switchMap(async (defisPromise)=>{
+        return await Promise.all(defisPromise)
+      })
+    )
   }
 
   getMostActiveAuthors(): ChamiDto[] {
@@ -36,13 +51,13 @@ export class ActiveAuthorComponent implements OnInit {
       let i = 0;
       console.log("MOSTACTIVEAUTHOR AVANT : ",mostActiveAuhor[i]);
       console.log("auteur id : ",activeAuteur[i].auteurId);
-      /*while (i < activeAuteur.length) {
+      while (i < activeAuteur.length) {
         this.chamiRest.getById1({id: activeAuteur[i].auteurId!}).subscribe((v) => {
           mostActiveAuhor[i] = v;
           console.log("MOSTACTIVEAUTHOR N°",i," : ",mostActiveAuhor[i]);
         });
         i++;
-      }*/
+      }
     }
     return mostActiveAuhor;
   }
