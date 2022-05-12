@@ -16,4 +16,19 @@
   object-fit: cover;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
+.subtitle{
+  display: flex;
+  flex-direction: row;
+  line-height: 16px;
+  mat-icon{
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
+}
+
 

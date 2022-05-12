@@ -52,7 +52,7 @@ export class TagTendanceComponent implements OnInit {
 
   getTagsPopulaires(max: number){
     let tagsPop: TagCount[];
-    tagsPop = this.tags!.filter(tag => tag.count! >= max*2/3);
+    tagsPop = this.tags!.filter(tag => tag.count! >= max*1/3);
     return tagsPop;
   }
 

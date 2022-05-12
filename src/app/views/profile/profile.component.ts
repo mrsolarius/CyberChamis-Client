@@ -4,6 +4,7 @@ import {ChamiRestControllerService} from "../../apis/api-local/services/chami-re
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {lastValueFrom} from "rxjs";
 import {ChamiDto} from "../../apis/api-local/models/chami-dto";
+import {GeolocService,getDistance} from "../../services/geoloc.service";
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
   angForm: FormGroup = this.createForm();
   id: number=-1;
 
-  constructor(public auth: AngularFireAuth, public cm: ChamiRestControllerService, private fb: FormBuilder) {
+  constructor(public auth: AngularFireAuth, public cm: ChamiRestControllerService, private fb: FormBuilder, private geolocService : GeolocService) {
     auth.authState.subscribe(user => {
       if (user) {
         this.idGoogle = user?.uid;
@@ -65,5 +66,13 @@ export class ProfileComponent implements OnInit {
 
   getAuthObs(){
     return this.auth.user;
+  }
+
+  getDistance(latitude: number, longitude: number, latitude2: number, longitude2: number) {
+    return getDistance(latitude, longitude, latitude2, longitude2);
+  }
+
+  getLocObs() {
+    return this.geolocService.getLocObs();
   }
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DefiDto} from "../../../apis/api-local/models/defi-dto";
 import {DefiRestControllerService} from "../../../apis/api-local/services/defi-rest-controller.service";
 import {ChamisCount} from "../../../apis/api-local/models/chamis-count";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-top-rated',
@@ -11,24 +11,23 @@ import {BehaviorSubject} from "rxjs";
 })
 export class TopRatedComponent implements OnInit {
   @Input() defis!: DefiDto[];
-  defisNbChamisObs = new BehaviorSubject<ChamisCount[]>([]);
   defisNbChamis!: ChamisCount[];
 
   constructor(private defisRest : DefiRestControllerService) {
   }
 
-  ngOnInit(): void {
-    this.defisRest.getDefiNbChamis().subscribe((v)=>{this.defisNbChamisObs.next(v);});
-    this.defisNbChamisObs.subscribe((v)=>{this.defisNbChamis = v;});
+  async ngOnInit(): Promise<void> {
+    this.defisNbChamis = await lastValueFrom(this.defisRest.getDefiNbChamis());
   }
 
   getBestDefis() : DefiDto[] {
     let bestDefisPlayed: DefiDto[] = [];
     if (this.defisNbChamis != undefined) {
       let bestDefis: DefiDto[];
-      this.defis.sort(this.compareNotes);
+      bestDefis = this.defis.filter(defi => !isNaN(<number>defi.noteMoyenne)).sort(this.compareNotes).slice(0,5);
       //slice defi de 5
-      bestDefis = this.defis.slice(0, 5);
+      console.log("bestDefis", bestDefis);
+
       // tableau de tableau, chaque element contient les defis de la meme note
       let defisByNote: DefiDto[][] = [];
       let currentNote = bestDefis[0].noteMoyenne;
@@ -43,7 +42,7 @@ export class TopRatedComponent implements OnInit {
           currentDefis.push(bestDefis[i]);
         }
       }
-      defisByNote.push(currentDefis);
+      //bestDefisPlayed = defisByNote.flat();
       // pour chaque element de defisByNote, on sort les defis les plus chamis
       for (let i = 0; i < defisByNote.length; i++) {
         defisByNote[i].sort((a,b)=>{
@@ -63,9 +62,9 @@ export class TopRatedComponent implements OnInit {
         });
       }
       defisByNote.map((v)=>{v.map(value => bestDefisPlayed.push(value));});
-      while(this.isDefiUnrated(bestDefisPlayed)){
+      /*while(this.isDefiUnrated(bestDefisPlayed)){
         bestDefisPlayed.pop();
-      }
+      }*/
     }
     return bestDefisPlayed;
   }

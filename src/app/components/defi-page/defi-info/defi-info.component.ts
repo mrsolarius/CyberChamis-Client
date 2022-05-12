@@ -9,6 +9,7 @@ import {NoteRestControllerService} from "../../../apis/api-local/services/note-r
 import {RatingDefiDto} from "../../../apis/api-local/models/rating-defi-dto";
 import {FirefilesService} from "../../../services/firefiles.service";
 import {map} from "rxjs/operators";
+import {GeolocService,getDistance} from "../../../services/geoloc.service";
 
 @Component({
   selector: 'app-defi-info',
@@ -27,7 +28,8 @@ export class DefiInfoComponent implements OnInit {
               private defiRestControllerService : DefiRestControllerService,
               private noteRestComponent : NoteRestControllerService,
               private comentaireService : CommentaireRestControllerService,
-              private fileService : FirefilesService) {
+              private fileService : FirefilesService,
+              private geolocService : GeolocService) {
     this.viewObsDefi = this.obsDefi.pipe(
       map(async defi => {
         if(defi.img) {
@@ -81,4 +83,13 @@ export class DefiInfoComponent implements OnInit {
     if (defi.img) return this.fileService.getPhotoUrlObs('defi',defi.img);
     else return new Observable<string>((observer) => observer.next(''));
   }
+
+  getDistance(latitude: number, longitude: number, latitude2: number, longitude2: number) {
+    return getDistance(latitude, longitude, latitude2, longitude2);
+  }
+
+  getLocObs(){
+    return this.geolocService.getLocObs();
+  }
+
 }

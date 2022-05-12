@@ -101,20 +101,6 @@ export class CreateComponent implements OnInit {
         this.secondFormGroup.controls['etapes'].setErrors({'invalid': true});
       }
     });
-    /*//ajout des arrêt de bus depuis le json de l'api-local
-    let lstarret  = ''
-    fetch('https://data.mobilites-m.fr/api/points/json?types=stops')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(myJson) {
-        lstarret=myJson
-        console.log(lstarret)
-      });
-
-    /*lstarret.foreach(function(arret){console.log(arret.name)});*/
-
-
   }
 
   ngOnInit() {
@@ -255,7 +241,7 @@ export class CreateComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    let value = event.value;
+    let value = event.value.toLowerCase();
     value = value.toUpperCase();
     if ((value || '').trim()) {
       if (this.listeTags.filter((v) => v === value)?.length === 0) {

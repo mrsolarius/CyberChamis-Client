@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DefiDto } from 'src/app/apis/api-local/models';
+import {DefiDto, VisiteDto} from 'src/app/apis/api-local/models';
 import {GeolocService, getDistance} from "../../../services/geoloc.service";
 @Component({
   selector: 'app-slides-defis',
@@ -25,5 +25,9 @@ export class SlidesDefisComponent implements OnInit {
 
   checkIfNote(noteMoyenne: number) {
     return noteMoyenne > 0 || !isNaN(noteMoyenne);
+  }
+
+  getNoteMoyenne(defiDto:DefiDto) {
+    return Math.round(defiDto.noteMoyenne! * 10) / 10;
   }
 }

@@ -38,4 +38,7 @@ export class SlideReprendreDefisComponent implements OnInit {
   }
 
 
+  getNoteMoyenne(visite:VisiteDto) {
+    return Math.round(visite.defi!.noteMoyenne! * 10) / 10;
+  }
 }

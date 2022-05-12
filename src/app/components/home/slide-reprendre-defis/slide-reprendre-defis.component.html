@@ -1,5 +1,6 @@
 <div>
-  <div class="container">
+  <div>
+    <h2 class="title">Reprendre</h2>
     <div class="row">
       <div class="card" *ngFor="let visite of visites; let i = index; trackBy:trackById">
         <mat-card>
@@ -10,10 +11,10 @@
           <mat-card-subtitle class="subtitle-container">
             <ng-container *ngIf="checkIfNote(visite.defi!.noteMoyenne!)">
               <mat-icon class="material-symbols-outlined small-icon" color="primary">star</mat-icon>
-              <span>{{visite.defi!.noteMoyenne}} • </span>
+              <span>{{getNoteMoyenne(visite)}} • </span>
             </ng-container>
             <ng-container *ngIf="getLocObs() | async as geoloc">
-              <mat-icon *ngIf="!checkIfNote(visite.defi!.noteMoyenne!)" class="material-symbols-outlined small-icon">
+              <mat-icon class="material-symbols-outlined small-icon">
                 directions_walk
               </mat-icon>
               <span>{{getDistance(geoloc.coords.latitude, geoloc.coords.longitude, visite.defi!.arretDTO!.latitude!, visite.defi!.arretDTO!.longitude!)}}
@@ -24,8 +25,8 @@
             </div>
           </mat-card-subtitle>
           <mat-card-actions>
-            <button mat-raised-button color="warn" (click)="abandon(visite.id!)">Abandon</button>
-            <a mat-raised-button class="avocat" [routerLink]="'/game/'+visite.defi!.id!">Reprendre</a>
+            <button mat-stroked-button color="warn" (click)="abandon(visite.id!)">Abandon</button>
+            <a mat-stroked-button color="primary" [routerLink]="'/game/'+visite.defi!.id!">Reprendre</a>
           </mat-card-actions>
         </mat-card>
       </div>

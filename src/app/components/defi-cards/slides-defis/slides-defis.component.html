@@ -9,7 +9,11 @@
         <mat-card-subtitle class="subtitle-container">
           <ng-container *ngIf="checkIfNote(defi.noteMoyenne!)">
             <mat-icon class="material-symbols-outlined small-icon" color="primary">star</mat-icon>
-            <span>{{defi.noteMoyenne}} • </span>
+            <span>{{getNoteMoyenne(defi)}} • </span>
+          </ng-container>
+          <ng-container *ngIf="defi.duree !== undefined">
+            <mat-icon class="material-symbols-outlined small-icon">timer</mat-icon>
+            <span>{{defi.duree}} min • </span>
           </ng-container>
           <ng-container *ngIf="getLocObs() | async as geoloc">
             <mat-icon *ngIf="!checkIfNote(defi.noteMoyenne!)" class="material-symbols-outlined small-icon">directions_walk</mat-icon>

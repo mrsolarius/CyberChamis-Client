@@ -1,3 +1,5 @@
+@import "src/app-var";
+
 .content{
   display: flex;
   align-content: center;
@@ -28,7 +30,6 @@ mat-card-header{
 }
 
 .defi-description{
-  margin: 20px;
 }
 
 .commentaires-section{
@@ -38,4 +39,53 @@ mat-card-header{
 .image-defi-info{
   height: 280px;
   object-fit: cover;
+  width: 100%;
+}
+
+.title-c{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  h1{
+    flex-grow: 1;
+  }
+}
+
+.defi-container{
+  padding: 16px;
+}
+
+.info-comp{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.info-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 20px;
+
+    mat-icon{
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: $max-width-smartphone){
+  .info-comp{
+    flex-direction: column;
+  }
+
 }

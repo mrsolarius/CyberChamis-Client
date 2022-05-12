@@ -15,7 +15,7 @@ export class MetroboliliteService {
 
   constructor(private http: HttpClient) {}
 
-  static readonly GetStops = '/api-local/points/json'
+  static readonly GetStops = '/api/points/json'
 
   getPoints$Response(params: {
     types: string,

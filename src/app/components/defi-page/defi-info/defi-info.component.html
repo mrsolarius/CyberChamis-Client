@@ -1,27 +1,51 @@
 <div *ngIf="viewObsDefi | async as defi">
   <section>
     <img mat-card-image [src]="defi.img" [alt]="defi.titre" class="image-defi-info">
-    <mat-card-header>
-      <mat-card-title>{{defi.titre}}</mat-card-title>
-    </mat-card-header>
-    <ng-container>
-      <div class="button-defi-container">
-        <button mat-flat-button color="primary" routerLink="/game/{{defi.id}}" >Jouer</button>
+    <div class="defi-container">
+      <div class="title-c">
+        <h1>{{defi.titre}}</h1>
+        <button mat-flat-button color="primary" routerLink="/game/{{defi.id}}">Jouer</button>
       </div>
-    </ng-container>
-    <ng-container>
-      <div class="defi-description">
-        <p>{{defi.description}}</p>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="checkIfNote(defi)">
-      <div class="defi-notes">
-        <h4>Notes</h4>
-        <div class="defi-rating" *ngIf="obsRating | async as rating">
-          <app-rating-view [rating]="rating" [avg]="defi.noteMoyenne!"></app-rating-view>
+      <div class="info-comp">
+        <div class="info-column">
+        <div>
+          <mat-icon class="material-symbols-outlined">timer</mat-icon>
+          <span>{{defi.duree}} min</span>
+        </div>
+        <div>
+          <mat-icon class="material-symbols-outlined">workspace_premium</mat-icon>
+          <span>{{defi.pointTotaux}} points</span>
+        </div>
+        </div>
+
+        <div class="info-column">
+        <div *ngIf="getLocObs() | async as geoloc">
+          <mat-icon class="material-symbols-outlined small-icon">
+            directions_walk
+          </mat-icon>
+          <span>{{getDistance(geoloc.coords.latitude, geoloc.coords.longitude, defi!.arretDTO!.latitude!, defi!.arretDTO!.longitude!)}}
+            km de vous</span>
+        </div>
+        <div>
+          <mat-icon class="material-symbols-outlined">hail</mat-icon>
+          <span>{{defi.arretDTO!.nomArret!}}</span>
+        </div>
         </div>
       </div>
-    </ng-container>
+      <ng-container>
+        <div class="defi-description">
+          <p>{{defi.description}}</p>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="checkIfNote(defi)">
+        <div class="defi-notes">
+          <h4>Notes</h4>
+          <div class="defi-rating" *ngIf="obsRating | async as rating">
+            <app-rating-view [rating]="rating" [avg]="defi.noteMoyenne!"></app-rating-view>
+          </div>
+        </div>
+      </ng-container>
+    </div>
   </section>
   <section class="commentaires-section">
     <app-add-comment [defiId]="defi.id!" (commentAdded)="apendNewComment($event)"></app-add-comment>
