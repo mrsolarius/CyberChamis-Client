@@ -1,1 +1,19 @@
-<p>active-author works!</p>
+
+<ng-container *ngIf="chamisDtoObs | async as users">
+<div *ngFor="let user of users, let i=index"
+     class="authors-container">
+  <div class="author-container">
+    <div class="img-container">
+  <img src="{{user.chamis.profileImg}}"
+       [alt]="user.chamis.username"
+       class="profile-img"
+       routerLink="/profile-info/{{user.chamis.id}}">
+    </div>
+  <div class="comment-content">
+    <h3 routerLink="/profile-info/{{user.chamis.id}}">{{user.chamis.username}}</h3>
+    <h3 >{{user.chamis.bio}}</h3>
+    <h3>Nombre de défis créés: {{user.count}}</h3>
+  </div>
+  </div>
+</div>
+</ng-container>

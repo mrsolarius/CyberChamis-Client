@@ -255,8 +255,8 @@ export class CreateComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
-
+    let value = event.value;
+    value = value.toUpperCase();
     if ((value || '').trim()) {
       if (this.listeTags.filter((v) => v === value)?.length === 0) {
         this.listeTags.push(value.trim());
