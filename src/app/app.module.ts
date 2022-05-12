@@ -59,6 +59,8 @@ import { DefiCreatedComponent } from './components/defi-created/defi-created.com
 import { VisiteProfileComponent } from './components/visite-profile/visite-profile.component';
 import { DefitrouveComponent } from './app-map/defitrouve/defitrouve.component';
 import { SlideReprendreDefisComponent } from './components/slide-reprendre-defis/slide-reprendre-defis.component';
+import { TopRatedComponent } from './components/top-rated/top-rated.component';
+import { MostPlayedComponent } from './components/most-played/most-played.component';
 
 
 @NgModule({
@@ -96,6 +98,8 @@ import { SlideReprendreDefisComponent } from './components/slide-reprendre-defis
     SingleLayoutComponent,
     CommentUserComponent,
     DefisByTagComponent,
+    TopRatedComponent,
+    MostPlayedComponent,
     DefiCreatedComponent,
     VisiteProfileComponent,
     DefitrouveComponent,

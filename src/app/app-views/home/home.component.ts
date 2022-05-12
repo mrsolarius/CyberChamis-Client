@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {DefiDto} from "../../api/models/defi-dto";
 import {DefiRestControllerService} from "../../api/services/defi-rest-controller.service";
-import {BehaviorSubject, filter, map, lastValueFrom, Observable, switchMap, firstValueFrom} from "rxjs";
+import {BehaviorSubject,  filter, map,lastValueFrom, Observable, switchMap} from "rxjs";
 import {FirefilesService} from "../../firefiles.service";
 import {TagCount} from "../../api/models/tag-count";
 import {VisiteDto} from "../../api/models/visite-dto";
 import {UserService} from "../../user/user.service";
 import {GameRestControllerService} from "../../api/services/game-rest-controller.service";
+import {ChamisCount} from "../../api/models/chamis-count";
 
 @Component({
 
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   visiteur:BehaviorSubject<VisiteDto[]> = new BehaviorSubject<VisiteDto[]>([]);
   tagsObs : Observable<TagCount[]>;
   tagsTab? : TagCount[];
+  defisNbChamis = new BehaviorSubject<ChamisCount[]>([]);
   userId: number=-1;
   constructor(private defisRest : DefiRestControllerService,
               private fileService : FirefilesService,
