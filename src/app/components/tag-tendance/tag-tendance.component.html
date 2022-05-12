@@ -1,5 +1,5 @@
 <div *ngIf="tags != undefined && tags.length > 0">
-  <h2>Les tags les plus tendances !</h2>
+  <h2 class="margin-left">Les tags les plus tendances !</h2>
   <div class="box">
     <div class="elem" mat-ripple
          *ngFor="let tag of trierTags()" routerLink="/s/tag/{{tag.tag}}">{{tag.tag}} - {{tag.count}}

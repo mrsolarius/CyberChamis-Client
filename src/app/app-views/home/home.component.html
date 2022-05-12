@@ -2,10 +2,10 @@
   <div *ngIf="getvisiteObsView() | async as visites">
     <app-slide-reprendre-defis *ngIf="visites.length>0" [visites]="visites" (abandonJeux)="update()"></app-slide-reprendre-defis>
   </div>
-  <app-slides-defis [defis]="defis"></app-slides-defis>
   <app-top-rated [defis]="defis"></app-top-rated>
   <app-most-played [defis]="defis"></app-most-played>
-  <app-defis [defis]="defis"></app-defis>
   <app-tag-tendance [tags]="tagsTab" ></app-tag-tendance>
+  <h1 *ngIf="defis.length>0">Les {{defis.length}} defis !</h1>
+  <app-defis [defis]="defis"></app-defis>
 </div>
 
