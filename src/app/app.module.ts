@@ -99,6 +99,12 @@ import { ActiveAuthorComponent } from './components/active-author/active-author.
     CommentUserComponent,
     DefisByTagComponent,
     DefitrouveComponent,
+    VisiteProfileComponent,
+    TopRatedComponent,
+    SlideReprendreDefisComponent,
+    MostPlayedComponent,
+    DefiCreatedComponent,
+    ActiveAuthorComponent
   ],
   imports: [
     DragDropModule,
