@@ -12,4 +12,5 @@ Nos services d'api sont trouvable [ici](/src/app/apis/api-local)
 - Utilisation de firebase pour stocker les données (images, arrets...) 
 
 ## Deployment
-L'application déployer et disponible sur https://cyberchamis.tuturu.fr
+* L'application déployer et disponible sur https://cyberchamis.tuturu.fr
+* Le serveur déployer est disponible ici https://grechat.herokuapp.com/swagger-ui/
